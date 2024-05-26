@@ -1,0 +1,301 @@
+\newenvironment{titledslide}[1]{\flushleft\begin{slide}\titolo{#1}\vfill}{\vspace{\fill}\end{slide}}
+\newcommand{\titolo}[1]{\begin{center}#1\end{center}
+ \vspace{-8mm} 
+ \rule[10mm]{\textwidth}{0.7mm}}
+\newcommand{\epspic}[2]{\epsfxsize=#2mm\begin{center}\leavevmode\epsfbox{#1.ps}\end{center}}
+\newcommand{\pl}{{\tt PLaSM}} % PLaSM
+\newcommand{\simplexn}{{Simple$_{X}^{n}$}} % Simplexn
+\newcommand{\fl}{{\tt FL}} % FL
+
+\newenvironment{code}
+{\samepage\small\begin{tabbing}aa\=aa\=aa\=aa\=aa\=aa\=aa\=aa\=aa\=aa\=aa\=aa\=aa\=aa\kill}{\end{tabbing}}
+
+\newenvironment{plasm}
+{\samepage\tt\begin{quote}
+\begin{tabbing}aa\=aa\=aa\=aa\=aa\=aa\=aa\=aa\=aa\=aa\=aa\=aa\=aa\=aa\kill}
+{\end{tabbing}\end{quote}}
+
+\newenvironment{smallplasm}
+{\begin{quote}\samepage\small\tt
+\begin{tabbing}aaa\=aaa\=aaa\=aaa\=aaa\=aaa\=aaa\=aaa\=aaa\=aaa\=aaa\=aaa\=aaa\=aaa\kill}
+{\end{tabbing}\end{quote}}
+
+\newenvironment{tinyplasm}
+{\scriptsize\tt
+\begin{tabbing}aaa\=aaa\=aaa\=aaa\=aaa\=aaa\=aaa\=aaa\=aaa\=aaa\=aaa\=aaa\=aaa\=aaa\kill}
+{\end{tabbing}}
+
+\newenvironment{smallerplasm}
+{\footnotesize\tt\begin{tabbing}aaa\=aaa\=aaa\=aaa\=aaa\=aaa\=aaa\=aaa\=aaa\=aaa\=aaa\=aaa\=aaa\=aaa\kill}{\end{tabbing}}
+
+\newenvironment{smallestplasm}
+{\tt\tiny\begin{tabbing}aaa\=aaa\=aaa\=aaa\=aaa\=aaa\=aaa\=aaa\=aaa\=aaa\=aaa\=aaa\=aaa\=aaa\kill}{\end{tabbing}}
+
+\newenvironment{plasmverb}
+{\small\tt\begin{verbatim}}{\end{verbatim}}
+
+% \newenvironment{script}
+% {\noindent\rule{5.15in}{0.1mm}\vspace{-0.2cm}\begin{plist}}
+% {\end{plist}\vspace{-0.4cm}\rule{5.15in}{0.1mm}\vspace{0.2cm}}
+
+\newenvironment{defscript}
+{\begin{minipage}[c]{\linewidth}\begin{plist}}{\end{plist}\end{minipage}}
+
+%\newcommand{\ve}[1]{\bf #1}
+\def\E{{\sf I\!E}}
+
+\def\D#1#2{{d^{#1} \over d #2}}
+\def\Partial#1#2{{\partial^{#1} \over \partial #2}}
+\def\v#1{{\bf #1}}
+\def\v#1{{\mbox{\boldmath $#1$}}}
+\def\p#1{{\bf #1}}
+\def\p#1{{\mbox{\boldmath $#1$}}}
+\def\T#1{{\bf #1}}
+\def\T#1{{\mbox{\boldmath $#1$}}}
+\def\grad#1{\mbox{grad\,}#1}
+%\def\vect2 #1 #2{{\left[\begin{array}{cc}#1\\#2\end{array}\right]}}
+\def\vet#1{{\left(\begin{array}{ccccccc}#1\end{array}\right)}}
+\def\mat#1{{\left(\begin{array}{ccccccc}#1\end{array}\right)}}
+\def\deriv#1#2{{d #1 \over d #2}}
+\def\pderiv #1 #2{{ \partial #1} \over {\partial #2}}
+\def\binomial#1#2{{\left(\!\begin{array}{c}#1\\#2\end{array}\!\right)}}
+\def\module#1{{\left|\!\left|#1\right|\!\right|}}
+
+
+\newtheorem{definition}{Definition}[section]
+\newtheorem{Note}{Note}[section]
+\newtheorem{rrule}{Rule}[section]
+\newtheorem{lemma}{Lemma}[section]
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{corollary}{Corollary}[section]
+
+\theorembodyfont{\rmfamily}
+\theoremstyle{break}
+\newtheorem{example}{Example}[section]
+\newtheorem{plist}{Script}[section]
+
+\def\E{\mathbb{E}}
+\def\R{\mathbb{R}}
+\def\P{\mathbb{P}}
+\def\N{\mathbb{N}}
+\def\Z{\mathbb{Z}}
+\newcommand{\curl}[0]{\mbox{\rm curl}\,}
+\newcommand{\topint}[0]{\mbox{\rm int}\,}
+\newcommand{\closure}[0]{\mbox{\rm clos}\,}
+\newcommand{\lin}[0]{\mbox{\rm lin}\,}
+\newcommand{\aff}[0]{\mbox{\rm aff}\,}
+\newcommand{\pos}[0]{\mbox{\rm pos}\,}
+\newcommand{\cone}[0]{\mbox{\rm cone}\,}
+\newcommand{\conv}[0]{\mbox{\rm conv}\,}
+\newcommand{\relint}[0]{\mbox{\rm relint}\,}
+\newcommand{\homog}[0]{\mbox{\rm homog}\,}
+\newcommand{\ext}[0]{\mbox{\rm ext}\,}
+\newcommand{\complement}[0]{\mbox{\rm complement}\,}
+\newcommand{\proj}[1]{\mbox{\rm proj}_{#1}\,}
+\newcommand{\elim}[1]{\mbox{\rm elim}_{#1}\,}
+% \newcommand{\dim}[0]{\mbox{\rm dim}\,}
+
+
+\def\myDelta{{\scriptscriptstyle{\Delta}}}
+\def\one{{\rm \mbox{\small $1$}\!\!1}}
+
+%-----------------------------------------------------------------------------
+% \newcommand{\figsdir}[1]{os9:Work:Book:#1:#1fig:}
+% \newcommand{\exampledir}[1]{os9:Work:Book:examples:#1:}
+\newcommand{\figsdir}[1]{/Users/paoluzzi/BACK/Users/work/Libri/book/#1/}
+%-----------------------------------------------------------------------------
+
+
+%%% Claudio Baldazzi
+
+\newcommand{\bigsymb}[3]{\begin{array}{c}
+{\scriptscriptstyle #3}\\[-0.15cm]
+{\displaystyle #1} \\[-0.3cm]
+{\scriptscriptstyle #2}\end{array}}
+
+\newcommand{\BSP}{\mbox{BSP}}
+
+\newenvironment{lang}
+{
+\begin{quote}
+    \begin{tabbing}
+        aaa\=aaa\=aaa\=aaa\=aaa\=aaa\kill
+}
+{
+\end{tabbing}
+\end{quote}
+}
+
+\newcommand{\note}[1]{\typeout{--------Note: #1}{\sc #1}}
+\newcommand{\st}[0]{\;|\;}                           %tale che
+
+% background section
+\newcommand{\espace}[0]{E} 
+\newcommand{\rspace}[0]{\R}
+\newcommand{\vset}[0]{V}
+\newcommand{\vsymb}[0]{v}
+\newcommand{\fsymb}[0]{f}
+\newcommand{\dime}[0]{\mbox{\rm dim}\,}
+
+\newcommand{\cella}[0]{\cell}
+\newcommand{\interior}[1]{\stackrel{\circ}{#1}}
+\newcommand{\boundary}[0]{\partial}
+\newcommand{\interiorcella}[0]{\interior{\cella}}
+\newcommand{\insieme}[0]{\rm}
+\newcommand{\dcomplesso}[0]{{\cal K}}
+\newcommand{\identita}[0]{I} 
+
+\newcommand{\poliedro}[0]{P}  \newcommand{\poliedri}[0]{{\cal P}}
+\newcommand{\mappa}[0]{T}     \newcommand{\mappe}[0]{{\cal T}}
+\newcommand{\istanza}[0]{I}   \newcommand{\istanze}[0]{{\cal I}}
+\newcommand{\complesso}[0]{C} \newcommand{\complessi}[0]{{\cal C}}
+\newcommand{\modelli}[0]{{\cal M}}
+
+\newcommand{\Rpoliedro}[0]{\langle P \rangle}
+\newcommand{\Ristanza}[0]{\langle I \rangle}
+\newcommand{\Rcomplesso}[0]{\langle C \rangle}
+\newcommand{\Rmappa}[0]{\langle T \rangle}
+\newcommand{\rappresentazioni}[0]{{\cal R}}
+\newcommand{\schemaR}[0]{\mbox{\tt r}}
+\newcommand{\schemaWR}[0]{\mbox{\tt wr}}
+
+\newcommand{\istanzaB}[0]{\tilde{I}}  \newcommand{\istanzeB}[0]{\tilde{{\cal I}}}
+\newcommand{\sequenza}[0]{S}          \newcommand{\sequenze}[0]{{\cal S}}
+\newcommand{\Modelli}[0]{{\cal M}^*}
+\newcommand{\Rappresentazioni}[0]{{\cal R}^*}
+\newcommand{\RistanzaB}[0]{\langle \tilde{I} \rangle}
+\newcommand{\Rsequenza}[0]{\langle S \rangle}
+\newcommand{\schemaRR}[0]{\mbox{\tt r}^*}
+%\newcommand{\diff}[0]{\mbox{\tt V}}
+%\newcommand{\Rdiff}[0]{\mbox{\tt V}^*}
+\newcommand{\diff}[0]{\mbox{\tt PD}}
+\newcommand{\Rdiff}[0]{\mbox{\tt PD}^*}
+\newcommand{\oper}[0]{\star}
+\newcommand{\operX}[0]{\diamond_\star}
+\newcommand{\Rom}[0]{\tt}
+\newcommand{\operA}[0]{\operX^{\Rom 1}}
+\newcommand{\operB}[0]{\operX^{\Rom 2}}
+\newcommand{\operC}[0]{\operX^{\Rom 3}}
+\newcommand{\operD}[0]{\operX^{\Rom 4}}
+
+%paper operatori
+%scheletro
+\newcommand{\kskeleton}[0]{{\tt @k}}
+\newcommand{\kskeletonX}[0]{\diamond_{\kskeleton}}
+\newcommand{\kskeletonB}[0]{\kskeletonX^{\Rom 2}}
+\newcommand{\cell}[0]{c}        % coerenza con  \cella !!!!!!!!!
+\newcommand{\rank}[0]{\mbox{\rm rank}\,}
+
+%prodotto
+\newcommand{\prodottoX}[0]{\diamond_{\prodotto}}
+\newcommand{\sequenzaB}[0]{D}
+\newcommand{\poliedroA}[0]{\poliedro}
+\newcommand{\poliedroB}[0]{Q}
+\newcommand{\poliedroC}[0]{O}
+\newcommand{\mappaI}[0]{T_{\identita}}
+\newcommand{\matrici}[0]{M}
+\newcommand{\prodottoB}[0]{\prodottoX^{\Rom 2}}
+\newcommand{\prodottoC}[0]{\prodottoX^{\Rom 3}}
+\newcommand{\facce}[0]{F}
+\newcommand{\celle}[0]{\dcomplesso}
+\newcommand{\cellepoliedroA}[0]{\celle_{\poliedroA}}
+\newcommand{\cellepoliedroB}[0]{\celle_{\poliedroB}}
+\newcommand{\cellepoliedroC}[0]{\celle_{\poliedroC}}
+
+
+
+\newcommand{\umlaut}[1]{\"{#1}}
+\newcommand{\Simplex}[0]{\emph{Simple}${}_X^n$\ }
+\newcommand{\simplex}[0]{\emph{Simple}${}_X^n$\ }
+\newcommand{\rem}[1] {\rule{3mm}{.2mm}\hspace{2mm}{\sc
+   #1}\hspace{2mm}\rule{3mm}{.2mm}\hspace{2mm}} 
+\newcommand{\prodotto}[2]  {\,\, {}_{#1} \otimes_{#2} \,\,}
+\newcommand{\Prodotto}[3]  {\,\, {}_{#1}\!\!\otimes^{#3}_{#2} \,}
+\newcommand{\pol}[1]  {{\cal P}^{#1}}
+\newcommand{\af}[1]  {{\cal A}^{#1}}
+\newcommand{\fa}[1]  {{\cal A}_{#1}}
+\newcommand{\ad}[1]{{\cal AD}_{#1}}
+
+\def\vint{\int\!\!\int\!\!\int}
+\def\sint{\int\!\!\int}
+\def\isum{\sum_{i=1}^n}
+\def\asum{\sum_{\alpha=0}^n}
+\def\bsum{\sum_{\beta=0}^m}
+\def\csum{\sum_{\gamma=0}^p}
+\def\sssum{\asum\bsum\csum}
+\def\XXa{\sum_{\tau\in T}  |{\bf a} \times {\bf b}| }
+\def\XXb{\pmatrix{\alpha\cr  h\cr}}
+\def\XXc{\pmatrix{\beta\cr k\cr}}
+\def\XXd{\pmatrix{\gamma\cr m\cr}}
+\def\XXe{\pmatrix{h\cr i\cr}} 
+\def\XXf{\pmatrix{k\cr j\cr}}
+\def\XXg{\pmatrix{m\cr l\cr}}
+\def\XXh{\pmatrix{p\!\!+\!\!1\cr h\cr}}
+
+\newlength\myheight  %command for \inlinegraphics
+\newlength\mydepth
+\settototalheight\myheight{Xygp}
+\settodepth\mydepth{Xygp}
+\setlength\fboxsep{0pt}
+\newcommand*\inlinegraphics[1]{%
+  \settototalheight\myheight{Xygp}%
+  \settodepth\mydepth{Xygp}%
+  \raisebox{-\mydepth}{\includegraphics[height=\myheight]{#1}}%
+}
+
+%Command for documenting functions
+
+% \newcommand{\function}[5]{
+% }}\noindent
+% \vspace{0.1cm}\rule{5.15in}{0.1mm}\vspace{-0.2cm}
+% \begin{description} \item[{\tt ~#1}] #2\end{description}
+% \vspace{-3mm}
+% \begin{tabular}[t]{lp{4.2in}}
+% \ifthenelse{\equal{#3}{}}{}{{\small Prototype:}&{\small \texttt{#3}}\\}
+% \ifthenelse{\equal{#4}{}}{}{{\small Returns:}&{\small \texttt{#4}}}
+% \ifthenelse{\equal{#5}{}}{}{\\ {\small Example:}&{\small \texttt{#5}}}
+% \end{tabular}}
+
+\newcommand{\function}[6]{
+}\noindent
+\vspace{0.1cm}\rule{5.15in}{0.1mm}\vspace{-0.4cm}
+\begin{description} \item[{\tt ~#1}] {\small #3}\end{description}
+\vspace{-2mm}
+\begin{tabular}[t]{lp{4.2in}}
+\ifthenelse{\equal{#4}{}}{}{{\small \hspace{-0.3mm}Pre/Post conds}&{\small \texttt{#4}}}
+\ifthenelse{\equal{#5}{}}{}{{${} \rightarrow {}$}{\small \texttt{#5}}\\}
+\ifthenelse{\equal{#6}{}}{}{ {\small \hspace{-1.4mm}Example}&{\small \texttt{#6}}}
+\end{tabular}}
+
+%Ignore overfull/underfull warnings
+
+\hbadness=30000
+\vbadness=30000
+\showboxbreadth=0
+\showboxdepth=0
+\hfuzz=\maxdimen
+\vfuzz=\maxdimen
+
+
+% macros for book formatting
+
+%\newfloat{bookcopyright}{b}{ext}{}
+%\newfloat{floatplasm}{htb}{ext}{}
+
+\newenvironment{script}
+{\begin{floatplasm}\noindent\rule{\textwidth}{0.1mm}\vspace{-0.2cm}\begin{plist}}
+{\end{plist}\vspace{-0.4cm}\rule{\textwidth}{0.1mm}\vspace{-0.4cm}\end{floatplasm}}
+
+\newenvironment{nofloat}
+{\noindent\rule{5.15in}{0.1mm}\vspace{-0.2cm}\begin{plist}}
+{\end{plist}\vspace{-0.4cm}\rule{5.15in}{0.1mm}}
+
+%\def\gp4cad{\begin{bookcopyright}
+%    \emph{Geometric Programming for Computer-Aided Design}\ \ Alberto Paoluzzi\\
+%    \copyright\ 2003 John Wiley \& Sons, Ltd\ \ ISBN 0-471-89942-9
+%\end{bookcopyright}}
+
+\makeindex                                         
+\def\sysdetails{}
+\linewidth = \textwidth
+

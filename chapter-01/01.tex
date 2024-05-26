@@ -1,0 +1,1048 @@
+% !TEX TS-program = xelatex
+
+\chapter{Introduction to Julia Programming}\label{chapt:}
+%==============================================================================
+
+Many programming languages are developed for writing computer programs. Let’s imagine their set covered, in a mathematical sense, by a few subsets called \emph{programming paradigms} that characterize the \emph{programming style}, i.e., how the computation is performed, how data are transformed or stored, and other aspects of calculation.
+Some languages follow a single paradigm; other languages are multiparadigm since their programs may be written adopting more than one style. Examples are Smalltalk (object-oriented), Haskell or ML (functional), Prolog (declarative).  C++, Java, Python, and Julia are multiparadigm. 
+Julia was designed for scientific programming, which currently leads for performance, simplicity, and expressiveness. Julia solved the \emph{two-language problem}~\cite{BEKS14}, so unifying program prototyping and optimization.
+This book begins with a chapter introducing the Julia multi-paradigm which blends high description power and simplicity with very fast computing ability. The chapter is not a programming primer, but is oriented to readers already able to code in other languages.
+
+
+
+\section{Basic syntax and type system}\label{sect:1-1}
+%-------------------------------------------------------------------------------
+
+Julia combines features of productivity languages, such as Python or MATLAB, with characteristics of performance-oriented languages, such as C++ or Fortran. Syntactically, Julia is easy and fast to write and debug, and also enjoys a great collection of packages.
+
+\subsubsection*{Basic syntax}
+
+Julia strongly resembles Python for generic code, and MATLAB for algebraic calculus with matrices and vectors. 
+Only a few syntax notions are actually necessary to allow the reader to understand the scripts in this book.
+A set of differences between the languages Julia, Python, and R, full of scriptlets, may be found in \href{https://cheatsheets.quantecon.org}{https://cheatsheets.quantecon.org}, suggested to readers.
+
+The comment \emph{lines} start with a character |#|. All text following it on the line is considered a comment and skipped by the compiler.  \emph{Multiline} comments, called block-comments, start with |#=| and terminate with a reverse pair |=#|.
+
+Even if actually multi-paradigm, Julia can be properly considered a functional language, as everything in Julia is an \emph{expression} generating a \emph{value}. 
+
+There are several basic types of numbers: e.g.,
+|Int64|, |Float64|, |Complex|\{|Float64|\}, |Rational|\{|Int64|\}. |String| values are created with  "<string chars>"; |Char| literals are written as |'a','b'|, etc. All arithmetic infix operators are available, as well as bitwise operators, Boolean values and operations, and primitive comparison operators. 
+
+\subsubsection*{Variables}
+
+Variables are declared while assigning a value to them. Accessing a non-previously declared variable is an error. \emph{Names} of variables start with a \emph{letter} or \emph{underscore} and may have any number of alphanumeric characters, including |_| and |!|. It is also possible to use many Unicode characters, like |$\pi$| or |$\in$|, using their \LaTeX\ names 
+%|\verb{\pi|} and |\in| 
+followed by the Tab key, like |\pi<Tab> # => $\pi$|. 
+
+Values have a type, but variables do not so that a variable can be reassigned with values of the same or different types.
+
+\subsubsection*{Naming conventions}
+\begin{enumerate}
+\item 
+In {long names} word {separation} can be indicated by underscores, but their use is discouraged unless the name would be hard to read otherwise;
+
+\item 
+names of |Type|s begin with a capital letter, and word separation is shown with \emph{UpperCamelCase} instead of underscores: |AbstractFloat|;
+
+\item 
+names of \emph{functions} and macros are in \emph{lower case}, without underscores;
+
+\item 
+\emp{functions} that modify their input have names that end in |!|. These functions are called \emph{mutating} functions or \emph{in-place} functions because they mutate their input.  For large data structures, this one is rarely a good idea.
+\end{enumerate}
+
+\subsubsection*{Control flow}
+
+Julia provides a variety of control flow constructs:
+\begin{enumerate}
+\item 
+\emph{Compound Expressions}:  block |begin$\ldots$end|, and |;| for expressions in sequence.
+\item 
+\emph{Conditional Evaluation}: |if$\ldots$elseif$\ldots$else$\ldots$end|, and |<>?<>:<>| (ternary operator).
+\item 
+\emph{Short-Circuit Evaluation}: logical operators |&&| (“and”), and $\|$ (“or”), are \emp{chained} comparisons.
+\item 
+\emph{Repeated Evaluation}: Loops: |while$\ldots$end|, and |for$\ldots$end|.
+\item 
+\emph{Exception Handling}: |try$\ldots$catch|, |error|, and |throw|. Exceptions are thrown when an unexpected condition has occurred. 
+\item 
+|Tasks| (aka \emph{Coroutines}),  a generalized subroutine in Julia, which is a set of instructions stored in memory and invoked during execution.
+|yieldto| allow suspending and resuming of tasks.
+
+\end{enumerate}
+
+
+The |for$\ldots$end| loops iterate over iterables; 
+iterable types include |Range|, |Array|, |Set|, |Dict|, and |AbstractString|.
+In loops you can use |in| instead of range generators\\
+|while$\ldots$end| loop lops while a condition \emph{predicate} is |true|, and terminates when the predicate become |false|.
+
+Sequential \emph{iteration} is implemented by the |iterate| function \cite{julia:iterate}. Instead of mutating objects as they are iterated over, Julia iterators may keep track of the iteration state externally from the object. The return value from |iterate| is always either a tuple of a value and a state, or |nothing| if no elements remain.
+
+
+\subsubsection*{Type system}
+
+Julia has a type system.
+Every \emph{value} has a type; variables do not have types themselves.
+You can use the |typeof| function to get the type of a value: |abcd = "abcd"; typeof(abcd) # => String|.
+
+Types are first-class values that can be used as arguments of functions and returned by functions.
+|DataType| is the type that represents types, including itself.
+
+
+Julia's type system is \emph{dynamic}. Still, it gains some of the advantages of static type systems by making it possible to indicate that certain values are of specific types and by type reasoning. This can greatly assist in generating efficient code, but even more significantly, it allows \emph{method dispatch} on the types of function arguments to be deeply integrated with the language.
+
+
+In Julia, a type is \emph{concrete} if it can be instantiated, that is, some type
+|T| is concrete if there exists at least one value |v| such that
+|typeof(v) # => T|. \emph{Abstract} types cannot be instantiated; they are used to create hierarchies of types, useful to generate fast code.
+Both abstract and concrete types can be parameterized by other types. They can also be parameterized by symbols and values of types s.t. |isbits| returns true. 
+
+The hierarchical relationships between types are explicitly declared.
+One particularly distinctive feature of Julia's type system is that \emph{concrete types} may not \emph{subtype each other}: all concrete types are \emph{final}: may only have abstract types as supertypes.
+
+
+Users can define new types. User-defined types are like \emph{records} or \emph{structs} in other languages.  New types are defined using the |struct| keyword. Julia gives a default constructor as a function with the same name of the type.
+The default constructor's arguments are the \emph{properties} of the type, in the order they are listed in the definition \cite{julia:types}.
+
+These struct-style types are \emph{concrete types}. So, 
+they can be instantiated, but cannot have \emph{subtypes}.
+The other kind of types is |abstract| types defined as:  
+|abstract| \emph{<name>} |end|.
+Abstract types \emph{cannot} be instantiated, but can have subtypes.
+|AbstractString|, as the name implies, is also an abstract type.
+
+
+\subsubsection*{Type relations and hierarchy}
+
+The method |supertype(T::DataType)| returns the |DataType| father of |T|.
+The \emph{subtype} operator is a predicate |T1 <: T2| that returns |true| when values of type |T1| are also of type |T2|.  
+The \emph{supertype} operator |T1 >: T2| is equivalent to |T2 <: T1|. Two examples follows (see also Figure~\ref{fig:TypeTrees}):
+\begin{lstlisting}[language=JuliaLocal, style=julia, mathescape = true]
+subtypes # => (generic function with two methods)
+subtypes(Number) # => [Complex, Real]|
+\end{lstlisting}
+
+%\begin{figure}[htbp] %  figure placement: here, top, bottom, or page
+%   \centering
+%   \includegraphics[width=\textwidth]{chapter-02/figs/timedate} 
+%   \includegraphics[width=\textwidth]{chapter-02/figs/numbers} 
+%   \caption{Two |Type| hierarchies: (top) The tree of only abstract types  \cite{} from root node |AbstractTime|; (bottom) full Julia hierarchy of |Number| type: non-leave nodes are abstract types; leaves are concrete types \cite{}.
+%   \label{fig:TypeTrees}
+%\end{figure}
+
+
+Types are used for documentation, optimizations, and dispatch. In Julia, they are not statically checked, but used by the JIT compiler to create faster code.
+The |::| operator may be used to attach type annotations to expressions and variables within the program. As a general rule, it is better not to use type annotation but let the compiler do it, so writing generic code makes also easier to interact with other packages.
+
+The |abstract type| declares a type that \emph{cannot} be instantiated and serves only as a node in the type graph, thereby describing sets of \emph{related concrete types}: those concrete types which are their descendants. Abstract types form the conceptual hierarchy, which makes Julia’s type system more than just a collection of object implementations. For example:
+|Number| has supertype |Any|, whereas |Real| is an abstract subtype of |Number| (see Figure \ref{fig:TypeTrees}).
+
+A |primitive| type declares a concrete type whose data consists only of a series of bits. Classic examples of primitive types are integers and floating-point values. Some examples of built-in primitive type declarations from Julia implementation:
+
+\begin{lstlisting}[language=JuliaLocal, style=julia]
+primitive type Char 32 end
+primitive type Bool <: Integer 8 end
+\end{lstlisting}
+
+Type declarations can be used in |global| scope, i.e., type annotations can be added to global variables to make accessing them type stable  (about the importance of |type-stability| read \cite{typestable:21}).
+
+\begin{lstlisting}[language=JuliaLocal, style=julia]
+julia> x::Int = 10
+10
+julia> x = 3.5
+ERROR: InexactError: Int64(3.5)
+\end{lstlisting}
+
+
+
+
+
+\section{Functions and collections}\label{sect:1-1}
+%-------------------------------------------------------------------------------
+The actual backbone of Julia programming are the data objects of \emph{collection} types, including arrays, tuples, dictionaries, and sets. 
+Objects of |Function| type have great significance in the language, since they denote any computable transformation from input data to output results of a computation.
+
+\subsection{Julia functions}
+
+In Julia, a function is an object that maps a tuple of argument values to a |return| value. 
+All arguments to functions are passed by sharing (i.e., by memory address).
+Julia functions are not \emph{pure} mathematical functions because they can alter and be affected by the global state of the program. 
+\begin{definition}[Basic syntax for defining functions]
+\begin{lstlisting}[language=JuliaLocal, style=julia]
+julia> function f(x,y)
+           x + y
+       end
+f (generic function with 1 method)
+\end{lstlisting}
+\end{definition}
+
+A \emph{generic} function can be used for different types of its arguments. In simple words, whenever the function is called with arguments of a new type, the Julia compiler will generate a different version, called \emph{method} for that function. The same happens when a function name is invoked with different number and types of arguments. See Julia Multiple Dispatch \cite{julia4data}.
+
+The keyword |function| creates new functions. Functions return the value of their last expression.
+\begin{definition}[Statement functions]
+There is a compact definition of functions, like in old Fortran. Here is the function definition with formal arguments, andt its application to actual argument values:
+
+\begin{lstlisting}[language=JuliaLocal, style=julia]
+julia> f_add(x,y) = x + y
+f_add (generic function with 1 method)
+
+julia> f_add(2,3) 
+5
+\end{lstlisting}
+\end{definition}
+
+\begin{definition}[Multiple return values] Functions can also return multiple values, as a tuple.
+\begin{lstlisting}[language=JuliaLocal, style=julia]
+julia> f(x,y) = x+y, x-y, x*y
+f (generic function with 1 method)
+
+julia> a,b,c = f(2,4) 
+(6, -2, 8)
+\end{lstlisting}
+\end{definition}
+
+
+\begin{definition}[Variable number of arguments] 
+You may define functions whose $<head>$ takes a \emph{variable} number of \emph{positional} arguments:
+\begin{lstlisting}[language=JuliaLocal, style=julia, mathescape = true]
+function varargs(args...) $<body>$ end
+\end{lstlisting}
+of course followed by a \emph{body} of instructions and by the |end| token. 
+\end{definition}
+
+The token |...| is called a \emph{splat}. We just used it to define a function \emph{head}. 
+The splat can also be used in a \emph{function call}, where it will splat an array or tuple contents into the \emph{argument} list: \\ |add(list...)| is equivalent to |add(5,6,7,8,9)| when |list = [5,6,7,8,9]|.
+
+\begin{definition}[Optional positional arguments] 
+You may define functions with \emph{optional} positional arguments.
+with an assigned \emph{default} value, and hence not necessarily with an assigned value at runtime. 
+\begin{lstlisting}[language=JuliaLocal, style=julia, mathescape=false]
+julia> function defaults(a, b, x=5, y=6)
+	       return "$a $b and $x $y"
+	   end
+defaults (generic function with 3 methods)
+
+julia> defaults(0, 0, y=10)
+"0 0 and 5 10"
+\end{lstlisting}
+The \texttt{\$} is used to interpolate values of variables or expressions into strings.
+\end{definition} 
+
+\begin{definition}[keyword-optional arguments] 
+You may also define functions that take keyword-optional arguments. \begin{lstlisting}[language=JuliaLocal, style=julia, mathescape=false]
+julia> function keyword_args(;k1=4, name2="hello")
+            return Dict("k1" => k1, "name2" => name2)
+       end
+keyword_args (generic function with 1 method)
+\end{lstlisting}
+Note the |;| character before the optional arguments
+\end{definition} 
+
+\begin{coding}\noindent\emph{Function call}
+A corresponding {function call} follows, showing the parameter names |k1| and |name2| together with the assigned values, used to increase the code readability:
+\begin{lstlisting}[language=JuliaLocal, style=julia, mathescape=false]
+julia> keyword_args(; k1=4, name2="hello")
+Dict{String, Any} with 2 entries:
+  "name2" => "hello"
+  "k1"    => 4
+\end{lstlisting}
+You can combine all kinds of arguments in the same function, with keyword ones defined in the last positions, following the |;| character. They can be invoked in any number and order, and possibly substituted by the default value.
+\end{coding} 
+
+\subsubsection*{Functional programming style}
+
+Julia allows the programmer to use efficiently several traits of functional programming style, as it is shown in the following of this section.
+
+
+\begin{coding} In other words, 
+Julia has \emph{first class} functions. In the following scriptlet, the function |create_adder| returns an |adder| function:
+
+\begin{lstlisting}[language=JuliaLocal, style=julia, mathescape=false]
+function create_adder(x)
+    adder = function(y)
+        return x + y
+    end
+    return adder
+end
+\end{lstlisting}
+It is also possible to name the internal function if desired:
+
+\begin{lstlisting}[language=JuliaLocal, style=julia, mathescape=false]
+function create_adder(x)
+    function adder(y)
+        x + y
+    end
+    adder
+end
+\end{lstlisting}
+To be called, e.g.,  
+|add_10 = create_adder(10);|  |add_10(3) #=> 13|.\\
+\end{coding}
+
+
+
+\begin{definition}[lambda syntax]
+The \emph{lambda syntax} or "stabby lambda syntax" is used to create \emph{anonymous} functions: |(x -> x + 2)(3) # => 5|,
+where the lambda expression is |x -> x + 2|. The \emph{arguments} are before the characters ” |->| “, and after the stab we have the \emph{value-generating expression}.
+
+\begin{lstlisting}[language=JuliaLocal, style=julia, mathescape=false]
+function create_adder(x)
+    y -> x + y
+end
+\end{lstlisting}
+Of course, it is  possible to use a tuple of arguments in the lambda form of functions: |((x,y) -> x + y)(2, 3) # => 5|. 
+This function is identical to the |create_adder| implementation above.
+\end{definition}
+
+\begin{coding}
+Even more, like a proper functional language, with curried parameters, we may have: 
+\begin{lstlisting}[language=JuliaLocal, style=julia, mathescape=false]
+add = (x -> y -> x + y); 
+add(2)(3) # => 5.
+\end{lstlisting}
+A curried function is a function which takes multiple parameters one at a time, by taking the first argument, and returning a series of functions which each take the next argument until all the parameters have been fixed, and the function application can complete, at which point, the resulting value is returned. Note that the number of arrows equals the number of applications.
+\end{coding}
+
+
+\subsubsection*{Julia higher-order functions}
+
+The |map()|, |filter()|, and |reduce()| functions are three fundamental higher-order functions that are found in almost every programming language today.
+In Julia we have this syntax for built-in higher-order functions:
+
+\begin{lstlisting}[language=JuliaLocal, style=julia, mathescape=false]
+map(add_10, [1,2,3])  				# => [11, 12, 13]
+filter(x -> x > 5, [3, 4, 5, 6, 7]) # => [6, 7]
+reduce(*, [2; 3; 4]; init=-1)  		# => -24
+\end{lstlisting}
+
+\noindent |Reduce| takes two arguments — a function |f| and a collection |A|. The function |f| must take two arguments, and then |reduce| goes through the collection and one-element-at-a-time it updates |result = f(result, elt)|. The keyword argument |init| is the initial value to use in the reductions. For |+, *, max,| and |min| the |init| argument is optional. 
+
+\begin{lstlisting}[language=JuliaLocal, style=julia, mathescape=false]
+julia> a = reshape(Vector(1:16), (4,4))
+  4×4 Matrix{Int64}:
+   1  5   9  13
+   2  6  10  14
+   3  7  11  15
+   4  8  12  16
+julia> reduce(max, a, dims=2)
+  4×1 Matrix{Int64}:
+   13
+   14
+   15
+   16
+julia> reduce(max, a, dims=1)
+  1×4 Matrix{Int64}:
+   4  8  12  16
+\end{lstlisting}
+
+
+You may also consider using |foldl| or |foldr|, with fixed associativity direction: |foldr(op, itr; [init])| is like |reduce|, but with guaranteed \emph{right} associativity. Or |foldl(op, itr; [init])| is like |reduce|, but with guaranteed \emph{left} associativity, 
+|foldr(*, 1:5; init=1) # => 120| in this case also |foldr(*, 1:5; init=1) # => 120|. Such recursive functionals transform any binary operator into an $n$-ary operator and might implement many geometric programming patterns.
+
+\begin{remark}
+When redefining a method or adding new methods, realizing that these changes don't take effect \emph{immediately} is essential. 
+
+This is key to Julia's ability to statically infer and compile code to run fast without the usual JIT tricks and overhead. Indeed, any new method definition won't be immediately visible to the current runtime environment, including |Tasks| and |Threads| (and any previously defined |@generated| functions, an excellent \emph{metaprogramming} tool \cite{julia:metaprogramming}).
+\end{remark}
+
+
+\subsection{Collections}
+
+Julia |Base| package contains a variety of functions and macros suitable for performing scientific and numerical computing but is as broad as many general-purpose programming languages. Additional functionality is available from a growing collection of available packages. 
+
+The proper Julia collections are arrays, tuples, dictionaries, and sets. All (but sets) can be accessed by integer indices. User-defined collections must satisfy the |Iterable Collections| protocol.
+
+
+Beware, Julia indexes everything from |1| (like MATLAB and Fortran), not |0| (like most languages, including C, C++, Rust, and Java). Or else, iterating over strings is recommended (|map|, |for| loops, etc). The notation \$|(expr)| can be used for interpolation of a value inside a string, making complex printing very easy. Note that parenthesis |()| are \emph{mandatory} when |expr| is not a single token.
+%This is a significant reason why it is better to compile twice to get actual code performance.
+
+
+\subsubsection*{Arrays}
+
+Julia provides a complete collection of basic arithmetic and bitwise operators across all of its numeric primitive types and portable, efficient implementations of a comprehensive collection of standard mathematical functions.
+
+|AbstractArray{T, N}| is the supertype for N-dimensional arrays (or array-like types) with elements of type |T|; array and other types are subtypes of this.
+
+|AbstractVector{T}| is the supertype for one-dimensional arrays (or array-like types) with elements of type |T|. It is an alias for |AbstractArray{T,1}|. 
+
+|AbstractMatrix{T}| is the supertype for two-dimensional arrays (or array-like types) with elements of type |T|. It is an alias for |AbstractArray{T,2}|.
+
+A broadcast dot operator (|.|) applies any Julia operator or function to all the elements of a collection: |f.[a,b,c] # => [f(a),f(b),f(c)]|. 
+
+%To implement concurrency and multithreading is just a matter of following few style rules.
+
+
+
+\subsubsection*{Tuples}
+
+In Julia, |typeof(Tuple) # => DataType| is an \emph{immutable} collection of distinct values of the same or different datatypes separated by commas. 
+
+Tuples are a \emph{heterogeneous} collection of values. Tuples are more like arrays in Julia, except that arrays only take values from the same datatype. 
+The values in a tuple \emph{cannot be changed} because tuples are immutable. The whole  tuple value in a variable can only be \emph{replaced} by a new tuple value.
+
+The sequence of values stored in a tuple can be of any type, and integers index them. Although not needed, defining a tuple using \emph{parentheses} around the sequence of values is expected. This helps in understanding the Julia tuples more easily.
+
+\begin{coding}
+The |tuple| function returns a tuple from given objects: 
+\begin{lstlisting}[language=JuliaLocal, style=julia, mathescape=true]
+  tuple(1, 'b', pi) # => (1, 'b', $\pi$). 
+\end{lstlisting}
+\end{coding}
+
+\begin{coding}
+The function |ntuple(f::Function, n::Integer)| creates a tuple of length $n$, computing each element as |f(i)|, where |i| is the index of the element: 
+\begin{lstlisting}[language=JuliaLocal, style=julia, mathescape=false]
+  ntuple(i -> 2i, 4) # => (2, 4, 6, 8).
+\end{lstlisting}
+\end{coding}
+
+
+\subsubsection*{Dictionary}
+
+A simple look-up table is a helpful way of organizing many data types: given a single piece of information, such as a number, string, or symbol, called the \emph{key}, what is the corresponding data \emph{value}? For this purpose, Julia provides the |Dictionary| object, called |Dict| for short. It is an "associative collection" because it associates keys with values \cite{wiki:dict:sets}.
+
+\begin{definition}[Dict is the standard dictionary type] 
+Its implementation uses |hash| as the hashing function for the key and |isequal| to determine equality. Redefine these two functions for \emph{custom types} to override how they are stored in a hash table. Any |hash| function must compute an integer hash code such that |isequal(x,y)| implies |hash(x) == hash(y)|. 
+\end{definition}
+
+Dictionaries can be created by passing \emph{pair objects} constructed with |=>| to a |Dict| \emph{constructor}: |Dict("A"=>1, "B"=>2)|. This call will attempt to infer type information from the keys and values (i.e., this example creates a |Dict{String, Int64}|. To explicitly specify types use the syntax |Dict{KeyType,ValueType}(...)|.
+
+\begin{coding} Construction syntax directly using pairs |key => value|:
+\begin{lstlisting}[language=JuliaLocal, style=julia, mathescape=false]
+julia> Dict{String, Int32}(“A”=>1, "B"=>2)   #=
+Dict{String, Int32} with 2 entries:
+  "B" => 2
+  "A" => 1 			=#
+\end{lstlisting}
+\end{coding}
+
+\begin{coding} 
+Dictionaries may also be created using \emph{generators}.
+\begin{lstlisting}[language=JuliaLocal, style=julia, mathescape=false]
+julia> f = i->2i; Dict(i => f(i) for i=1:10)   #=
+Dict{Int64, Int64} with 10 entries:
+  5 => 10
+  4 => 8
+  ⋮ => ⋮   			=#
+\end{lstlisting}
+\end{coding}
+
+\begin{remark}
+Let us notice that the pairs in a |Dict| are not ordered according to the generation sequence. |OrderedDict| in |DataStructures| package is used for this purpose.
+\end{remark}
+
+Given a dictionary |D|, the syntax |D[x]| returns (in reading) the value associated to key |x| (if it exists) or throws an error, and |D[x] = y| stores (in writing) the key-value pair |x => y| in |D| ({replacing} any existing value for the key |x|). 
+
+Multiple arguments to |D[...]| are converted to |tuples|; for example, the syntax |D[x,y]| is equivalent to |D[(x,y)]|, i.e., it refers to the value keyed by the tuple |(x,y)|.
+
+
+\subsubsection*{Set}
+
+\begin{definition}
+Sets are \emph{mutable containers} that provide fast membership testing. |Set{T} <: AbstractSet{T}|.
+\end{definition}
+
+
+|Set| datatype enjoys efficient implementations of set operations such as |in|, |union|, and |intersect|. Elements in a |Set| are \emph{unique}, as determined by the elements' definition of |isequal|. The order of elements in a |Set| is an \emph{implementation detail} and cannot be relied on.
+
+\begin{coding} Some |Set| examples follow:
+\begin{lstlisting}[language=JuliaLocal, style=julia, mathescape=false]
+julia> s = Set("aaBca")		#=
+Set{Char} with 3 elements:
+  'a'
+  'c'
+  'B'		=#
+julia> push!(s, 'b')		#=
+Set{Char} with 4 elements:
+  'a'
+  'c'
+  'b'
+  'B'		=#
+julia> union([4 2 3 4 4], 1:3, 3.0)		#=
+4-element Vector{Float64}:
+  4.0
+  2.0
+  3.0
+  1.0		=#
+\end{lstlisting}
+Let note the type \emph{promotion} of all |Set| elements to the same type |Float64|.
+\end{coding}
+
+
+
+\section{Matrix computations}\label{sect:1-3}
+%-------------------------------------------------------------------------------
+
+
+A \emph{primitive type} is a concrete type whose data consists of plain old bits. Classic examples of primitive types are integers and floating-point values. 
+Julia's primitive \emph{numeric} types called \emph{bits types} (integers, both signed and unsigned, Booleans, and floats) are |Int8|, |UInt8|, |Int16|, |UInt16|, |Int32|, |UInt32|, |Int64|, |UInt64|, |Int128|, |UInt128|, |Bool|, |Float16|, |Float32|, |Float64|, depending on the number of bits. Additionally, full support for |Complex| and |Rational| numbers is built on top of these primitive numeric types.
+
+\subsubsection*{Vector and Matrix Types}
+
+In Julia, the |Array| type holds both "bits" values as well as "boxed" values. Boxed variables are \emph{heap-allocated}  and tracked by the garbage collector. 
+
+The distinction is whether the value itself is stored \emph{inline} (in the directly allocated memory of the array, i.e., without following pointers to it) or if the array's memory is simply a collection of pointers to objects allocated elsewhere. 
+Regarding performance, accessing values {inline} is a substantial advantage over following a \emph{pointer} to the actual values. 
+
+Julia provides a first-class array implementation without treating arrays in any special way. The array library is implemented almost entirely in Julia itself and derives its performance from the compiler, just like any other code written in Julia. 
+
+
+
+The \emph{type} |Vector{T} <: AbstractVector{T}| is a $1$-dimensional \emph{dense array} with elements of type |T|, often used to represent a mathematical vector. It is an alias for |Array{T,1}|. 
+
+Of course, the \emph{method} |Vector{T}(undef,n)| constructs an \emph{uninitialized} object |Array{T,1}| of length |n|.
+Analogously, we have the |Base.Matrix| as the alias |Matrix| in |Base| package:
+\begin{enumerate}
+\item
+the parameterized \emph{type} |Matrix{T} <: AbstractMatrix{T}|, is a two-dim\-ensional dense array with elements of type |T|, often used to represent a mathematical matrix, where stands for |Array{T,2}|;  
+\item
+the \emph{method} |Matrix{T}(undef,m,n)| which construct an \emph{uninitialized} |Array{T,2}| of size $m\times n$.
+\end{enumerate}
+
+
+\subsubsection*{Vectors in Julia}
+
+We see how to create and manipulate vectors in Julia and how Julia notation differs from mathematical notation.\\
+To create the 3-vector
+$x=(8,-4,3.5)= \vet{8\\-4\\3.5}$, use: 
+|x = [8,-4,3.5]|,\\ but |x = [8;-4;3.5]| also works. Be careful for similar-looking expressions, because 
+|(8,-4,3.5)|, |[8,-4,3.5]| and |[8 -4 3.5]| are not equivalent in Julia. They are a tuple, a column matrix, and a row matrix, respectively.
+
+To get an integer range from $i$ to $j$ (for $i\leq j$), let’s use a colon iterator |i:j|. The assignment |x = collect(1:10)| returns the array |x|. To specify an increment size, add an argument. 
+\begin{lstlisting}[language=JuliaLocal, style=julia, mathescape=false]
+x = collect(1:0.1:10)' #= > 
+[1.0 1.1 1.2 1.3 1.4 … 9.4 9.5 9.6 9.7 9.8 9.9 10.0]. 	=#
+\end{lstlisting}
+The range from |1| to |10| with |0.1| step size is given above. 
+Note the apex for transposition, which is needed for typographical reasons here.
+\begin{enumerate} 
+\item indexes run from |1| to |n = length(x)|, and $x_2$ is |x[2]|
+
+\item you can also \emph{set an element}, e.g., |x[3] = 10.5|;
+
+\item use a range to select more than one element;
+  |x[2:3]| selects the second and third elements ;
+
+\item |x[end]| selects the last element;
+
+\item to select the even significant elements of |x| use 
+\begin{lstlisting}[language=JuliaLocal, style=julia, mathescape=true]
+x[1:2:end]' # => [1.0 1.2 1.4 … 9.6 9.8 10.0]. 
+\end{lstlisting}
+
+
+\end{enumerate}
+
+To form a |stacked| |Vector| made by vectors |a=[1;2]| and |b=[3;4;5]| use |[a...,b...]| or |[a;b]|. 
+
+The expression |[a,b]| would return a |Vector{Vector{Int64}}| value with 2 elements of type |Vector{Int64}|.  Stacked vectors can be used as list of lists. To access an element in |w = [a,b]| use |w[2][2] # => 4|
+
+Many more vector operations are defined in |Base| package. In Julia, a scalar and a vector can be added using the dot (broadcast) operator. The scalar is added to each entry of the vector: |[2,4,8] .+ 3 # => [5,7,11]|. 
+
+Scalar-vector multiplication uses |*|  
+because the operator is linear: 
+
+|[2,4,8] * 3 # => [6,12,24]|. Both expressions are commutative.
+
+In Julia syntax, like in MATLAB and differently from Python: |+| and |*| operate on congruent arrays, otherwise promote the arguments to same type.
+
+
+\subsubsection*{Matrices in Julia}
+
+Julia provides a very simple notation to create matrices. A matrix can be created using the following notation: |A = [1 2 3; 4 5 6]|. Spaces separate entries in a row and semicolons separate rows. We can also get the size of a $m\times n$ matrix using |size(A) = (m,n)|. Block matrices are easily generated by the same notation, as long as matrix or vector blocks of consistent size are used.
+
+In addition to (and as part of) its support for multi-dimensional arrays, Julia provides native implementations of many common and useful linear algebra operations which can be loaded with using |LinearAlgebra|. Basic operations, such as |tr|, |det|, and |inv| are all supported in |LinearAlgebra| package. As well as other useful operations \cite{julia:linearalgebra}, such as finding |eigenvalues| or |eigenvectors|:
+\begin{lstlisting}[language=JuliaLocal, style=julia, mathescape=true]
+A = [-4. -17.; 2. 2.]	#=
+2×2 Matrix{Float64}:
+ -4.0  -17.0
+  2.0    2.0	=#
+eigvals(A)	#=
+2-element Vector{ComplexF64}:
+ -1.0 - 5.0im
+ -1.0 + 5.0im	=#
+eigvecs(A)	#=
+2×2 Matrix{ComplexF64}:
+  0.945905-0.0im        0.945905+0.0im
+ -0.166924+0.278207im  -0.166924-0.278207im	=#
+\end{lstlisting}
+
+
+\section{Linear algebra and sparse arrays}\label{sect:1-4}
+%-------------------------------------------------------------------------------
+
+In addition to its support for multi-dimensional arrays, Julia provides native implementations of many common and useful linear algebra operations, which can be loaded by |using| the package. A simple example is given. Note the promotion of values in matrix |A|:
+\begin{lstlisting}[language=JuliaLocal, style=julia]
+using LinearAlgebra
+A = [3. 9 8; 5 9 1; 4 8 2] 	#= 
+3x3 Matrix{Int64}:
+ 3.0  9.0  8.0
+ 5.0  9.0  1.0
+ 4.0  8.0  2.0	=#
+A'  	#= 
+3x3 adjoint(::Matrix{Int64}) with eltype Int64:
+ 3.0  5.0  4.0
+ 9.0  9.0  8.0
+ 8.0  1.0  2.0	=#
+\end{lstlisting}
+Basic operations, such as |tr|, |det|, |rank|, and |inv| are  supported by the package 
+|LinearAlgebra|:
+\begin{lstlisting}[language=JuliaLocal, style=julia]
+tr(A)   # => 14.0
+det(A)  # => 7.999999999999996
+rank(A) # => 3
+inv(A)   		#=
+3x3 Matrix{Float64}:
+  1.25   5.75  -7.875
+ -0.75  -3.25   4.625
+  0.5    1.5   -2.25 	=#
+\end{lstlisting}
+
+The inner product $a^\top b$ is written as |LinearAlgebra.dot(a,b)|.
+|Vector|s |a| and |b| must have the same |length|. 
+
+The norm $||x||= \sqrt{\ }(x_1^2 + x_2^2 + \cdots +x_n^2)$ is written |LinearAlgebra.norm(x)|.
+
+The distance of two vectors ${dist(x, y)$ = ||y - x||} is 
+|LinearAlgebra.norm(y-x)|. Of course, the qualification |LinearAlgebra.| is not explicitly needed, after declaration, for exported package symbols.
+The function Root Mean Square: 
+$
+{rms}(x)= \sqrt{\ } ({(x_1^2 + \cdots + x_n^2)/n)}} = ||x||/\sqrt{n}
+$
+can be expressed as:
+\begin{lstlisting}[language=JuliaLocal, style=julia]
+rms(x) = norm(x)/sqrt(length(x)) 	#=  function definition
+rms (generic function with 1 method)	=#
+x 	#=
+1x2 Array{Float64,2}:
+ 0.543101  0.335506		=#
+rms(x)	                            #=	function application
+0.45139931240367087		=#
+\end{lstlisting}
+
+
+
+From Rosetta Code \cite{Rootmeansquare:23} we report several ways of implementing/using the $rms(x)$ function.
+In fact, there are a variety of ways to do this via built-in functions in Julia, given an array |A = rand(10)| of values. 
+
+The formula can be implemented directly using the comma broadcast:
+\begin{lstlisting}[language=JuliaLocal, style=julia]
+sqrt(sum(A.^2)/length(A))
+\end{lstlisting}
+or shorter by |using Statistics| package: 
+|sqrt(mean(A.^2))|. The implicit allocation of a new array by |(A.^2)|
+can be avoided by using |sum| as a higher-order function:
+|sqrt(sum(x -> x*x, A)/length(A))|. 
+Of course, one can also use an explicit loop for near--C performance:
+\begin{lstlisting}[language=JuliaLocal, style=julia]
+function rms(A)
+   s = 0.0
+   for a in A
+      s += a*a
+   end
+   return sqrt(s/length(A))
+end
+\end{lstlisting}
+
+
+Potentially even better is to use the built-in |norm| function, which computes the square root of the sum of the squares of the entries of |A| in a way that avoids the possibility of spurious floating-point overflow (if the entries of |A| are so large that they may overflow if squared):
+|norm(A)/sqrt(length(A))|.
+
+To solve a linear system, $Ax = b$ by $|x = LinearAlgebra.inv(A) * b|$ is not recommended for big |A| matrices. A better approach would be to compute |x = A \ b|, which is equivalent to 
+\begin{lstlisting}[language=JuliaLocal, style=julia]
+  qr(A, Val(true)) \ b
+\end{lstlisting}
+
+This expression uses a pivoted $QR$ factorization to solve the least-squares problem, which is much more accurate than the normal-equations approach for poorly conditioned |A|.
+
+In addition, Julia provides many factorizations which can be used to speed up problems such as linear solve or matrix exponentiation by pre-factorizing a matrix into a form more amenable (for performance or memory reasons) to the problem. In |factorize(A)| documentation \cite{julia:factorize} we find:
+
+Compute a suitable factorization of |A|, based upon the type of the input matrix. |factorize| checks |A| to see if it is |symmetric/triangular/|etc. if |A| is passed as a generic matrix. |factorize| checks every element of |A| to verify/rule out each property. It will short-circuit as soon as it can rule out symmetry/triangular structure. The return value can be reused for efficient solving of multiple systems. For example: 
+\begin{lstlisting}[language=JuliaLocal, style=julia]
+  A = factorize(A);  x = A \ b. 
+\end{lstlisting}
+
+Furthermore, 
+\begin{lstlisting}[language=JuliaLocal, style=julia]
+  Y = A \ C.  
+\end{lstlisting}
+
+Technically, two matrices cannot be divided, but if you remember the basic concept of division of two fractions, then second fraction
+ remains the same but the first fraction gets inverted and multiplied to the former fraction for performing the division. Example with rational numbers:  
+\begin{lstlisting}[language=JuliaLocal, style=julia]
+  (4//3 \ 5//2 == 3//4 * 5//2 == 15//8) == true. 
+\end{lstlisting}
+
+
+\subsubsection*{Sparse Arrays}
+
+In numerical analysis and scientific computing, a sparse matrix is a matrix with many zero elements. In other words, the sparse array is an array where many elements have a recurring value, typically zero. It is, therefore, possible to use a better storage model, storing only the non-zero values. There are several storage schemes for numeric sparse vectors and sparse matrices.
+
+The most straightforward scheme is called \emph{storage by triples} |(i,j,v)|, where some suitable data structure supplies the row index, the column index, and the corresponding value of every non-zero. In Julia, this is implemented in the |SparseArray| package as input method |sparse()| with input parameters |(I, J, V)|: two arrays of integer indices and one array of bits type for values.
+
+Typical implementation schemes for sparse matrices are the CSR (compressed sparse row) and CSC (compressed sparse column). Julia uses, by now, only the CSC scheme.
+Julia supports sparse vectors and sparse matrices in the |SparseArrays| |stdlib| module. Sparse arrays contain enough zeros that storing them in a special data structure leads to savings in space and execution time compared to dense arrays.
+
+As said above, n Julia, sparse matrices are stored in the \emph{Compressed Sparse Column} (CSC) format. Julia sparse matrices have the type |SparseMatrixCSC{Tv, Ti}|, where |Tv| is the type of the stored values, and |Ti| is the integer type for storing column pointers and row indices. 
+
+The internal representation of type |SparseMatrixCSC| is as follows:
+\footnotesize
+\begin{lstlisting}[language=JuliaLocal, style=julia]
+struct SparseMatrixCSC{Tv,Ti<:Integer} <: AbstractSparseMatrixCSC{Tv,Ti}
+    m::Int              # Number of rows
+    n::Int              # Number of columns
+    colptr::Vector{Ti}  # Column j in colptr[j]:(colptr[j+1]-1)
+    rowval::Vector{Ti}  # Row indices of stored values
+    nzval::Vector{Tv}   # Stored values, typically nonzeros
+end
+\end{lstlisting}\normalsize
+
+
+In some applications, storing explicit zeros in a |SparseMatrixCSC| is convenient.
+The |nnz| function returns the number of elements explicitly stored in the sparse data structure, including non-structural zeros. To count the exact number of numerical nonzeros, use |zcount(!iszero, x)|, which inspects every stored element of a sparse matrix. |dropzeros|, and the in-place |dropzeros!|, can be used to remove stored zeros from the sparse matrix.
+
+Sparse vectors are stored in a close analog to a compressed sparse column format for sparse matrices. In Julia, sparse vectors have the type |SparseVector{Tv, Ti|} where |Tv| is the type of the stored values and |Ti| is the integer type for the indices. The internal representation is as follows:
+\footnotesize
+\begin{lstlisting}[language=JuliaLocal, style=julia]
+struct SparseVector{Tv,Ti<:Integer} <: AbstractSparseVector{Tv,Ti}
+    n::Int              # Length of the sparse vector
+    nzind::Vector{Ti}   # Indices of stored values
+    nzval::Vector{Tv}   # Stored values, typically nonzeros
+end
+\end{lstlisting}\normalsize
+
+The |sparse| function is often handy for constructing sparse arrays. For example, to construct a sparse matrix, we can input a vector |I| of row indices, a vector |J| of column indices, and a vector |V| of stored values (this is also known as the |COO| (coordinates) format). |sparse(I,J,V)| then returns a sparse matrix |S| such that |S[I[k], J[k]] = V[k]|. The equivalent sparse vector constructor is |sparsevec|, which takes the (row) index vector |I| and the vector |V| with the stored values and constructs a sparse vector |R| such that |R[I[k]] = V[k]|.
+
+The inverse of the |sparse and sparsevec| functions is |findnz|, which retrieves the inputs used to create the sparse array. |findall(!iszero, x)| returns the cartesian indices of non-zero entries in |x| (including stored entries equal to zero).
+
+Details and examples can be found in the Sparse Vectors and Matrices section of the standard library reference \cite{julia:SparseArrays}.
+
+
+
+\section{Parallel and distributed computing}\label{sect:1-5}
+%-------------------------------------------------------------------------------
+
+
+Julia makes easier the implementation of complex algorithms by providing native support for concurrency and fast computation by design. Implementing concurrency and multithreading of computations in Julia is mainly a matter of following some style rules and inserting a few macros in the program code.
+
+Parallelism at all levels, from instruction execution to distributed computation, is mostly implicit.
+Task-based control flows for parallel execution are natively provided, like booth cooperative multitasking and thread-based preemptive multitasking. 
+
+Of course, Julia's multithreading model offers the ability to schedule tasks simultaneously on more than one thread or CPU core, sharing memory.
+
+\subsection{Parallel Programming}
+\label{subsec:2:style}
+
+There are three steps to program parallelization. First, you identify a decomposition into tasks to be computed concurrently.
+
+If the number of tasks is too large compared to the number of threads, the overhead of scheduling them could slow down the computation. No free lunches.
+The third step is to figure out how to map tasks to threads \cite{Aubanel:2016}. 
+
+According to Julia manual, the language supports four major classes of concurrent and parallel programming \cite{julia:ParallelComputing}, also known as models of parallel computing: (a) asynchronous "tasks", or coroutines; (b) multi-threading; (c) distributed computing; (d) GPU computing.
+ 
+
+\subsubsection*{Asynchronous tasks (coroutines)}
+Coroutines are program components that allow execution to be suspended and resumed, generalizing subroutines (computation with effects as opposed to functions returning a value) for \emph{cooperative} multitasking. This one is a style of  multitasking in which the operating system never executes a context switch at system level from a running process to another process. Conversely, tasks voluntarily yield control periodically or when idle or logically blocked.
+
+Tasks are a control flow feature that allows computations to be suspended and resumed in a flexible manner.  Julia tasks allow suspending and resuming computations for I/O, event handling, producer-consumer processes, and similar patterns,  in order to run multiple applications concurrently.
+
+Objects of type |Task| can be created by the macro |@task x|, where |x| is any expression, usually |begin; ...; end|. The |Task| object can be assigned to a variable: |t = @task x|. After creation, the task must be started; it is started by calling |schedule(t)|, where it is added to a queue of tasks waiting resources for execution. It is common to create a task and |schedule| it immediately. The macro |@async| is provided for that purpose: |@async x| is equivalent to |schedule(@task x)|.
+
+
+The macro |@async| wrap an expression in a |Task| and add it to the local machine's scheduler queue.
+Values can be interpolated into |@async|\ via \texttt{\$}, which copies the \emph{value} directly into the constructed underlying \emph{closure}. This allows you to insert the value of a variable, \emph{isolating} the asynchronous code from \emph{changes} to the variable's value in the current task.
+
+
+It is strongly encouraged to favor |Threads.@spawn| over |@async| always.
+This is because a use of |@async| disables the migration of the parent task across worker threads in the current implementation of Julia. Thus, seemingly innocent use of |@async| in a library function can have a large impact on the performance of very different parts of user applications \cite{julia:parallel:task}.
+
+
+
+The macro |@sync| waits until all lexically-enclosed uses of |@async|, |@spawn|, |@spawnat| and |@distributed| are complete. In practice it works like a parallel barrier in other languages.
+One of the simplest examples is using |@sync/@async| for non-blocking I/O.  For example, you want to download 10 web pages. If you do it in a simple blocking loop, most of the time Julia does nothing but waits for network: 
+\begin{lstlisting}[language=JuliaLocal, style=julia]
+urls = ["https://discourse.julialang.org/" for i=1:10]
+results = Vector(10)
+@time for (i, url) in enumerate(urls)
+    results[i] = Requests.get(url)
+end
+\end{lstlisting}
+But network I/O in Julia is non-blocking, so you can use task machinery to accelerate:
+\begin{lstlisting}[language=JuliaLocal, style=julia]
+@sync for (i, url) in enumerate(urls)
+    @async results[i] = Requests.get(url)
+end
+\end{lstlisting}
+
+
+
+In the following example each |println| request is run in a separate task using |Threads.@spawn| and then wait for the result of all of them because of |@sync|. 
+When one of these tasks encounters I/O operation, it gives away control so that other tasks could use CPU. 
+When I/O operations are finished, the task is resumed via |@sync|.
+
+\begin{lstlisting}[language=JuliaLocal, style=julia, mathescape=false]
+julia> Threads.nthreads() # => 4
+\end{lstlisting}
+\begin{lstlisting}[language=JuliaLocal, style=julia, mathescape=false]
+julia> @sync begin
+    Threads.@spawn 
+      println("Thread-id $(Threads.threadid()), task 1")
+    Threads.@spawn 
+      println("Thread-id $(Threads.threadid()), task 2")
+end;
+# =>
+Thread-id 3, task 1
+Thread-id 1, task 2
+\end{lstlisting}
+
+
+
+Tasks communicate via |Channels|. While strictly not parallel computing, Julia lets you schedule |Task|s on several threads. When a piece of computing work (in practice, executing a particular function) is designated as a |Task|, it becomes possible to interrupt it by \emph{switching} to another Task. The original |Task| can later be resumed, at which point it will pick up right where it left off. 
+
+At first, this may seem similar to a function call. However there are two key differences. First, switching tasks does not use any space, so any number of task switches can occur without consuming the call stack. Second, switching among tasks can occur in any order, unlike function calls, where the called function must finish executing before control returns to the calling function \cite{julia:parallel:data-parallelism}.
+
+Julia tasks are not threads. They are coroutines which can be scheduled asynchronously on a single thread or multiplexed onto a thread pool. All I/O in Julia is non-blocking and yields to the scheduler, so it is more of a cooperative situation.
+
+
+\subsubsection*{Data parallelism}
+
+For data parallelism, a higher-level description is appropriate. It also helps you write more reusable code; e.g., using the same code for single-threaded, multi-threaded, and distributed computing
+
+In particular, it is important to use libraries that help you describe \emph{what} to compute rather than \emph{how} to compute. Practically, it means to use generalized form of |map| and |reduce| operations and learn how to express your computation in terms of them. Luckily, if you already know how to write \emph{iterator comprehensions}, there is not much more to learn for accessing a large class of data parallel computations. \cite{julia:parallel:data-parallelism}. 
+
+Like how multi-threading is setup, you need to setup multiple worker processes to get speedup. You can start julia with |-p auto| and with |-t auto| to maximize the number of processes and tasks \emph{sharing memory}.
+
+|Mapping| is probably the most frequently used function in data parallelism. 
+In sequential code we have: |map(f, vect)| which results in 
+
+|[f(vect[i] for i in vect]|; but Julia's standard library 
+
+|Distributed.jl| contains a function |pmap| as a distributed version of |map|, so that you can write using |Distributed; pmap(f,vect)|. Also you can use |Folds| library and write: |using Folds; Folds.map(f,vect)| with good speedups on large collections.
+\begin{lstlisting}[language=JuliaLocal, style=julia, mathescape=false]
+  pmap(f, [::AbstractWorkerPool], c...; distributed=true, [...])
+\end{lstlisting}
+
+
+Transform collection |c| by applying |f| to each element using available workers and tasks. For multiple collection arguments, apply |f| elementwise. Note that |f| must be made available to all worker processes; see Code Availability and Loading Packages for details.
+If a worker pool is not specified, all available workers, i.e., the default worker pool is used.
+By default, |pmap| distributes the computation over all specified workers. To use only the local process and distribute over tasks, specify |distributed=false|.
+
+
+Julia's \emph{iterator comprehension} syntax is a powerful tool for composing mapping, filtering, and flattening. Recall that sequential mapping can be written as an array or iterator comprehension:
+\begin{lstlisting}[language=JuliaLocal, style=julia, mathescape=false]
+  b1 = map(x -> x + 1, 1:3)         # => [2,3,4]
+  b2 = [x + 1 for x in 1:3]         # array comprehension
+  b3 = collect(x + 1 for x in 1:3)  # iterator comprehension
+  @assert b1 == b2 == b3            # => true
+\end{lstlisting}	
+
+The \emph{iterator comprehension} can be executed with threads via 
+
+|Folds.collect| \cite{julia:parallel:data-parallelism}:
+\begin{lstlisting}[language=JuliaLocal, style=julia, mathescape=false]
+b4 = Folds.collect(x + 1 for x in 1:3)
+@assert b1 == b4                    # => true
+\end{lstlisting}
+
+Functions such as |sum|, |prod|, |maximum|, and |all| are the examples of \emph{reduction} (aka |fold|) that can be parallelized. Using |Folds.jl|, a sum of an iterator created by the comprehension syntax can easily be parallelized by
+\begin{lstlisting}[language=JuliaLocal, style=julia, mathescape=false]
+  d = Folds.sum(x + 1 for x in 1:3).
+\end{lstlisting}
+
+
+\subsubsection*{Multi-threading}
+
+Multithreading enables programmers to speed up their programs by taking advantage of concurrent execution of multiple threads, with each thread assigned to a different CPU core. On the surface, this type of programming may seem easy, but in practice it can be difficult to ensure correctness and to obtain signficant speedup. 
+
+Julia supports two different models for multithreaded programming: loop parallelism with the |@threads| macro and task parallelism with the 
+
+  |Threads.@spawn| macro, which is low-level basic construct.
+Julia's multi-threading provides the ability to schedule Tasks simultaneously on more than one thread or CPU core, \emph{sharing memory}. 
+This is usually the easiest way to get parallelism on one's PC or on a single large multi-core server. Julia's multi-threading is composable. When one multi-threaded function calls another multi-threaded function, Julia will schedule all the threads globally on available resources.
+
+Although Julia's threads can communicate through shared memory, it is notoriously difficult to write correct and data-race free multi-threaded code. Julia's Channels are thread-safe and may be used to communicate safely. The best way to ensure data-race freedom is to acquire a lock around any access to data that can be observed from multiple threads. 
+
+By default, Julia starts up with a single thread of execution. 
+
+  |Threads.nthreads()| returns the number of thrads, setted by parameter -t when starting Julia, for example |-t auto| or |--threads n|. The function |Threads.threadid()| returns the integer |id| of the current thread.
+
+
+Julia supports parallel loops using the {Threads.@threads} macro. This macro is affixed in front of a for loop to indicate to Julia that the loop is a multi-threaded region.  Julia supports accessing and modifying values atomically, that is, in a thread-safe way to avoid race conditions.
+
+When a program's threads are busy with many tasks to run, tasks may experience delays which may negatively affect the responsiveness and interactivity of the program. To address this, you can specify that a task is |interactive|.
+
+External libraries, such as those called via |ccall|, pose a problem for Julia's task-based I/O mechanism. If a C library performs a blocking operation, that prevents the Julia scheduler from executing any other tasks until the call returns.
+
+There are a few specific limitations and warnings to be aware of when using threads in Julia \cite{julia:multithreading}.
+
+
+
+\subsection{Multiprocessing and Distributed Computing}
+\label{subsec:2:style}
+
+Most modern computers possess more than one CPU, and several computers can be combined together in a cluster. Harnessing the power of these multiple CPUs allows many computations to be completed more quickly.
+
+There are two major factors that influence performance: the speed of the CPUs themselves, and the speed of their access to memory. In a cluster, it's fairly obvious that a given CPU will have fastest access to the RAM within the same computer (node). Perhaps more surprisingly, similar issues are relevant on a typical multicore laptop, due to differences in the speed of main memory and the cache \cite{julia:DistributedComputing}.
+
+
+Distributed computing runs multiple Julia processes with separate memory spaces. These can be on the same computer or multiple computers. The |Distributed| standard library provides the capability for remote execution of a Julia function. With this basic building block, it is possible to build many different kinds of distributed computing abstractions. Packages like |DistributedArrays.j| are an example of such an abstraction. On the other hand, packages like |MPI.jl| and |Elemental.jl| provide access to the existing |MPI| ecosystem of libraries.
+
+An implementation of distributed memory parallel computing is provided by module |Distributed| as part of the standard library shipped with Julia.
+
+Consequently, a good multiprocessing environment should allow control over the "ownership" of a chunk of memory by a particular CPU. Julia provides a multiprocessing environment based on message passing to allow programs to run on multiple processes in separate memory domains at once \cite{julia:DistributedComputing}.
+
+
+
+Distributed programming in Julia is built on two primitives: \emph{remote references} and \emph{remote calls}. A remote reference is an object that can be used from any process to refer to an object stored on a particular process. Remote references come in two flavors: |Future| and |RemoteChannel|.
+A remote call is a request by one process to call a certain function on certain arguments on another (possibly the same) process.
+
+Much easier is parallel programming in Julia by making use of
+
+|DistributedArrays.jl|. This great computational abstraction uses the stdlib |Distributed| to implement a |Global Array| interface. 
+In fact, large computations are often organized around large arrays of data. In these cases, a particularly natural way to obtain parallelism is to distribute arrays among several processes. 
+
+This combines the memory resources of multiple machines, allowing use of arrays too large to fit on one machine. Each process can read and write to the part of the array it owns and has read-only access to the parts it doesn't own. This provides a ready answer to the question of how a program should be divided among machines.
+
+A |DArray| is distributed across a \emph{set of workers}. Each worker can read and write from its local portion of the array and each worker has read-only access to the portions of the array held by other workers.
+Julia distributed arrays are implemented by the |DArray| type. A |DArray| has an element type and dimensions just like an |Array|. A DArray can also use arbitrary array-like types to represent the local chunks that store actual data. The data in a |DArray| is distributed by dividing the index space into some \emph{number of blocks} in each dimension.
+
+By using |DistributedArrays|, common kinds of arrays can be constructed with distributed data structures. E.g., |d = DistributedArrays;| 
+|d.zeros|, |d.ones|, |d.rand|, |d.randn|, |d.fill|. The constructor that buils a distributed array is:
+
+\begin{lstlisting}[language=JuliaLocal, style=julia, mathescape=false]
+  DArray(init, dims, [procs, dist])
+\end{lstlisting}
+
+
+\begin{enumerate}
+\item 
+  the parameter |init| is a \emph{function} that accepts a tuple of index ranges. This
+  function should allocate a local chunk of the distributed array and
+  initialize it for the specified indices.
+\item 
+  |dims| is the overall size of the distributed array.
+\item 
+  |procs| optionally specifies a vector of process |ID|s to use. If unspecified,
+  the array is distributed over \emph{all} worker processes only. Typically, when running in distributed mode, i.e., |nprocs() > 1|, this would mean that no chunk of the distributed array exists on the process hosting the interactive julia prompt.
+\item 
+  |dist| is an integer vector specifying how many chunks the distributed array should be divided into in each dimension.
+\end{enumerate}
+
+
+
+For example, the |dfill| function that creates a distributed array and fills it with a value |v| is implemented as:
+\begin{lstlisting}[language=JuliaLocal, style=julia, mathescape=false]
+  dfill(v, args...) = DArray(I->fill(v, map(length,I)), args...)
+\end{lstlisting}
+
+
+
+
+\subsection{Programming the GPU}
+\label{subsec:2:style}
+
+While \emph{kernel} functions for GPU are usually written in a C/C++ dialect, the Julia GPU compiler provides the ability to run Julia code \emph{natively} on GPUs. There is also a rich ecosystem of Julia packages that target GPUs. The |JuliaGPU.org| website provides a list of capabilities, supported GPUs, related packages and documentation.
+Julia has several packages for programming GPUs, each of which support various programming models. 
+
+|JuliaGPU| is a Github organization created to unify the many packages for programming GPUs in Julia, in order to perform high-performance GPU programming in a high-level language. 
+
+JuliaGPU is vendor-neutral, and some content is available for all supported GPU back-ends. Of course JuliaGPU embraces also vendor-specific tools and APIs. At 2021 JuliaCon workshop, they demonstrated the use of three major GPU programming packages: |CUDA.jl| for Nvidia GPUs, |AMDGPU.jl| for AMD GPUs, and |oneAPI.jl| for Intel GPUs. 
+The various approaches for programming GPUs with these packages, range from generic array operations that focus on ease-of-use, to hardware-specific kernels for when performance matters.
+
+GPU functions (\emph{kernels}) are inherently parallel, so writing GPU kernels is at least as difficult as writing low-level parallel CPU code, but the difference in hardware adds quite a bit of complexity. Most algorithms will need arrays to manage all their data, which calls for a good GPU array library.
+
+
+\subsubsection*{GPUArrays.jl}
+
+|GPUArrays.jl| is the counterpart of Julia's |AbstractArray| interface, but for GPU types. It is not intended for the end-user, which should only use one of the packages that builds on GPUArrays.jl, such as |CUDA.jl| (Nvidia), |oneAPI.jl| (Intel), |AMDGPU.jl| (AMD), or |Metal.jl| (Apple), for different hardware support.
+
+
+|GPUArrays| is an \emph{abstract interface} for GPU computations. Think of it as the |AbstractArray| interface in Julia |Base| but for GPUs. It allows you to write generic julia code for all GPU platforms and implements common algorithms for the GPU. Like Julia |Base|, this includes |BLAS| wrapper, |FFT|s, |maps|, |broadcasts| and m|apreduces|. So when you inherit from |GPUArrays| and overload the interface correctly, you will get a lot of functionality for free.
+
+It is important to remark that 
+Julia allows you to write both GPU \emph{kernels} and \emph{surrounding code} in Julia itself, while running on most GPU hardware. 
+
+In complex analysis, the \emph{Julia set} \cite{juliaset} of a holomorphic function consists of all those points whose behavior after repeated iterations of the function is chaotic, in the sense that it can change drastically following a small initial perturbation.
+As one can see in \cite{JuliaGPU}, the computational example of \emph{Julia set} with Julia (!) strongly motivates why one should move big array computations to the GPU. For large arrays one gets a solid 60-80x speed-up by moving the calculation to the GPU. Getting this speed-up was as simple as converting the Julia |array| to a |GPUArray|.
+
+
+\subsubsection*{CUDA and OpenCL}
+
+There is a model gap between |CUDA| and |OpenCL| parallel programming, which are the dominant frameworks used to write low-level GPU code. OpenCL is a heterogeneous programming platform that allows applications to run across multiple platforms, including CPUs, GPUs, and other specialized hardware. Conversely, CUDA is a software framework specifically designed to run computations on Nvidia's GPUs.
+
+While |CUDA.jl| only supports Nvidia hardware, |OpenCL.jl| supports all hardware but “is a bit rough around the edges”. One needs to decide what to use, and will get pretty much stuck with that decision \cite{JuliaGPU}.
+
+One might think that the GPU performance suffers from being written in a dynamic language like Julia, but Julia's GPU performance should be pretty much on par with the raw performance of CUDA or OpenCL. Tim Besard, the creator of Julia GPU compiler, did a great job at integrating the LLVM Nvidia compilation pipeline to achieve the same or sometimes even better performance as CUDA C code \cite{JuliaGPU}. 
+
+
+\subsubsection*{CUDA programming in Julia}
+
+The |CUDA.jl| package is the main entry point for programming NVIDIA GPUs in Julia. The package makes it possible to do so at various abstraction levels, from easy-to-use arrays down to hand-written kernels using low-level CUDA APIs. The following is synthesized from Reference \cite{JuliaGPU:gentle} that you are invited to read.
+
+Julia has first-class support for GPU programming: you can use high-level abstractions or obtain fine-grained control, all without ever leaving your favorite programming language. The purpose of this tutorial is to help Julia users take their first step into GPU computing. In this tutorial, you'll compare CPU and GPU implementations of a simple calculation, and learn about a few of the factors that influence the performance you obtain.
+
+We can perform GPU computations at a high level using the |CuArray| type, without explicitly writing a kernel function:
+\begin{lstlisting}[language=JuliaLocal, style=julia, mathescape=false]
+using CUDA
+x_d = CUDA.fill(1.0f0, N) # vector stored on GPU filled of 1.0 (Float32)
+y_d = CUDA.fill(2.0f0, N) # vector stored on GPU filled of 2.0
+\end{lstlisting}
+Here the |d| means |device|, in contrast with |host|. Now let's do the increment:
+\begin{lstlisting}[language=JuliaLocal, style=julia, mathescape=false]
+y_d .+= x_d
+@test all(Array(y_d) .== 3.0f0) # => Test Passed
+\end{lstlisting}
+
+
+The statement |Array(y_d)| moves the data in |y_d| back to the host for testing. If we want to benchmark this, let's put it in a function:
+\begin{lstlisting}[language=JuliaLocal, style=julia, mathescape=false]
+function add_broadcast!(y, x)
+    CUDA.@sync y .+= x
+    return
+end
+
+add_broadcast! # => (generic function with 1 method)
+@btime add_broadcast!($y_d, $x_d) # => 67.047 μs 
+  (84 allocations: 2.66 KiB)
+\end{lstlisting}
+
+The most interesting part of this is the call to |CUDA.@sync|. The CPU can assign jobs to the GPU and then doing other stuff (such as assigning more jobs to the GPU) while the GPU completes its tasks. Wrapping the execution in a |CUDA.@sync| block will make the CPU block until the queued GPU tasks are done, similar to how |Base.@sync| waits for distributed CPU tasks. 
+Without such synchronization, you'd be measuring the time takes to launch the computation, not the time to perform the computation. But most of the time you don't need to synchronize explicitly: many operations, like copying memory from the GPU to the CPU, implicitly synchronize execution.
+
+For that particular hardware used, the GPU computation was significantly faster than the single-threaded CPU computation, and the use of multiple CPU threads makes the CPU implementation competitive. 
+
+The high-level functionality of CUDA often means that you don't need to worry about writing kernels at a low level. However, there are many cases where computations can be optimized using low-level manipulations \cite{JuliaGPU:gentle}. 
+
+\section{Modules and packages}\label{sect:1-6}
+%-------------------------------------------------------------------------------
+
+A Julia |module| is a named sequence of |julia| code, typically contained in a file with the the same name: 
+\begin{lstlisting}[language=JuliaLocal, style=julia]
+  module NameOfModule; <some code>; end # => Main.NameOfModule 
+\end{lstlisting}
+
+A module start with the reserved word |module| followed by \emph{<NameOfModule>} and is terminated by |end| word.
+Modules in Julia help organize code into coherent units and have the following features.
+
+Modules are \emph{separate namespaces}, each introducing a new \emph{global scope}. This is useful, because it allows the same name to be used for different functions or global variables without conflict, as long as they are in separate modules.
+
+Modules have facilities for detailed |namespace| \emph{management}: each defines a set of names it |export|s, and can |import| names from other modules with |using| and |import|.
+Modules can be precompiled for faster loading, and may contain code for \emph{runtime initialization}. Typically, in larger Julia packages you will see module code organized into program files \cite{julia:modules}. One can have multiple files per module, and multiple modules per file. include behaves as if the contents of the source file were evaluated in the global scope of the including module.
+
+The recommended style is not to indent the body of the module, since that would typically lead to whole files being indented. Also, it is common to use |UpperCamelCase| for module names (just like types),
+
+
+A \emph{software library} is a suite of data and programming code that is used to develop software programs and applications. In Julia a library is called \emph{package}.
+A Julia package contains modules, tests, and documentation. It extends core Julia functionality. You can share your code with the community by developing a package. You can create a Julia package using as support the built-in package manager |PkgDev.jl| or the package |PkgTemplates.jl|. The second is easier for a novice.
+
+A good tutorial about how a user may develop a package is \cite{julia:package:develop}. The reader is warmly solicited to see, and try the suggested step-by-step development.
+
+The Julia ecosystem contains over 9,000 packages that are registered in the |General registry|, which means that finding the right package can be a challenge. Fortunately, there are services that can help navigate the ecosystem, including:
+\begin{enumerate}
+\item 
+\href{https://juliahub.com/}{\texttt{JuliaHub}}:
+service that includes search of all registered open source package documentation, code search, and navigation by tags/keywords.
+\item 
+\href{https://julialang.org/packages/}{Julia \texttt{Packages}}:
+to browse Julia packages, filter by categories, and sort them by popularity, creation date or date of last update. Also supports browsing package

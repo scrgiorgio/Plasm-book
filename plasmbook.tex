@@ -1,0 +1,157 @@
+%%%%%%%%%%%%%%%%%%%% book.tex %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% sample root file for the chapters of your "monograph"
+%
+% Use this file as a template for your own input.
+%
+%%%%%%%%%%%%%%%% Springer-Verlag %%%%%%%%%%%%%%%%%%%%%%%%%%
+% !TEX TS-program = xelatex
+% RECOMMENDED %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[graybox,envcountchap,sectrefs]{svmono}
+
+
+% choose options for [] as required from the list
+% in the Reference Guide
+
+%\usepackage{mathptmx}
+%\usepackage{helvet}
+%\usepackage{courier}
+%
+\usepackage{type1cm}         
+
+\usepackage{makeidx}         % allows index generation
+\usepackage{graphicx,calc}
+%\usepackage{graphicx}        % standard LaTeX graphics tool
+                             % when including figure files
+\usepackage{multicol}        % used for the two-column index
+\usepackage[bottom]{footmisc}% places footnotes at page bottom
+
+%\usepackage{newtxtext}       % 
+%\usepackage[varvw]{newtxmath}       % selects Times Roman as basic font
+
+
+%\usepackage[sectionbib]{chapterbib}
+\usepackage{hyperref}       % 
+\usepackage{lipsum}  
+\usepackage{bigints}  
+
+\usepackage{listings}
+\lstset{
+  basicstyle=\ttfamily, 
+  numbers=none, %numberstyle=\tiny
+  mathescape=true
+}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+
+\nonstopmode
+
+\usepackage{xcolor}
+\usepackage{julia-mono-listings}
+\usepackage{xcolor}
+\lstMakeShortInline[language=JuliaLocal,style=julia,mathescape]|
+
+%\lstset{basicstyle=\normalsize}
+\lstdefinelanguage{JuliaLocal}{
+    language = Julia, % inherit Julia lang. to add keywords
+    morekeywords = [3]{thompson_sampling}, % define more functions
+    morekeywords = [2]{Beta, Distributions}, % define more types and modules
+}
+
+\theoremstyle{plain}% default
+  \newtheorem{theorem}{Theorem}[section]
+  \newtheorem{lemma}[theorem]{Lemma}
+  \newtheorem{proposition}[theorem]{Proposition}
+  \newtheorem*{corollary}{Corollary}
+
+\theoremstyle{definition}
+  \newtheorem{definition}{\S }[section]
+  \newtheorem{condition}{Condition}[section]
+  \newtheorem{problem}{Problem}[section]
+  \newtheorem{coding}{Coding}[section]
+  \newtheorem{example}{Example}[section]
+
+
+% see the list of further useful packages
+% in the Reference Guide
+
+\makeindex             % used for the subject index
+                       % please use the style svind.ist with
+                       % your makeindex program
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\includeonly{
+  part-I,
+  chapter-01/01,
+  chapter-02/02,
+  chapter-03/03,
+  part-II,
+  chapter-04/04,
+  chapter-05/05,
+  chapter-06/06,
+  chapter-07/07,
+  chapter-08/08,
+  part-III,
+  chapter-09/09,
+  chapter-10/10,
+  part-IV,
+  chapter-11/11
+  appendix/appendix
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+
+\author{Alberto Paoluzzi and Giorgio Scorzelli}
+\title{BIM geometry with Julia Plasm}
+\subtitle{Functional language for CAD programming}
+\maketitle
+
+\input{macros}
+
+\frontmatter%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\include{dedication}
+\include{foreword}
+\include{preface}
+\include{acknowledgement}
+
+\tableofcontents
+
+%\include{acronym}
+
+
+\mainmatter%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\include{part-I}
+\include{chapter-01/01}
+\include{chapter-02/02}
+\include{chapter-03/03}
+\include{part-II}
+\include{chapter-04/04}
+\include{chapter-05/05}
+\include{chapter-06/06}
+\include{chapter-07/07}
+\include{chapter-08/08}
+\include{part-III}
+\include{chapter-09/09}
+\include{chapter-10/10}
+\include{part-IV}
+\include{chapter-11/11}
+
+\bibliographystyle{spmpsci}
+\bibliography{plasmbook.bib}
+
+\include{appendix/appendix}
+
+\backmatter%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\include{glossary}
+\include{solutions}
+\printindex
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}
+
+
+
+
