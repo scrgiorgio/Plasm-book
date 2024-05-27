@@ -22,15 +22,15 @@
 \contentsline {coding}{{Coding}{3.1.{8}}{Example of \texttt {FL \& Plasm} Combinators}}{57}{coding.3.1.8}%
 \contentsline {coding}{{Coding}{3.2.{1}}{Plasm $d$-dimensional simplex}}{63}{coding.3.2.1}%
 \contentsline {coding}{{Coding}{3.2.{2}}{Dataset associated to simplices.}}{63}{coding.3.2.2}%
-\contentsline {coding}{{Coding}{3.2.{3}}{binomial numbers with linear recursion}}{64}{coding.3.2.3}%
+\contentsline {coding}{{Coding}{3.2.{3}}{binomial numbers and simplex faces}}{64}{coding.3.2.3}%
 \contentsline {coding}{{Coding}{3.2.{4}}{}}{64}{coding.3.2.4}%
 \contentsline {coding}{{Coding}{3.2.{5}}{Facets of a $d$-simplex.}}{67}{coding.3.2.5}%
 \contentsline {coding}{{Coding}{3.2.{6}}{Execution example.}}{68}{coding.3.2.6}%
 \contentsline {coding}{{Coding}{3.2.{7}}{Generation of boundary complex}}{68}{coding.3.2.7}%
 \contentsline {coding}{{Coding}{3.2.{8}}{Simplex generation in \texttt {Hpc}}}{68}{coding.3.2.8}%
 \contentsline {coding}{{Coding}{3.2.{9}}{1D Extrusion}}{69}{coding.3.2.9}%
-\contentsline {coding}{{Coding}{3.2.{10}}{2D Extrusion}}{69}{coding.3.2.10}%
+\contentsline {coding}{{Coding}{3.2.{10}}{2D Extrusion}}{70}{coding.3.2.10}%
 \contentsline {coding}{{Coding}{3.2.{11}}{3D Extrusion}}{70}{coding.3.2.11}%
-\contentsline {coding}{{Coding}{3.3.{1}}{Construction of operator matrix}}{71}{coding.3.3.1}%
-\contentsline {coding}{{Coding}{3.3.{2}}{How to use the linear operators.}}{71}{coding.3.3.2}%
-\contentsline {coding}{{Coding}{3.4.{1}}{Volume of a cube from boundary triangles}}{72}{coding.3.4.1}%
+\contentsline {coding}{{Coding}{3.3.{1}}{Construction of operator matrix}}{72}{coding.3.3.1}%
+\contentsline {coding}{{Coding}{3.3.{2}}{How to use the linear operators.}}{72}{coding.3.3.2}%
+\contentsline {coding}{{Coding}{3.4.{1}}{Volume of a cube from boundary triangles}}{73}{coding.3.4.1}%
