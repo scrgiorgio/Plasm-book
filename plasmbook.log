@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.9.22)  27 MAY 2024 10:08
+This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.9.22)  27 MAY 2024 11:42
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -2437,9 +2437,6 @@ Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
 
-LaTeX Warning: Citation `hatcher:2002' on page 62 undefined on input line 433.
-
-
 ./chapter-03/03.tex:434: Package keyval Error: ##numbers undefined.
 
 See the keyval package documentation for explanation.
@@ -2451,9 +2448,6 @@ l.434 ...e remaining connected.  In other words, |
 
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
-
-
-LaTeX Warning: Citation `Wolfram' on page 62 undefined on input line 452.
 
 [62]
 
@@ -2815,9 +2809,6 @@ might try typing `S' now just to see what is salvageable.
 
 File: chapter-03/figs/simplex0.png Graphic file (type bmp)
 <chapter-03/figs/simplex0.png>
-
-LaTeX Warning: Citation `Whitney:1957' on page 66 undefined on input line 678.
-
 [66]
 
 ./chapter-03/03.tex:699: Package keyval Error: ##numbers undefined.
@@ -2999,14 +2990,6 @@ If that doesn't work, type  X <return>  to quit.
 
 [68]
 
-LaTeX Warning: Citation `10.1016/0010-4485(91)90080-G' on page 69 undefined on 
-input line 765.
-
-
-LaTeX Warning: Citation `10.1145/164360.164376' on page 69 undefined on input l
-ine 765.
-
-
 ./chapter-03/03.tex:776: Package keyval Error: ##numbers undefined.
 
 See the keyval package documentation for explanation.
@@ -3162,382 +3145,467 @@ File: chapter-03/figs/complex1D.png Graphic file (type bmp)
 <chapter-03/figs/complex1D.png>
 [70]
 
-./chapter-03/03.tex:874: Package keyval Error: ##numbers undefined.
+./chapter-03/03.tex:839: Package keyval Error: ##numbers undefined.
 
 See the keyval package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.874 The |
+l.839 ...ark their multidimensional cheracter in |
+                                                  Plasm|.
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+LaTeX Warning: No positions in optional float specifier.
+               Default added (so using `htbp') on input line 843.
+
+File: chapter-03/figs/cubic01.pdf Graphic file (type pdf)
+<use chapter-03/figs/cubic01.pdf>
+File: chapter-03/figs/cubic02.pdf Graphic file (type pdf)
+<use chapter-03/figs/cubic02.pdf>
+
+./chapter-03/03.tex:854: Package keyval Error: ##numbers undefined.
+
+See the keyval package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.854 In |
+          Plasm| the cuboidal grids are not mandatory regular, and can be ev...
+
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+./chapter-03/03.tex:857: Package keyval Error: ##numbers undefined.
+
+See the keyval package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.857 ...ular cuboidal grids, respectively. Each |
+                                                  GRID| instance generates a...
+
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+./chapter-03/03.tex:857: Package keyval Error: ##numbers undefined.
+
+See the keyval package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.857 ..., and two Cartesian product, denoted in |
+                                                  Plasm| by the |*| infix sy...
+
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+./chapter-03/03.tex:857: Package keyval Error: ##numbers undefined.
+
+See the keyval package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.857 ...sian product, denoted in |Plasm| by the |
+                                                  *| infix symbol, produces ...
+
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+./chapter-03/03.tex:858: Package keyval Error: ##numbers undefined.
+
+See the keyval package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.858 ...uliaLocal, style=julia, mathescape=false]
+                                                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[71]
+
+./chapter-03/03.tex:894: Package keyval Error: ##numbers undefined.
+
+See the keyval package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.894 The |
            larprod| function takes as input a pair of |Lar| models and retur...
 
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
 
-./chapter-03/03.tex:874: Package keyval Error: ##numbers undefined.
+./chapter-03/03.tex:894: Package keyval Error: ##numbers undefined.
 
 See the keyval package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.874 ...prod| function takes as input a pair of |
+l.894 ...prod| function takes as input a pair of |
                                                   Lar| models and returns th...
 
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
 
-./chapter-03/03.tex:874: Package keyval Error: ##numbers undefined.
+./chapter-03/03.tex:894: Package keyval Error: ##numbers undefined.
 
 See the keyval package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.874 ...eir \emph{Cartesian product}. Since the |
+l.894 ...eir \emph{Cartesian product}. Since the |
                                                   Lar| type is a pair (\emph...
 
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
 
-./chapter-03/03.tex:875: Package keyval Error: ##numbers undefined.
+./chapter-03/03.tex:895: Package keyval Error: ##numbers undefined.
 
 See the keyval package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.875 output of |
+l.895 output of |
                  larprod( lar1, lar2 )| is the \emph{topological product} of...
 
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
 
-./chapter-03/03.tex:875: Package keyval Error: ##numbers undefined.
+./chapter-03/03.tex:895: Package keyval Error: ##numbers undefined.
 
 See the keyval package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.875 ...\emph{topological product} of the input |
+l.895 ...\emph{topological product} of the input |
                                                   Lar| values.
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
-[71]
+[72]
 
-./chapter-03/03.tex:891: LaTeX Error: \begin{document} ended by \end{definition
+./chapter-03/03.tex:911: LaTeX Error: \begin{document} ended by \end{definition
 }.
 
 See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.891 \end{definition}
+l.911 \end{definition}
                       
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
 or  <return>  to continue without it.
 
-./chapter-03/03.tex:891: Extra \endgroup.
+./chapter-03/03.tex:911: Extra \endgroup.
 <recently read> \endgroup 
                           
-l.891 \end{definition}
+l.911 \end{definition}
                       
 Things are pretty mixed up, but I think the worst is over.
 
 
-./chapter-03/03.tex:893: Package keyval Error: ##numbers undefined.
+./chapter-03/03.tex:913: Package keyval Error: ##numbers undefined.
 
 See the keyval package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.893 ...often use a pair of characters from $\{$|
+l.913 ...often use a pair of characters from $\{$|
                                                   V|, |E|, |F|$\}$, for inst...
 
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
 
-./chapter-03/03.tex:893: Package keyval Error: ##numbers undefined.
+./chapter-03/03.tex:913: Package keyval Error: ##numbers undefined.
 
 See the keyval package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.893 ... use a pair of characters from $\{$|V|, |
+l.913 ... use a pair of characters from $\{$|V|, |
                                                   E|, |F|$\}$, for instance ...
 
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
 
-./chapter-03/03.tex:893: Package keyval Error: ##numbers undefined.
+./chapter-03/03.tex:913: Package keyval Error: ##numbers undefined.
 
 See the keyval package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.893 ...a pair of characters from $\{$|V|, |E|, |
+l.913 ...a pair of characters from $\{$|V|, |E|, |
                                                   F|$\}$, for instance |EF|,...
 
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
 
-./chapter-03/03.tex:893: Package keyval Error: ##numbers undefined.
+./chapter-03/03.tex:913: Package keyval Error: ##numbers undefined.
 
 See the keyval package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.893 ...rom $\{$|V|, |E|, |F|$\}$, for instance |
+l.913 ...rom $\{$|V|, |E|, |F|$\}$, for instance |
                                                   EF|, to denote the mapping...
 
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
 
-./chapter-03/03.tex:893: Package keyval Error: ##numbers undefined.
+./chapter-03/03.tex:913: Package keyval Error: ##numbers undefined.
 
 See the keyval package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.893 ...or instance |EF|, to denote the mapping |
+l.913 ...or instance |EF|, to denote the mapping |
                                                   F|${}\to{}$|E| from 2-chai...
 
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
 
-./chapter-03/03.tex:893: Package keyval Error: ##numbers undefined.
+./chapter-03/03.tex:913: Package keyval Error: ##numbers undefined.
 
 See the keyval package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.893 ...|EF|, to denote the mapping |F|${}\to{}$|
+l.913 ...|EF|, to denote the mapping |F|${}\to{}$|
                                                   E| from 2-chains in |F| to...
 
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
 
-./chapter-03/03.tex:893: Package keyval Error: ##numbers undefined.
+./chapter-03/03.tex:913: Package keyval Error: ##numbers undefined.
 
 See the keyval package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.893 ...apping |F|${}\to{}$|E| from 2-chains in |
+l.913 ...apping |F|${}\to{}$|E| from 2-chains in |
                                                   F| to 1-chains in |E| (see...
 
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
 
-./chapter-03/03.tex:893: Package keyval Error: ##numbers undefined.
+./chapter-03/03.tex:913: Package keyval Error: ##numbers undefined.
 
 See the keyval package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.893 ...|E| from 2-chains in |F| to 1-chains in |
+l.913 ...|E| from 2-chains in |F| to 1-chains in |
                                                   E| (see Section~\ref{}).
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
 
-LaTeX Warning: Reference `sec:2:chaincomplexes' on page 72 undefined on input l
-ine 898.
+LaTeX Warning: Reference `sec:2:chaincomplexes' on page 73 undefined on input l
+ine 918.
 
 
-./chapter-03/03.tex:898: Package keyval Error: ##numbers undefined.
+./chapter-03/03.tex:918: Package keyval Error: ##numbers undefined.
 
 See the keyval package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.898 ...plexes}), we build the sparse matrix of |
+l.918 ...plexes}), we build the sparse matrix of |
                                                   EF $\equiv$ ∂₂: F $\to$ E|.
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
 
-./chapter-03/03.tex:899: Package keyval Error: ##numbers undefined.
+./chapter-03/03.tex:919: Package keyval Error: ##numbers undefined.
 
 See the keyval package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.899 ...ASM/SPRINGER/BOOK/chapter-06/code/006.jl}
+l.919 ...ASM/SPRINGER/BOOK/chapter-06/code/006.jl}
                                                   
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
 
-./chapter-03/03.tex:899: Package keyval Error: ##numbers undefined.
+./chapter-03/03.tex:919: Package keyval Error: ##numbers undefined.
 
 See the keyval package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.899 ...ASM/SPRINGER/BOOK/chapter-06/code/006.jl}
+l.919 ...ASM/SPRINGER/BOOK/chapter-06/code/006.jl}
                                                   
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
 (/Users/paoluzzi/Documents/dev/PLASM/SPRINGER/BOOK/chapter-06/code/006.jl)
 
-./chapter-03/03.tex:906: Package keyval Error: ##numbers undefined.
+./chapter-03/03.tex:926: Package keyval Error: ##numbers undefined.
 
 See the keyval package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.906 ...ASM/SPRINGER/BOOK/chapter-06/code/007.jl}
+l.926 ...ASM/SPRINGER/BOOK/chapter-06/code/007.jl}
                                                   
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
 
-./chapter-03/03.tex:906: Package keyval Error: ##numbers undefined.
+./chapter-03/03.tex:926: Package keyval Error: ##numbers undefined.
 
 See the keyval package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.906 ...ASM/SPRINGER/BOOK/chapter-06/code/007.jl}
+l.926 ...ASM/SPRINGER/BOOK/chapter-06/code/007.jl}
                                                   
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
 (/Users/paoluzzi/Documents/dev/PLASM/SPRINGER/BOOK/chapter-06/code/007.jl
-[72])
+[73])
 
-LaTeX Warning: Reference `sec:2:chaincomplexes' on page 73 undefined on input l
-ine 907.
+LaTeX Warning: Reference `sec:2:chaincomplexes' on page 74 undefined on input l
+ine 927.
 
 
-./chapter-03/03.tex:907: Package keyval Error: ##numbers undefined.
+./chapter-03/03.tex:927: Package keyval Error: ##numbers undefined.
 
 See the keyval package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.907 ...tion~\ref{sec:2:chaincomplexes}. E.g.,  |
+l.927 ...tion~\ref{sec:2:chaincomplexes}. E.g.,  |
                                                   face[4]| has boundary edge...
 
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
 
-./chapter-03/03.tex:907: Package keyval Error: ##numbers undefined.
+./chapter-03/03.tex:927: Package keyval Error: ##numbers undefined.
 
 See the keyval package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.907 ...s boundary edges 3, 4, and 12 (look for |
+l.927 ...s boundary edges 3, 4, and 12 (look for |
                                                   1|s positions in row 5 abo...
 
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
 
-./chapter-03/03.tex:919: Package keyval Error: ##numbers undefined.
+./chapter-03/03.tex:939: Package keyval Error: ##numbers undefined.
 
 See the keyval package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.919 The variable |
+l.939 The variable |
                     obj| first contains the memory pointer to an object of t...
 
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
 
-./chapter-03/03.tex:919: Package keyval Error: ##numbers undefined.
+./chapter-03/03.tex:939: Package keyval Error: ##numbers undefined.
 
 See the keyval package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.919 ...the memory pointer to an object of type |
+l.939 ...the memory pointer to an object of type |
                                                   Hpc|, then to an object of...
 
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
 
-./chapter-03/03.tex:919: Package keyval Error: ##numbers undefined.
+./chapter-03/03.tex:939: Package keyval Error: ##numbers undefined.
 
 See the keyval package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.919 ...f type |Hpc|, then to an object of type |
+l.939 ...f type |Hpc|, then to an object of type |
                                                   Lar|. Here, |obj.C| gives ...
 
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
 
-./chapter-03/03.tex:919: Package keyval Error: ##numbers undefined.
+./chapter-03/03.tex:939: Package keyval Error: ##numbers undefined.
 
 See the keyval package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.919 ... then to an object of type |Lar|. Here, |
+l.939 ... then to an object of type |Lar|. Here, |
                                                   obj.C| gives the dictionar...
 
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
 
-./chapter-03/03.tex:919: Package keyval Error: ##numbers undefined.
+./chapter-03/03.tex:939: Package keyval Error: ##numbers undefined.
 
 See the keyval package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.919 ...ar|. Here, |obj.C| gives the dictionary |
+l.939 ...ar|. Here, |obj.C| gives the dictionary |
                                                   C| of its cell complex, wh...
 
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
 
-./chapter-03/03.tex:919: Package keyval Error: ##numbers undefined.
+./chapter-03/03.tex:939: Package keyval Error: ##numbers undefined.
 
 See the keyval package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.919 ...ctionary |C| of its cell complex, where |
+l.939 ...ctionary |C| of its cell complex, where |
                                                   C[:FV]| denotes the array ...
 
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
 
-./chapter-03/03.tex:920: Package keyval Error: ##numbers undefined.
+./chapter-03/03.tex:940: Package keyval Error: ##numbers undefined.
 
 See the keyval package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.920 ...liaLocal, style=julia, mathescape = true]
+l.940 ...liaLocal, style=julia, mathescape = true]
                                                   
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
-) [73]
+) [74]
 ./plasmbook.tex:128: Extra \else.
 \@include ...ediate \closeout \@partaux \fi \else 
                                                   \deadcycles \z@ \@nameuse ...
@@ -3545,8 +3613,7 @@ l.128 \include{chapter-03/03}
                              
 I'm ignoring this; it doesn't match any \if.
 
-No file plasmbook.bbl.
-[92
+(./plasmbook.bbl [88
 
 
 
@@ -3560,6 +3627,7 @@ No file plasmbook.bbl.
 
 
 
+] [89]) [90] [92
 
 
 
@@ -3583,16 +3651,16 @@ LaTeX Warning: There were undefined references.
 LaTeX Warning: There were multiply-defined labels.
 
 Package rerunfilecheck Info: File `plasmbook.out' has not changed.
-(rerunfilecheck)             Checksum: 4B30CC6001B42C7B5F885ACAB3C58957;2435.
+(rerunfilecheck)             Checksum: BAEC908F12E756FB87F19BE361D93506;2540.
  )
 (\end occurred when \ifnum on line 128 was incomplete) 
 Here is how much of TeX's memory you used:
- 18165 strings out of 476683
- 336969 string characters out of 5804047
+ 18233 strings out of 476683
+ 338394 string characters out of 5804047
  2037018 words of memory out of 5000000
- 37983 multiletter control sequences out of 15000+600000
+ 38047 multiletter control sequences out of 15000+600000
  522095 words of font info for 114 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  72i,11n,102p,9597b,11800s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on plasmbook.pdf (31 pages).
+Output written on plasmbook.pdf (35 pages).

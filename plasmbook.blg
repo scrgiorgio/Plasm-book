@@ -1,0 +1,80 @@
+This is BibTeX, Version 0.99d (TeX Live 2023)
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: plasmbook.aux
+A level-1 auxiliary file: dedication.aux
+A level-1 auxiliary file: foreword.aux
+A level-1 auxiliary file: preface.aux
+A level-1 auxiliary file: acknowledgement.aux
+A level-1 auxiliary file: part-I.aux
+A level-1 auxiliary file: chapter-01/01.aux
+A level-1 auxiliary file: chapter-02/02.aux
+The style file: spmpsci.bst
+A level-1 auxiliary file: chapter-03/03.aux
+A level-1 auxiliary file: part-II.aux
+A level-1 auxiliary file: chapter-04/04.aux
+A level-1 auxiliary file: chapter-05/05.aux
+A level-1 auxiliary file: chapter-06/06.aux
+A level-1 auxiliary file: chapter-07/07.aux
+A level-1 auxiliary file: chapter-08/08.aux
+A level-1 auxiliary file: part-III.aux
+A level-1 auxiliary file: chapter-09/09.aux
+A level-1 auxiliary file: chapter-10/10.aux
+A level-1 auxiliary file: part-IV.aux
+A level-1 auxiliary file: chapter-11/11.aux
+Illegal, another \bibstyle command---line 37 of file plasmbook.aux
+ : \bibstyle
+ :          {spmpsci}
+I'm skipping whatever remains of this command
+Illegal, another \bibdata command---line 38 of file plasmbook.aux
+ : \bibdata
+ :         {plasmbook.bib}
+I'm skipping whatever remains of this command
+A level-1 auxiliary file: appendix/appendix.aux
+A level-1 auxiliary file: glossary.aux
+A level-1 auxiliary file: solutions.aux
+Database file #1: plasmbook.bib
+Warning--I didn't find a database entry for "Rootmeansquare:23"
+Warning--I didn't find a database entry for ""
+Warning--empty year in juliaset
+You've used 41 entries,
+            2945 wiz_defined-function locations,
+            875 strings with 11831 characters,
+and the built_in function-call counts, 16307 in all, are:
+= -- 1317
+> -- 456
+< -- 4
++ -- 193
+- -- 149
+* -- 792
+:= -- 2131
+add.period$ -- 86
+call.type$ -- 41
+change.case$ -- 202
+chr.to.int$ -- 0
+cite$ -- 42
+duplicate$ -- 1557
+empty$ -- 1516
+format.name$ -- 162
+if$ -- 3525
+int.to.chr$ -- 0
+int.to.str$ -- 41
+missing$ -- 341
+newline$ -- 213
+num.names$ -- 84
+pop$ -- 698
+preamble$ -- 1
+purify$ -- 156
+quote$ -- 0
+skip$ -- 547
+stack$ -- 0
+substring$ -- 493
+swap$ -- 803
+text.length$ -- 4
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 154
+warning$ -- 1
+while$ -- 95
+width$ -- 43
+write$ -- 460
+(There were 2 error messages)

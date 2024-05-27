@@ -43,13 +43,13 @@
 \contentsline {section}{\numberline {3.2}Cellular models}{61}{section.3.2}%
 \contentsline {subsection}{\numberline {3.2.1}Simplicial complex}{63}{subsection.3.2.1}%
 \contentsline {subsection}{\numberline {3.2.2}Cubical complex and grid}{70}{subsection.3.2.2}%
-\contentsline {subsection}{\numberline {3.2.3}Polyhedral complex}{71}{subsection.3.2.3}%
-\contentsline {subsection}{\numberline {3.2.4}Topological product}{71}{subsection.3.2.4}%
-\contentsline {subsection}{\numberline {3.2.5}Cell complex product}{71}{subsection.3.2.5}%
-\contentsline {section}{\numberline {3.3}Chain complex}{72}{section.3.3}%
-\contentsline {subsection}{\numberline {3.3.1}Linear chain spaces}{72}{subsection.3.3.1}%
-\contentsline {subsection}{\numberline {3.3.2}Linear chain operators}{72}{subsection.3.3.2}%
-\contentsline {section}{\numberline {3.4}Cochain integration (surface, volume, inertia)}{73}{section.3.4}%
+\contentsline {subsection}{\numberline {3.2.3}Polyhedral complex}{72}{subsection.3.2.3}%
+\contentsline {subsection}{\numberline {3.2.4}Topological product}{72}{subsection.3.2.4}%
+\contentsline {subsection}{\numberline {3.2.5}Cell complex product}{72}{subsection.3.2.5}%
+\contentsline {section}{\numberline {3.3}Chain complex}{73}{section.3.3}%
+\contentsline {subsection}{\numberline {3.3.1}Linear chain spaces}{73}{subsection.3.3.1}%
+\contentsline {subsection}{\numberline {3.3.2}Linear chain operators}{73}{subsection.3.3.2}%
+\contentsline {section}{\numberline {3.4}Cochain integration (surface, volume, inertia)}{74}{section.3.4}%
 \contentsline {part}{Part\ II\hspace {\betweenumberspace }Dimension-independent Modeling}{75}{part.2}%
 \contentsline {chapter}{\numberline {4}Geometric models}{77}{chapter.4}%
 \contentsline {section}{\numberline {4.1}Introduction to geometric objects}{77}{section.4.1}%
@@ -104,6 +104,7 @@
 \contentsline {section}{\numberline {11.2} Out-of-Core Potree dataset}{87}{section.11.2}%
 \contentsline {section}{\numberline {11.3} Multidimensional array store}{87}{section.11.3}%
 \contentsline {section}{\numberline {11.4} Mapping to solid models}{87}{section.11.4}%
+\contentsline {section}{References}{88}{section*.23}%
 \contentsline {chapter}{\numberline {A}Coding examples}{91}{appendix.A}%
 \contentsline {chapter}{Glossary}{93}{appendix*.65}%
 \contentsline {paragraph}{glossary term}{93}{section*.66}%
