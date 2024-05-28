@@ -11,27 +11,28 @@
 \contentsline {coding}{{Coding}{2.6.{1}}{2D virtual Manhattan}}{46}{coding.2.6.1}%
 \contentsline {coding}{{Coding}{2.6.{2}}{3D virtual Manhattan}}{48}{coding.2.6.2}%
 \contentsline {coding}{{Coding}{2.6.{3}}{Solid 2D graph of a scalar function}}{48}{coding.2.6.3}%
-\contentsline {coding}{{Coding}{3.1.{1}}{Matrices $m\times n$ are vector spaces}}{54}{coding.3.1.1}%
-\contentsline {coding}{{Coding}{3.1.{2}}{Random vector generation.}}{55}{coding.3.1.2}%
-\contentsline {coding}{{Coding}{3.1.{3}}{Multiplication matrix-vector.}}{55}{coding.3.1.3}%
-\contentsline {coding}{{Coding}{3.1.{4}}{Addition matrix-vector.}}{55}{coding.3.1.4}%
-\contentsline {coding}{{Coding}{3.1.{5}}{Pure functional style in Julia}}{57}{coding.3.1.5}%
-\contentsline {coding}{{Coding}{3.1.{6}}{Generating Bernstein polynomial bases}}{58}{coding.3.1.6}%
-\contentsline {coding}{{Coding}{3.1.{7}}{Sampling of third quadratic polynomial}}{58}{coding.3.1.7}%
-\contentsline {coding}{{Coding}{3.1.{8}}{Sampling of third basis polynomial of degree 4}}{58}{coding.3.1.8}%
-\contentsline {coding}{{Coding}{3.1.{9}}{Example of \texttt {FL \& Plasm} Combinators}}{59}{coding.3.1.9}%
-\contentsline {coding}{{Coding}{3.2.{1}}{Plasm $d$-dimensional simplex}}{65}{coding.3.2.1}%
-\contentsline {coding}{{Coding}{3.2.{2}}{Dataset associated to simplices.}}{65}{coding.3.2.2}%
-\contentsline {coding}{{Coding}{3.2.{3}}{binomial numbers and simplex faces}}{66}{coding.3.2.3}%
-\contentsline {coding}{{Coding}{3.2.{4}}{}}{66}{coding.3.2.4}%
-\contentsline {coding}{{Coding}{3.2.{5}}{Facets of a $d$-simplex.}}{69}{coding.3.2.5}%
-\contentsline {coding}{{Coding}{3.2.{6}}{Execution example.}}{70}{coding.3.2.6}%
-\contentsline {coding}{{Coding}{3.2.{7}}{Generation of boundary complex}}{70}{coding.3.2.7}%
-\contentsline {coding}{{Coding}{3.2.{8}}{Simplex generation in \texttt {Hpc}}}{70}{coding.3.2.8}%
-\contentsline {coding}{{Coding}{3.2.{9}}{1D Extrusion}}{71}{coding.3.2.9}%
-\contentsline {coding}{{Coding}{3.2.{10}}{2D Extrusion}}{72}{coding.3.2.10}%
-\contentsline {coding}{{Coding}{3.2.{11}}{3D Extrusion}}{72}{coding.3.2.11}%
-\contentsline {coding}{{Coding}{3.2.{12}}{3D Cell Complex}}{73}{coding.3.2.12}%
-\contentsline {coding}{{Coding}{3.3.{1}}{Construction of operator matrix}}{78}{coding.3.3.1}%
-\contentsline {coding}{{Coding}{3.3.{2}}{How to use the linear operators.}}{78}{coding.3.3.2}%
+\contentsline {coding}{{Coding}{3.1.{1}}{Matrices $m\times n$ are vector spaces}}{52}{coding.3.1.1}%
+\contentsline {coding}{{Coding}{3.1.{2}}{Random vector generation.}}{53}{coding.3.1.2}%
+\contentsline {coding}{{Coding}{3.1.{3}}{Multiplication matrix-vector.}}{53}{coding.3.1.3}%
+\contentsline {coding}{{Coding}{3.1.{4}}{Addition matrix-vector.}}{53}{coding.3.1.4}%
+\contentsline {coding}{{Coding}{3.1.{5}}{Pure functional style in Julia}}{55}{coding.3.1.5}%
+\contentsline {coding}{{Coding}{3.1.{6}}{Generating Bernstein polynomial bases}}{56}{coding.3.1.6}%
+\contentsline {coding}{{Coding}{3.1.{7}}{Sampling of third quadratic polynomial}}{56}{coding.3.1.7}%
+\contentsline {coding}{{Coding}{3.1.{8}}{Sampling of third basis polynomial of degree 4}}{56}{coding.3.1.8}%
+\contentsline {coding}{{Coding}{3.1.{9}}{Example of \texttt {FL \& Plasm} Combinators}}{57}{coding.3.1.9}%
+\contentsline {coding}{{Coding}{3.2.{1}}{Plasm $d$-dimensional simplex}}{63}{coding.3.2.1}%
+\contentsline {coding}{{Coding}{3.2.{2}}{Dataset associated to simplices.}}{63}{coding.3.2.2}%
+\contentsline {coding}{{Coding}{3.2.{3}}{binomial numbers and simplex faces}}{64}{coding.3.2.3}%
+\contentsline {coding}{{Coding}{3.2.{4}}{}}{64}{coding.3.2.4}%
+\contentsline {coding}{{Coding}{3.2.{5}}{Facets of a $d$-simplex.}}{67}{coding.3.2.5}%
+\contentsline {coding}{{Coding}{3.2.{6}}{Execution example.}}{68}{coding.3.2.6}%
+\contentsline {coding}{{Coding}{3.2.{7}}{Generation of boundary complex}}{68}{coding.3.2.7}%
+\contentsline {coding}{{Coding}{3.2.{8}}{Simplex generation in \texttt {Hpc}}}{68}{coding.3.2.8}%
+\contentsline {coding}{{Coding}{3.2.{9}}{1D Extrusion}}{69}{coding.3.2.9}%
+\contentsline {coding}{{Coding}{3.2.{10}}{2D Extrusion}}{70}{coding.3.2.10}%
+\contentsline {coding}{{Coding}{3.2.{11}}{3D Extrusion}}{70}{coding.3.2.11}%
+\contentsline {coding}{{Coding}{3.2.{12}}{3D Cell Complex}}{71}{coding.3.2.12}%
+\contentsline {coding}{{Coding}{3.3.{1}}{Construction of operator matrix}}{76}{coding.3.3.1}%
+\contentsline {coding}{{Coding}{3.3.{2}}{How to use the linear operators.}}{76}{coding.3.3.2}%
+\contentsline {coding}{{Coding}{3.3.{3}}{Cell with a hole}}{77}{coding.3.3.3}%
 \contentsline {coding}{{Coding}{3.4.{1}}{Volume of a cube from boundary triangles}}{78}{coding.3.4.1}%
