@@ -12,6 +12,12 @@ Arakaki., T.: Julia Data Parallel Computing.
   \urlprefix\url{https://juliafolds.github.io/data-parallelism/tutorials/quick-introduction/}.
 \newblock [retrieved june 27, 2023]
 
+\bibitem{Arnold:2018}
+Arnold, D.N.: Finite Element Exterior Calculus, \emph{CBMS-NSF Regional
+  Conference Series in Applied Mathematics}, vol.~93.
+\newblock Society for Industrial and Applied Mathematics (SIAM), Philadelphia,
+  PA (2018)
+
 \bibitem{Aubanel:2016}
 Aubanel, E.: Elements of Parallel Computing.
 \newblock Chapman \ Hall/CRC Press (2016)
@@ -51,6 +57,11 @@ Danisc, S., Kavalar, M., Dombrowski, M., Markovics, P.: An Introduction to GPU
 \newblock
   \urlprefix\url{https://nextjournal.com/sdanisch/julia-gpu-programming}.
 \newblock [retrieved june 29, 2023]
+
+\bibitem{Edelsbrunner:95}
+Delfinado, C., Edelsbrunner, H.: An incremental algorithm for betti numbers of
+  sinplicial complexes on the 3-sphere.
+\newblock Computer Aided Geometric Design \textbf{12}, 771--784 (1995)
 
 \bibitem{ieee-tase}
 DiCarlo, A., Milicchio, F., Paoluzzi, A., Shapiro, V.: Chain-based
@@ -206,6 +217,12 @@ Paoluzzi, A., Shapiro, V., DiCarlo, A., Scorzelli, G., Onofri, E.: Finite
 \newblock \doi{https://doi.org/10.1016/j.cad.2022.103436}.
 \newblock
   \urlprefix\url{https://www.sciencedirect.com/science/article/pii/S0010448522001695}
+
+\bibitem{Wolfram:algebra:StandardBasis}
+Roth, A., Weisstein, E.W.: Standard basis.
+\newblock In: MathWorld, p. Algebra > Linear Algebra > Linear Systems of
+  Equations. A Wolfram Web Resource (2005).
+\newblock \urlprefix\url{https://mathworld.wolfram.com/StandardBasis.html}
 
 \bibitem{Wolfram}
 Rowland, T.: Characteristic function.
