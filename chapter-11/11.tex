@@ -1,14 +1,40 @@
 \chapter{Modeling from Point Clouds}\label{chapt:11}
 
-At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. 
+The survey of the built environment, even of large portions of cities, is growing and accelerating, either to support the reconstruction or restoration of the building heritage or to make the digital twin of historical neighborhoods or whole cities.
+Survey technologies have actually fueled the concept of a digital twin, which indicates the digital virtual representation of a physical system or product in the real world.
+In this section, we analyze the use of 3D Point Clouds, the digital model made up of points of physical space capable of returning synthetic local geometric information, and their integration with our innovative solid modeling methods.
+The chapter's goal is to integrate technologies for the management, manipulation, and visualization of point clouds [1] with techniques for specifying solid geometries using innovative Computer-Aided Design tools [2, 3, 4], using sparse linear algebra and algebraic topology, in highly automated forms consistent with the construction solutions adopted in the AEC sector.
+
+
 
 \section{ Geometric survey}\label{sect:11-1}
 
+%Una point cloud 3D è un insieme di punti dello spazio tridimensionale con as- sociate proprietà di colore, in alcuni casi di dettagli fotografici o di classificazione (terreno, vegetazione, costruzioni, ecc.).
+%È il risultato di un campionamento regolare di ambienti, attraverso punti rilevati sulle superfici visibili, prodotti da scanner LiDAR o da un workflow fotogrammetrico.
+
 
 \section{ Out-of-Core Potree dataset}\label{sect:11-2}
+
+%Per gestire e analizzare dataset normalmente di enormi dimensioni (centinaia di milioni di punti, o più) è necessario utilizzare tecniche informatiche out-of-core basate su spe- ciali alberi potree [1] di partizione dello spazio, con nodi non-foglia suddivisi da tre piani mutuamente ortogonali in otto regioni parallelepipede (cfr. Figura 1b).
+%Ogni nodo dell’albero, inclusa la radice, contiene un insieme regolare di punti e fornisce, durante una visita (traversal) in profondità, un sottoinsieme di punti sempre più accurato, insistente sulle superfici contenute in una regione spaziale sempre più ristretta.
+
 
 
 \section{ Multidimensional array store}\label{sect:11-3}
 
 
 \section{ Mapping to solid models}\label{sect:11-4}
+
+
+%Partendo dunque dalle Point Cloud 3D di un organismo o di un complesso edilizio, che comprendano unitariamente le superfici interne e esterne, e utilizzando alberi “duali” dei potree (covetree), contenenti nei nodi le firme (le equazioni normalizzate) dei cluster di punti contenuti nei sottoalberi radicati nei nodi, si possono ricostruire dei dati geometrici di sintesi, attraverso una visita opportuna dell’albero – che gli informatici chiamano post- order traversal. Questi dati producono gli elementi geometrici costituenti le forme, come sistemi di equazioni e disequazioni locali soddisfatte da sottoinsiemi di punti, e in definitiva come 2-celle geometriche (poligoni).
+%
+%Da queste ultime si può calcolare l’arrangement, ovvero la partizione 3D indotta dal cloud, ed in particolare l’insieme di atomi generatori di qualunque termine ed espres- sione Booleana nell’algebra così costruita. Resta infine da assegnare una semantica ai termini algebrici (cfr. anche [6]).
+%Gli studi sulla natura funzionale dei componenti fisici di un complesso edilizio hanno gene- rato, a partire dagli anni ’80, delle classificazioni funzionali dei suoi elementi in: sotto-
+%5
+%
+%sistemi portanti dell’edificio (l’ossatura), di chiusura verticale (le tamponature, gli infissi esterni) e orizzontale (i solai di copertura, intermedi e di base), di partizione dello spa- zio (tramezzi e infissi interni) di comunicazione (corridoi, ballatoi, ascensori e scale), e impiantistici.
+%Tutti i sottosistemi ed elementi funzionali sono normati a livello UNI ed europeo, in partico- lare per i requisiti prestazionali che debbano garantire rispetto alle caratteristiche stati- che (portanza ed autoportanza), termici (isolamento e tramittanza termica), e di luminosità (trasmittanza luminosa di vetri e infissi), etc..
+
+
+
+

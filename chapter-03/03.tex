@@ -4,10 +4,10 @@
 \label{chapt:3}
 
 It is implausible to set up a computer language and computational environment to define and deliver the geometric shape of construction elements and spaces without a pretty good understanding of geometric and topological concepts. Hence, this chapter introduces some basic notions about geometric spaces, operators, and properties, like linearity, that provide the computational foundation of shape definition and model construction.
-The essential elements of geometric spaces and cellular models, like affine transformations and simplicial, cubical, polyhedral, and chain complexes, constitute the substrate of |Plasm| discourse for building hierarchical assemblies of AEC products of any scale and complexity.
+The essential elements of geometric spaces and cellular models, like affine transformations and simplicial, cubical, polyhedral, and chain complexes, constitute the substrate of discourse for |Plasm| building hierarchical assemblies of AEC products of any scale and complexity.
 
 %1234567890234567890234567890234567890234567890234567890234567890234567890
-\section{Geometric Spaces}\label{}
+\section{Geometric Spaces}\label{chapt:3-1}
 
 
 In mathematics and science, a space is a set of objects with some added structure.
@@ -209,7 +209,7 @@ B^n_k(x) = {n \choose k}\,x^k\,(1-x)^{n-k}, \qquad 0\leq k \leq n
 form a basis for the vector space $\P_{n}(\R)$ of polynomials of degree at most $n$ with real coefficients. Therefore, to implement the basis and to draw a graph of each basis function we have to consider: the degree |n| we are interested to; the ordinal number |k| of each function ($1\leq k\leq n$); and finally the independent variable $x$ such that $x \mapsto p^n(x)$. 
 
 \begin{coding}[Pure functional style in Julia]
-The julia function |B| \\ given here returns the whole range of Bézier-Bernstein polynomials of any degree, and is very useful in curve geometric modeling.
+The julia function |B| \\ given here returns the whole range of Bézier-Bernstein polynomial bases of any degree, and is very useful in curve geometric modeling.
 \lstinputlisting[language=JuliaLocal,style=julia,mathescape=false]{/Users/paoluzzi/Documents/dev/PLASM/SPRINGER/BOOK/chapter-02/src/001.jl}
 This pure programming style is available in Julia and will be adopted when useful to get curried applications of functions. 
 \end{coding}
@@ -289,7 +289,7 @@ It is often necessary, given a basis in a linear space, to compute a novel param
 
 For concreteness, let we have vector data in a 3D linear space, where we need to compute their representation in a different basis. Let us denote the new basis as $(\v{u}_i)$, and the standard one as $(\v{e}_i)$, with $i\in \{1,2,3\}$. We may write the change of coordinates as a matrix map $\T{T}: \mathcal{V}\to\mathcal{V}$, such that $[u_{ij}] \mapsto [e_{ij}]$, so transforming the old coordinates of the new basis into the standard basis. 
 
-Therefore we set $\T{T}\, [u_{ij}] = [e_{ij}]$ and, since it is $[e_{ij}]=\mathbb{I}_{3}$, i.e., the $3\times 3$ identity matrix, the solution is $\T{T}=[u_{ij}]^{-1}$. Of course, this matrix exists provided that $\det\, [u_{ij}] \not= 0$. In other words, the vectors of the new basis must be linearly independent.
+Therefore we set $\T{T}\, [u_{ij}] = [e_{ij}]$ and, since it is $[e_{ij}]={I}_{3}$, i.e., the $3\times 3$ identity matrix, the solution is $\T{T}=[u_{ij}]^{-1}$. Of course, this matrix exists provided that $\det\, [u_{ij}] \not= 0$. In other words, the vectors of the new basis must be linearly independent.
 
 
 \subsection{Affine space}
@@ -838,7 +838,7 @@ We introduce now the definition and use of multidimensional \emph{grids} of \emp
 
 Regular cubical grids appear in finite element analysis, finite volume methods, finite difference methods, and in general for discretization of parameter spaces. 
 
-\begin{definition}[Regular cuboidal grid] A regular grid is a tessellation of n-dimensional Euclidean space by congruent parallelotopes (e.g. bricks). Its opposite is irregular grid. We prefer to call these objects “cuboidal” complexes, in order to remark their multidimensional cheracter in |Plasm|.
+\begin{definition}[Regular cuboidal grid] A regular grid is a tessellation of n-dimensional Euclidean space by congruent parallelotopes (e.g. bricks). Its opposite is irregular grid. We prefer to call these objects “cuboidal” complexes, in order to remark their multidimensional character in |Plasm|.
 \end{definition}
 
 
@@ -934,7 +934,7 @@ A linear map $f:V\to W$ between graded vector spaces is a \emph{graded
 map} of degree $k\ $ if $f(V_p) \subset W_{p+k}$ for each $p$.
 \end{definition}
 
-Let be given a cellular complex $X$. We are interested in working with subsets of cells with the \emph{same} dimension, and with their maps 1-graded, which completely specify the $X$ topology.
+Let be given a cellular complex $X$. We are interested in working with subsets of cells with the \emph{same} dimension, and with their 1-graded maps, which completely specify the $X$ topology.
 
 \begin{definition}[$p$-chain]
 A \emph{$p$-chain} can be seen, with some abuse of language, as \emph{any subset} of $p$-cells in a cellular complex $X$. 
@@ -993,6 +993,10 @@ That is to say, a cochain complex is a
 sequence of vector spaces $C^p$ and linear maps $\delta^p : C^p \to C^{p+1}$,
 such that $\delta^{p+1} \circ\ \delta^{p} = 0$. 
 
+\begin{remark}
+The reader should note, as rule of dumb to remember the meaning of boundary and coboundary operators, that boundaries map cells in decreasing dimensions, and coboundaries in increasing dimensions. So, e.g., it is $\partial_2: C_2\to C_1$ and $\delta_1: C_1\to C_2$. Note also that every operator index is the one of its domain.
+\end{remark}
+
 
 \subsection{Linear chain operators}\label{sect:3-3-2}
 
@@ -1047,18 +1051,23 @@ C_3 \
 The matrices of boundary and coboundary operators (their transpose) are very
 sparse, with sparsity growing linearly with the number $n$ of rows (sparse columns in Julia).  With common data structures~\cite{coosparse} for sparse matrices, 
 the storage cost $O(n)$ is linear with the number of cells, with $O(1)$ small cost per cell  that depends on the storage scheme.
+\begin{remark}
+The standard notation of matrices of operators is given by the operator symbol enclosed between squared brackets. For example $[\partial_3]$ and $[\delta_2]$ stand for the matrices of 3-boundary and 2-coboundary, respectively.\\
+\begin{end}
 
-According to what discussed in Section~\ref{sect:3-3-2}, we may identify the $U_0$ basis of 0-chains with the set |V| of vertices (0-cells) of a cellular complex, and the $U_1, U_2$ bases of 1- and 2-chains with the set |E| of edges (1-cells) and |F| of faces (2-cells), respectively. Analogously, we use the symbol |C| for the set of 3-cells.
+According to what discussed in Section~\ref{sect:3-3-2}, we may identify the $U_0$ basis of 0-chains with the ordered sequence |V| of vertices (0-cells) of a cellular complex, and the $U_1, U_2$ bases of 1- and 2-chains with ordered sequences |E| of edges (1-cells) and |F| of faces (2-cells), respectively. Analogously, we use the symbol |C| for the ordered 3-cells. 
+
+The natural bases of cells remain identified by ordinal numbers of their cells ($1$, $2$, $3$, $\ldots$), and the chain spaces dimension (for example $\dim$ V) by |$\#$V|, |$\#$E|, |$\#$F|, and |$\#$C|.
 
 Therefore, we adopt a pair of characters from $\{$|V|, |E|, |F|, |C|$\}$, for instance |EF|, to denote the matrix of mapping |F|${}\to{}$|E| from 2-chains in |F| to 1-chains in |E|,  in mathematical terms $\partial_2 : C_2 \to C_1$ (see Section~\ref{}).
-Hence, for sake of readiness and simplicity we will often use the following notations:
+Hence, for sake of readiness and simplicity we will often use the notations:
 
 \begin{lstlisting}[language=JuliaLocal, style=julia, mathescape = true]
-$\delta_2: C_2\to C_3 \equiv\ $CF: F $\to$ C $\qquad$ $\delta_1: C_1\to C_2 \equiv\ $FE: E $\to$ F  $\quad$ $\delta_0: C_0\to C_1 \equiv\ $EV: V $\to$ E  
+$\delta_2: C_2\to C_3 \equiv\ $CF: F $\to$ C $;\qquad$ $\delta_1: C_1\to C_2 \equiv\ $FE: E $\to$ F $;\qquad$ $\delta_0: C_0\to C_1 \equiv\ $EV: V $\to$ E $.$
 \end{lstlisting}
 
 \begin{lstlisting}[language=JuliaLocal, style=julia, mathescape = true]
-$\partial_3: C_3\to C_2 \equiv\ $FC: C $\to$ F  $\qquad$ $\partial_2: C_2\to C_1 \equiv\ $EF: F $\to$ E  $\quad$ $\partial_1 : C_1\to C_0\equiv\ $VE: E $\to$ V  
+$\partial_3: C_3\to C_2 \equiv\ $FC: C $;\to$ F $;\qquad$ $\partial_2: C_2\to C_1 \equiv\ $EF: F $\to$ E $;\qquad$ $\partial_1 : C_1\to C_0\equiv\ $VE: E $\to$ V $.$  
 \end{lstlisting}
 
 \begin{remark}[Matrix and vector formats]
@@ -1066,7 +1075,7 @@ Actual content of vectors |V,E,F,C| is the coordinate representation of a chain 
 \end{remark}
 
 \begin{remark}[Linear operator vs matrix]
-While linear operators work between two chain spaces, the actual application of their matrix produces a range vector from a domain vector (both in coordinates).
+Linear operators between chain spaces work between two linear spaces. The actual application of operator’s matrix produces a range’s vector from a domain’s vector (both in coordinates). Actually, any column of the matrix is one element of domain’s basis  expressed in coordinates of the target space, i.e. by the coefficients of linear combination of the target’s basis.
 \end{remark}
 
 
@@ -1075,12 +1084,41 @@ Left-multiply a matrix $\T{A}$ by a \emph{row vector} $\v{x}$, i.e. $\v{x}\T{A}$
 Analogously, right-multiply a matrix $\T{A}$ by a \emph{column vector} $\v{x}$, i.e. $\T{A}\v{x}$, gives a linear combination of \T{A} columns, and produces a column vector. 
 %\end{definition}
 
+\begin{coding}[Cube cell complex]\
+Let us generate a single 3-cube cellular complex, to use in Example~\ref{}:
+\begin{lstlisting}[language=JuliaLocal, style=julia, mathescape = true] 
+obj = LAR(CUBE(3))  	#=
+Lar(3, 3, 8, [3.0 0.0 … 3.0 0.0; 3.0 3.0 … 3.0 3.0; 0.0 0.0 … 3.0 3.0], Dict{Symbol, AbstractArray}(:CV => [[1, 2, 3, 4, 5, 6, 7, 8]], :FV => [[1, 2, 3, 4], [3, 4, 5, 6], [1, 3, 5, 7], [2, 4, 6, 8], [1, 2, 7, 8], [5, 6, 7, 8]], :EV => [[3, 4], [2, 4], [1, 2], [1, 3], [5, 6], [4, 6], [3, 5], [5, 7], [1, 7], [6, 8], [2, 8], [7, 8]])) =#
+
+V = obj.V; EV = obj.C[:EV]; FV = obj.C[:FV];
+\end{lstlisting}
+\end{coding}
 
 
-\begin{coding}[Construction of operator matrix] [$\partial_2$].
-With some abuse of language (removed after Section~\ref{sec:2:chaincomplexes}), we build the sparse matrix of |EF $\equiv$ ∂₂: F $\to$ E|. 
-\lstinputlisting[language=JuliaLocal,style=julia,mathescape=false]{/Users/paoluzzi/Documents/dev/PLASM/SPRINGER/BOOK/chapter-06/code/006.jl}
-It may be interesting to make some notation about this matrix. Remember that, by right multiplication, any mapping matrix sends the space of columns (2-chains: triangles here) to the space of rows (1-chains: edges here). With any simplicial complex we have two 1s on each row and three 1s on each column. They characterize the two faces incident on the edge, and the three edges incident on the face, respectively.
+\begin{coding}[Construction of an operator matrix]
+With some abuse of language, we build the |Plasm| operator |EF::ChainOP $\equiv$ ∂₂: F $\to$ E|. 
+\begin{lstlisting}[language=JuliaLocal, style=julia, mathescape = true] 
+KEV = lar2cop(EV); KFV = lar2cop(FV);  KVF = KFV’;
+∂_2 = KEV * KVF .÷ 2
+12×6 SparseArrays.SparseMatrixCSC{Int64, Int64} with 24 stored entries:
+ 1  1  ⋅  ⋅  ⋅  ⋅
+ 1  ⋅  ⋅  1  ⋅  ⋅
+ 1  ⋅  ⋅  ⋅  1  ⋅
+ 1  ⋅  1  ⋅  ⋅  ⋅
+ ⋅  1  ⋅  ⋅  ⋅  1
+ ⋅  1  ⋅  1  ⋅  ⋅
+ ⋅  1  1  ⋅  ⋅  ⋅
+ ⋅  ⋅  1  ⋅  ⋅  1
+ ⋅  ⋅  1  ⋅  1  ⋅
+ ⋅  ⋅  ⋅  1  ⋅  1
+ ⋅  ⋅  ⋅  1  1  ⋅
+ ⋅  ⋅  ⋅  ⋅  1  1
+\end{lstlisting}
+We see that the generated sparse matrix $[\partial_2]=|FE|$ is $12\times 6=\#|F| \times \#|E|$.
+\end{coding}
+
+
+It may be interesting to make some notation about this matrix. Remember that, by right multiplication, any mapping matrix sends the space of columns (2-chains: squares here) to the space of rows (1-chains: edges here). With any cubical complex we have two 1s on each row and four 1s on each column. They characterize the two faces incident on the edge, and the four edges incident on the face, respectively.
 \end{coding}
 
 
@@ -1155,20 +1193,22 @@ of the 1-boundary of  $c$, \emph{i.e.}, the cycle $u_1^1 + u_1^2 + u_1^3 + u_1^4
 
 \section{Cochain integration (surface, volume, inertia)}\label{sect:3-4}
 
+The \emph{space} $C^k$ of cochains on $X$ is the dual space $(C_k)^* = \{\phi : C_k \to \R\}$ of real-valued linear integration functions on chains, i.e., on subsets of cells of the same dimension that decompose $X$.  
+
+A \emph{domain integral} is the value that a given cochain takes on when evaluated on a given chain. This value depends bilinearly on the pair (cochain, chain). Therefore, the cochain is not the value of the integral, but the operation of calculating the integral, i.e. the application that associates (linearly) the value of the integral with each chain.
+
+The canonical example of cochain use is the domain integration on a curve, surface, volume, solved as summation of discrete integral values (real numbers) on the 1-, 2-, or 3-dimensional cells decomposing the domain.
+
+From the beginning of development of PLaSM as a language for solid modeling, we have introduced methods for integration of monomials on geometric shapes. In particular, they allow for surface and volume integration using a boundary triangulation, and for curve integration.  The integral on monomials may be extended easily to polynomials by linearity of both the integral and the integrand function. They can be used in |Plasm| as explained in this section. A very simple example follows.
 
 
-
-
-
-\begin{coding}[Volume of a cube from boundary triangles].
-The variable |obj| first contains the memory pointer to an object of type |Hpc|, then to an object of type |Lar|. Here, |obj.C| gives the dictionary |C| of its cell complex, where |C[:FV]| denotes the array of boundary faces (triangles).
+\begin{coding}[Volume of a cube from boundary triangles.]\\
+The variable |obj| first contains the memory pointer to an object of type |Hpc|, then to an object of type |Lar|. 
 \begin{lstlisting}[language=JuliaLocal, style=julia, mathescape = true]
-julia> obj = SIMPLEX(3) 	#=
-Hpc(MatrixNd(4), Geometry([[0.0, 0.0, 0.0], [1.0, 0.0, 0.0], [0.0, 1.0, 0.0], [0.0, 0.0, 1.0]], hulls=[[1, 2, 3, 4]])) =#		
-
-julia> obj = LAR(SIMPLEX(3)) 	#=
+obj = SIMPLEX(3) 		#=
+Hpc(MatrixNd(4), Geometry([[0.0, 0.0, 0.0], [1.0, 0.0, 0.0], [0.0, 1.0, 0.0], [0.0, 0.0, 1.0]], hulls=[[1,2,3,4]])) =#		
+obj = LAR(SIMPLEX(3)) 	#=
 Lar(3, 3, 4, [0.0 1.0 0.0 0.0; 1.0 0.0 0.0 0.0; 0.0 0.0 0.0 1.0], Dict{Symbol, AbstractArray}(:CV => [[1, 2, 3, 4]], :FV => [[1, 2, 3], [2, 3, 4], [1, 3, 4], [1, 2, 4]], :EV => [[2, 3], [1, 3], [1, 2], [3, 4], [2, 4], [1, 4]])) =#	
-
 FV = obj.C[:FV]  #=
 4-element Vector{Vector{Int64}}:
  [1, 2, 3]
@@ -1180,6 +1220,20 @@ P = (obj.V, FV); VOLUME(P)  #=
 volume(P) * 6   #=
 1.0   =#
 \end{lstlisting}
+Here, |obj.C| gives the dictionary |C| of |obj| chain bases, where |C[:FV]| denotes the array of boundary faces (triangles).
 \end{coding}
+
+%1234567890234567890234567890234567890234567890234567890234567890234567890
+
+\subsection*{Plasm integration}\label{sect-3.4.1}
+
+
+\subsubsection*{Curve integration}\label{sect-3.4.1.1}
+
+
+\subsubsection*{Surface integration}\label{sect-3.4.1.2}
+
+
+\subsubsection*{Volume integration}\label{sect-3.4.1.3}
 
 
