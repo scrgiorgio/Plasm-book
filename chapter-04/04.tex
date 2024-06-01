@@ -161,7 +161,7 @@ While in this small case, the |FV| matrix is not very sparse in this small case,
 In this section, we introduce and exemplify several features of the working of |Plasm| with geometric objects. This system is quite different from most geometric and graphics systems since it is based on |FL|-style combinators.
 
 
-\subsection{Geometric Transformations in Julia Plasm}\label{sect:4-2-1}
+\subsection{Geometric Transformations}\label{sect:4-2-1}
 
 The user interface to affine coordinate transformation of geometric objects is given through standard Julia functions and matrices. Internally, |Plasm| implements such mapping of local coordinates using its own multidimensional matrix type, called |MatrixNd|, and the use of the field |T::MatrixNd| within the recursive datatype |Hpc|.
 
@@ -169,7 +169,7 @@ The user interface to affine coordinate transformation of geometric objects is g
 A \emph{geometric transformation} is a bijective function, i.e., a one-to-one (injective) and onto (surjective) mapping $\mathbb{E}^d \to \mathbb{E}^d$. 
 \end{definition}
 
-By definition, geometric transformations of plane or space are invertible, and so represented by invertible square matrices. We will see that \emph{rotation}, \emph{scaling}, and \emph{shearing} are linear transformations; \emph{translation} is affine. 
+By definition, geometric transformations of plane or space are invertible, and hence represented by invertible square matrices. We will see that \emph{rotation}, \emph{scaling}, and \emph{shearing} are linear transformations; \emph{translation} is affine. 
 
 
 \subsubsection*{Homogeneous Coordinates}
@@ -448,13 +448,154 @@ Dict{Symbol, AbstractArray} with 3 entries:
 
 For |$\#$C, $\#$F, $\#$E, $\#$V|, we see, looking at |.V| and |.C| above:
 \begin{lstlisting}[language=JuliaLocal, style=julia, mathescape=false]
-AA(LEN)(values(Octahedron.C))'	#=
+AA(LEN)(values(octahedron.C))'	#=
 1×3 adjoint(::Vector{Int64}) with eltype Int64:
  8  20  18		=#
 \end{lstlisting}
 Therefore, we may see that the combinatorial (simplicial) complex corresponding to the 3D octahedron is made by 
 8 + 20 + 18 + 7 = 53 cells of dimension 3, 2, 1, and 0, respectively (see Figure~\ref{fig:octahedron}).
 \end{coding}
+
+
+
+
+\subsection*{Shearing}
+\label{s*ec:ccccccc}
+
+In  a 2D elementary \emph{shearing tranformation} all points of each line (plane in 3D) orthogonal to a coordinate axis move by summing one (fixed) vector. The coordinate line (plane in 3D) remain fixed, and the translation vector change linearly with the distance of its line (plane) from the origin. Each of two elementary planar shearing depends on a single scalar parameter (the translation of the line at unit distance from the coordinate line). 
+
+Each of the three elementary space shearing in 3D conversely depends on two scalar parameters (the coordinates of the planar translation vector of the plane at unit distance from the coordinate plane. Their 2D  and 3D matrices are as follows.
+
+\[
+\T{H}_x(h_x) = \mat{1\  & 0\\h_x & 1 },\qquad
+\T{H}_y(h_y) = \mat{1\  & h_y\\0 & 1 };
+\]
+\[
+\T{H}_x(h_y,h_z) = \mat{1 & 0 &  0 \\h_y & 1 & 0\\h_z & 0 & 1},\ 
+\T{H}_y(h_x,h_z) = \mat{1 & h_x & 0 \\0 & 1 & 0\\0 & h_z & 1},\ 
+\T{H}_z(h_x,h_y) = \mat{1 &  0 &  h_x\\0 & 1 & h_y\\0 & 0 & 1}.
+\]
+
+An elementary shearing differs from the identity matrix only for the elements of a single column, both in 2D and in 3D, and also in homogeneous 4D coordinates. 
+In |Plasm|, the shearing tensor is named |H| and has the following semantics: first, indicate the column index; then give the $d-1$ ordered transformation parameters, i.e., one in 2D and two in 3D, some of which possibly zeros. Therefore we have |H(col)(pars)|.
+
+\begin{figure}[htbp] %  figure placement: here, top, bottom, or page
+\begin{minipage}[c]{0.35\textwidth}
+   \includegraphics[width=\linewidth]{chapter-04/figs/shear2D} 
+\end{minipage}\hfill
+\begin{minipage}[c]{0.60\textwidth}
+\begin{lstlisting}[language=JuliaLocal, style=julia, mathescape=false]
+SQUARE(d) = CUBOID([d,d])
+shearedsquare = H(2)(.5)(SQUARE(1))
+
+VIEW(shearedsquare)
+\end{lstlisting}
+   \caption{Unit square sheared on the (second) coordinate $y$. The $y$ of model points does not change.}
+\end{minipage}
+\end{figure}
+
+Typically, |shearing| is used by typesetting systems of computerized typography to get \emph{italic} versions of character fonts. Note also above how we define a parametric square (with a vertex on the origin).
+
+\begin{figure}[htbp] %  figure placement: here, top, bottom, or page
+\begin{minipage}[c]{0.35\textwidth}
+   \includegraphics[width=\linewidth]{chapter-04/figs/shear3D} 
+\end{minipage}\hfill
+\begin{minipage}[c]{0.60\textwidth}
+\begin{lstlisting}[language=JuliaLocal, style=julia, mathescape=false]
+shearedcube = H(3)(.2,.3)(CUBE(1))
+
+VIEW(shearedcube)
+\end{lstlisting}
+   \caption{Unit cube sheared on the (third) coordinate $z$. The $z$ of points do not change.}
+\end{minipage}
+\end{figure}
+
+It is worthwhile to remark that the |H| mapping, as |R|, |GR|, |S|, |T|, |MAT|, and |HOMO| are dimension-independent, so can be applied to models of whatever embedding dimension $d$ of geometric models. Homogeneous \emph{normalized} matrices are used for implementation purpose. 
+
+
+ 
+\subsection*{Translation}
+\label{subsec:2:translation}
+
+\begin{definition}[Translation transformation]
+a translation is an invertible transformation of Euclidean space $\E^d$ generated by summing a fixed vector to all points.
+
+A translation of plane $\mathbb{E}^2$ (or space $\mathbb{E}^3$) is not a linear transformation, since it moves the origin, but it is an \emph{affine} transformation, since all $\mathbb{E}^2$ (or $\mathbb{E}^3$) mapped points change by sum with a fixed vector (an \emph{affine action}). 
+\end{definition}
+
+Hence, a 2D or 3D translation depends on two (or three) scalar parameters, i.e., by the coordinates of the \emph{translation vector}.
+We may therefore translate, using coordinates, a generic vector $\v{v} = (v_i)\in\mathbb{E}^d$:
+\begin{equation}
+\v{v}’ = \v{v} + \v{t}
+\label{eq:vectortranslation}
+\end{equation}
+where $\v{t} = ({t}_i)$ is the translation vector, applied to all points in $\mathbb{E}^d$.
+
+
+
+
+\subsubsection*{Translation in homogeneous coordinates}
+
+The translation \ref{eq:vectortranslation} is reduced to a linear transformation and hence is representable by a product with a square matrix when using normalized homogeneous coordinates. Let’s remind our choice to use as homogeneous the first coordinate. 
+For example, a translation of $\mathbb{E}^3$ is representable as
+\begin{equation}
+\T{T}(t_x,t_y,t_z) = \mat{1 & 0 & 0 & 0\\t_x & 1 & 0 & 0\\t_y & 0 & 1 & 0\\t_z & 0 & 0 & 1}
+\end{equation}
+
+We can see the equivalence between translation with Cartesian coordinates and homogenous normalized (affine) coordinates. Let $\v{v} = (x,y,z)$ be a point in 3D Euclidean space $\mathbb{E}^3$, and $\v{v}’ = (w=1,x,y,z)$ the same point in $\mathbb{R}^4$:
+\[
+\vet{x\\y\\z} + \vet{t_x\\t_y\\t_z} = \vet{x+t_x\\y+t_y\\z+t_z}
+\qquad\mbox{and}\qquad
+\mat{1 & 0 & 0 & 0\\
+	t_x & 1 & 0 & 0\\
+	t_y & 0 & 1 & 0\\
+	t_z & 0 & 0 & 1} \, 
+	\vet{1\\x\\y\\z} = \vet{1\\x+t_x\\y+t_y\\z+t_z}
+\]
+
+Just notice that a translation in 3D is actually a shearing $H_w(t_x,t_y,t_z)$ orthogonal to the added component in normalized homogeneous coordinates.
+
+\begin{coding}[Translation of 3D geometric object] 
+In |Plasm| we translate a geometric object of |Hpc| type via tensor application:
+
+\begin{lstlisting}[language=JuliaLocal, style=julia, mathescape=false]
+t_cube1 = T(1,2,3)(.5,.5,.5)(CUBE(1))
+t_cube2 = T(3)(1)(CUBE(1))
+
+VIEW(t_cube1);  VIEW(t_cube2)
+\end{lstlisting}
+A triple application of |T| function is needed: first to indices, then to translation paramenters, finally to the object of |Hpc| type to be translated.
+\end{coding}
+
+\begin{coding}[Parametric linear ladder stair] 
+The |step| is a |Hpc| solid obtained by product of three line segments of given sizes.
+An array of $n$ pairs |[move, step]| is generated and concatenated by the |CAT| operator.  Finally, the semantics of |STRUCT| (see Section~\ref{sect:4-3}) produces the whole parametric object, shown in Figure~\ref{fig:stair}. 
+
+\begin{lstlisting}[language=JuliaLocal, style=julia, mathescape=false]
+function Ladder(lx,ly,lz, n)::Hpc
+	step   = QUOTE(lx) * QUOTE(ly) * QUOTE(lz)
+	move   = T(2,3)(0.8*ly, 0.8*lz)
+	ramp   = STRUCT( CAT([[step, move] for k=1:n]) )
+end #=
+Ladder (generic function with 1 method)	=#
+stair = Ladder(.8, .22, .18, 15);
+
+VIEW(stair)
+\end{lstlisting}
+
+\end{coding}
+
+
+
+\begin{figure}[htbp] %  figure placement: here, top, bottom, or page
+   \includegraphics[width=0.35\linewidth]{chapter-04/figs/stair}
+   \hspace{5mm}
+   \sidecaption[t]
+   \caption{Simple linear scale, demostrating an iterative use of tensors in {\small\sf STRUCT}. Of course, not only the number, but also the size and even the shape of {\sf step} model can be parametrized, as arguments of a geometric function returning {\sf Hpc} objects.}
+   \label{fig:stair}
+\end{figure}  
+
+
 
 
 

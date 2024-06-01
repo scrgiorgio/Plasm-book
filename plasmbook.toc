@@ -53,11 +53,11 @@
 \contentsline {chapter}{\numberline {4}Geometric models}{85}{chapter.4}%
 \contentsline {section}{\numberline {4.1}Plasm geometric types}{85}{section.4.1}%
 \contentsline {section}{\numberline {4.2}Plasm parametric primitives}{89}{section.4.2}%
-\contentsline {subsection}{\numberline {4.2.1}Geometric Transformations in Julia Plasm}{90}{subsection.4.2.1}%
-\contentsline {section}{\numberline {4.3}Hierarchical assembly of geometric objects}{97}{section.4.3}%
-\contentsline {section}{\numberline {4.4}Attach properties to geometry}{97}{section.4.4}%
-\contentsline {section}{\numberline {4.5}Design documentation (Jupyter notebooks)}{97}{section.4.5}%
-\contentsline {section}{\numberline {4.6}Export geometry}{97}{section.4.6}%
+\contentsline {subsection}{\numberline {4.2.1}Geometric Transformations}{90}{subsection.4.2.1}%
+\contentsline {section}{\numberline {4.3}Hierarchical assembly of geometric objects}{100}{section.4.3}%
+\contentsline {section}{\numberline {4.4}Attach properties to geometry}{100}{section.4.4}%
+\contentsline {section}{\numberline {4.5}Design documentation (Jupyter notebooks)}{100}{section.4.5}%
+\contentsline {section}{\numberline {4.6}Export geometry}{100}{section.4.6}%
 \contentsline {chapter}{\numberline {5}Symbolic modeling with Julia Plasm}{97}{chapter.5}%
 \contentsline {section}{\numberline {5.1} Primitive generators}{97}{section.5.1}%
 \contentsline {section}{\numberline {5.2} Plasm topological operators}{97}{section.5.2}%
@@ -104,7 +104,7 @@
 \contentsline {section}{\numberline {11.2} Out-of-Core Potree dataset}{113}{section.11.2}%
 \contentsline {section}{\numberline {11.3} Multidimensional array store}{113}{section.11.3}%
 \contentsline {section}{\numberline {11.4} Mapping to solid models}{113}{section.11.4}%
-\contentsline {section}{References}{114}{section*.11}%
+\contentsline {section}{References}{114}{section*.14}%
 \contentsline {chapter}{\numberline {A}Coding examples}{117}{appendix.A}%
 \contentsline {chapter}{Glossary}{93}{appendix*.65}%
 \contentsline {paragraph}{glossary term}{93}{section*.66}%

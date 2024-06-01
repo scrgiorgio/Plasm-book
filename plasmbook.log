@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.9.22)  31 MAY 2024 20:04
+This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.9.22)  31 MAY 2024 23:47
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -3561,7 +3561,327 @@ l.450 ...uliaLocal, style=julia, mathescape=false]
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
-) [97] (./plasmbook.bbl [114
+
+./chapter-04/04.tex:480: Package keyval Error: ##numbers undefined.
+
+See the keyval package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.480 In |
+          Plasm|, the shearing tensor is named |H| and has the following sem...
+
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+./chapter-04/04.tex:480: Package keyval Error: ##numbers undefined.
+
+See the keyval package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.480 In |Plasm|, the shearing tensor is named |
+                                                H| and has the following sem...
+
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+./chapter-04/04.tex:480: Package keyval Error: ##numbers undefined.
+
+See the keyval package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.480 ...which possibly zeros. Therefore we have |
+                                                  H(col)(pars)|.
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+File: chapter-04/figs/shear2D.pdf Graphic file (type pdf)
+<use chapter-04/figs/shear2D.pdf>
+
+./chapter-04/04.tex:487: Package keyval Error: ##numbers undefined.
+
+See the keyval package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.487 ...uliaLocal, style=julia, mathescape=false]
+                                                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[97]
+
+./chapter-04/04.tex:497: Package keyval Error: ##numbers undefined.
+
+See the keyval package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.497 Typically, |
+                  shearing| is used by typesetting systems of computerized t...
+
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+File: chapter-04/figs/shear3D.pdf Graphic file (type pdf)
+<use chapter-04/figs/shear3D.pdf>
+
+./chapter-04/04.tex:504: Package keyval Error: ##numbers undefined.
+
+See the keyval package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.504 ...uliaLocal, style=julia, mathescape=false]
+                                                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+./chapter-04/04.tex:513: Package keyval Error: ##numbers undefined.
+
+See the keyval package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.513 It is worthwhile to remark that the |
+                                           H| mapping, as |R|, |GR|, |S|, |T...
+
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+./chapter-04/04.tex:513: Package keyval Error: ##numbers undefined.
+
+See the keyval package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.513 ...hile to remark that the |H| mapping, as |
+                                                  R|, |GR|, |S|, |T|, |MAT|,...
+
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+./chapter-04/04.tex:513: Package keyval Error: ##numbers undefined.
+
+See the keyval package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.513 ...to remark that the |H| mapping, as |R|, |
+                                                  GR|, |S|, |T|, |MAT|, and ...
+
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+./chapter-04/04.tex:513: Package keyval Error: ##numbers undefined.
+
+See the keyval package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.513 ...ark that the |H| mapping, as |R|, |GR|, |
+                                                  S|, |T|, |MAT|, and |HOMO|...
+
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+./chapter-04/04.tex:513: Package keyval Error: ##numbers undefined.
+
+See the keyval package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.513 ...hat the |H| mapping, as |R|, |GR|, |S|, |
+                                                  T|, |MAT|, and |HOMO| are ...
+
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+./chapter-04/04.tex:513: Package keyval Error: ##numbers undefined.
+
+See the keyval package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.513 ...he |H| mapping, as |R|, |GR|, |S|, |T|, |
+                                                  MAT|, and |HOMO| are dimen...
+
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+./chapter-04/04.tex:513: Package keyval Error: ##numbers undefined.
+
+See the keyval package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.513 ...ing, as |R|, |GR|, |S|, |T|, |MAT|, and |
+                                                  HOMO| are dimension-indepe...
+
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[98]
+
+./chapter-04/04.tex:559: Package keyval Error: ##numbers undefined.
+
+See the keyval package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.559 In |
+          Plasm| we translate a geometric object of |Hpc| type via tensor ap...
+
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+./chapter-04/04.tex:559: Package keyval Error: ##numbers undefined.
+
+See the keyval package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.559 ...asm| we translate a geometric object of |
+                                                  Hpc| type via tensor appli...
+
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+./chapter-04/04.tex:561: Package keyval Error: ##numbers undefined.
+
+See the keyval package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.561 ...uliaLocal, style=julia, mathescape=false]
+                                                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+./chapter-04/04.tex:567: Package keyval Error: ##numbers undefined.
+
+See the keyval package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.567 A triple application of |
+                               T| function is needed: first to indices, then...
+
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+./chapter-04/04.tex:567: Package keyval Error: ##numbers undefined.
+
+See the keyval package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.567 ...n paramenters, finally to the object of |
+                                                  Hpc| type to be translated.
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+./chapter-04/04.tex:571: Package keyval Error: ##numbers undefined.
+
+See the keyval package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.571 The |
+           step| is a |Hpc| solid obtained by product of three line segments...
+
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+./chapter-04/04.tex:571: Package keyval Error: ##numbers undefined.
+
+See the keyval package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.571 The |step| is a |
+                       Hpc| solid obtained by product of three line segments...
+
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+./chapter-04/04.tex:572: Package keyval Error: ##numbers undefined.
+
+See the keyval package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.572 An array of $n$ pairs |
+                             [move, step]| is generated and concatenated by ...
+
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+./chapter-04/04.tex:572: Package keyval Error: ##numbers undefined.
+
+See the keyval package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.572 ...]| is generated and concatenated by the |
+                                                  CAT| operator.  Finally, t...
+
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+./chapter-04/04.tex:572: Package keyval Error: ##numbers undefined.
+
+See the keyval package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.572 ...T| operator.  Finally, the semantics of |
+                                                  STRUCT| (see Section~\ref{...
+
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+./chapter-04/04.tex:574: Package keyval Error: ##numbers undefined.
+
+See the keyval package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.574 ...uliaLocal, style=julia, mathescape=false]
+                                                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[99]
+File: chapter-04/figs/stair.pdf Graphic file (type pdf)
+<use chapter-04/figs/stair.pdf>
+
+
+Class-Warning: Legend of \sidecaption for figure 4.5
+is 105.9925pt taller than the corresponding float - 
+you'd better switch the environment. 
+) [100] (./plasmbook.bbl [114
 
 
 
@@ -3614,19 +3934,19 @@ LaTeX Warning: There were undefined references.
 LaTeX Warning: There were multiply-defined labels.
 
 Package rerunfilecheck Info: File `plasmbook.out' has not changed.
-(rerunfilecheck)             Checksum: A8900097213A8003DAB29CFE2794C185;1757.
+(rerunfilecheck)             Checksum: BA8B6E9CCB8292763F4D40BF0B30B2FE;1673.
  )
 (\end occurred inside a group at level 1)
 
 ### semi simple group (level 1) entered at line 411 (\begingroup)
 ### bottom level 
 Here is how much of TeX's memory you used:
- 21821 strings out of 476683
- 389613 string characters out of 5804047
+ 21877 strings out of 476683
+ 390863 string characters out of 5804047
  2043018 words of memory out of 5000000
- 41646 multiletter control sequences out of 15000+600000
- 520749 words of font info for 119 fonts, out of 8000000 for 9000
+ 41697 multiletter control sequences out of 15000+600000
+ 520757 words of font info for 120 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  86i,13n,114p,9597b,11981s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on plasmbook.pdf (24 pages).
+Output written on plasmbook.pdf (27 pages).
