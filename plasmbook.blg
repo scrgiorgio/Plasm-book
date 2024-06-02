@@ -36,45 +36,45 @@ Database file #1: plasmbook.bib
 Warning--I didn't find a database entry for "Rootmeansquare:23"
 Warning--I didn't find a database entry for ""
 Warning--empty year in juliaset
-You've used 47 entries,
+You've used 48 entries,
             2945 wiz_defined-function locations,
-            921 strings with 13094 characters,
-and the built_in function-call counts, 20247 in all, are:
-= -- 1714
-> -- 531
+            926 strings with 13253 characters,
+and the built_in function-call counts, 20694 in all, are:
+= -- 1745
+> -- 553
 < -- 7
-+ -- 224
-- -- 173
-* -- 952
-:= -- 2550
-add.period$ -- 100
-call.type$ -- 47
-change.case$ -- 235
++ -- 233
+- -- 181
+* -- 979
+:= -- 2612
+add.period$ -- 101
+call.type$ -- 48
+change.case$ -- 242
 chr.to.int$ -- 0
-cite$ -- 48
-duplicate$ -- 1939
-empty$ -- 1843
-format.name$ -- 190
-if$ -- 4485
+cite$ -- 49
+duplicate$ -- 1978
+empty$ -- 1884
+format.name$ -- 199
+if$ -- 4580
 int.to.chr$ -- 0
-int.to.str$ -- 47
-missing$ -- 400
-newline$ -- 243
-num.names$ -- 98
-pop$ -- 802
+int.to.str$ -- 48
+missing$ -- 411
+newline$ -- 247
+num.names$ -- 100
+pop$ -- 824
 preamble$ -- 1
-purify$ -- 178
+purify$ -- 184
 quote$ -- 0
-skip$ -- 794
+skip$ -- 803
 stack$ -- 0
-substring$ -- 702
-swap$ -- 1064
+substring$ -- 707
+swap$ -- 1083
 text.length$ -- 7
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 176
+type$ -- 178
 warning$ -- 1
-while$ -- 113
-width$ -- 49
-write$ -- 534
+while$ -- 115
+width$ -- 50
+write$ -- 544
 (There were 2 error messages)

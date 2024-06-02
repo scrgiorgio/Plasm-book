@@ -59,6 +59,11 @@ Cimrman, R.: Sparse matrices in scipy.
 \newblock
   \urlprefix\url{https://scipy-lectures.org/advanced/scipy_sparse/index.html}
 
+\bibitem{10.5555/1614191}
+Cormen, T.H., Leiserson, C.E., Rivest, R.L., Stein, C.: Introduction to
+  Algorithms, Third Edition, 3rd edn.
+\newblock The {MIT} Press (2009)
+
 \bibitem{JuliaGPU}
 Danisc, S., Kavalar, M., Dombrowski, M., Markovics, P.: An Introduction to GPU
   Programming in Julia.

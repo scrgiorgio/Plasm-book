@@ -4,7 +4,7 @@
 \label{chapt:4}
 
 Julia |Plasm| is the best choice to write symbolic geometric models for Building Information Modeling (BIM) and Computer-Aided Design (CAD).  Geometric models specify the physical appearance of Architecture, Engineering, and Construction products at any scale, from structural and envelope components to whole buildings and built environments, and are used for design, tender, contract, and collaboration. We ported the  functional language |Plasm| to Julia for better supporting design, model generation, and visualization of geometric objects.
-In this chapter we introduce the great expressive power of |Plasm| geometric types and parametric functions, as well the simple methods used to build parametric assemblies, where objects itself can be used as actual parameters. We show also that |Plasm| offers a  general mechanism (Julia dictionaries) to export models characterized by colors, textures, materials, and so on. |Plasm| can be even embedded in the |Jupiter| platform in order to document the design choices step-by-step in digital notebooks.
+In this chapter we introduce the great expressive power of |Plasm| geometric types and parametric functions, as well the simple methods used to build parametric assemblies, where objects itself can be used as actual parameters. We show also that |Plasm| offers a  general mechanism (Julia dictionaries) to export models characterized by colors, textures, materials, and so on. |Plasm| can be even embedded in the |Juπpiter| platform in order to document the design choices step-by-step in digital notebooks.
 
 \section{Plasm geometric types}\label{sect:4-1}
 
@@ -20,10 +20,10 @@ This development defined different data types and user structures, which the cur
 The Hierarchical Polyhedral Complex, now denoted in Julia |Plasm| as the |Hpc| datatype, was characterized by models defined as aggregation of multidimensional convex cells, described only by their vertices and by multidimensional affine matrices.
 
 \item 
-Our research about algebraic topology of geometric design directed us to design the Linear Algebraic Representation, currently the |Lar| datatype, used to work with chain complexes, and able to  fully specify the geometry and topology of the \emph{solid objects} under consideration.
+Our research about algebraic topology of geometric design directed us to design the Linear Algebraic Representation, currently the |Lar| datatype, used to work with chain complexes, and able to  fully specify the geometry and topology of the \emph{solid objects} under consideration, even non-manifold.
 
 \item 
-Finally, a third Julia user-defined |struct|, named |Geo| for Geometry, is being used as container of huge datasets for |Plasm|-coded applications of |BIM| objects and 3D point clouds from surveys.  
+Finally, a third Julia’s user-defined |struct|, named |Geo| for Geometry, is being used as container of huge datasets for |Plasm|-coded generation of |BIM| objects and 3D point clouds from surveys.  
 \end{enumerate}
 
 
@@ -124,7 +124,7 @@ const ChainComplex = Vector{ChainOp}
 The |Cells| type stores the cellular bases and some subsets of cells as |Vector| of |Vector| of integers. The |Cell| type is utilized to memorize a single cell's (sparse)  representation. The |Chain| type item equals the cell type, and is used only for documentation aims. The |ChainOp| type allows the storage of the topological operators, including boundary and coboundary, and other higher degree operators, e.g., |FV|. The |ChainComplex| type is employed as the multidimensional |Vector| store of chain complexes, by now only in 2D and 3D, with two and three |ChainOp| sparse matrices, respectively.
 
 \begin{coding}[3-cube topology is a ChainOp object]\
-Whereas the expression |cube.C[:FV]| returns a dictionary value of type |Cells|, which contains the basis of our cubic cellular complex, |top| is of |ChainOp| type:
+The expression |cube.C[:FV]| returns a dictionary value of type |Cells|, which contains the basis of our cubic cellular complex.  |KFV| is of type |ChainOp|:
 
 \begin{lstlisting}[language=JuliaLocal, style=julia, mathescape = true] 
 cube = LAR(CUBE(3))			#=
@@ -137,9 +137,9 @@ FV = cube.C[:FV]			#=
  [1, 3, 5, 7]
  [2, 4, 6, 8]
  [1, 2, 7, 8]
- [5, 6, 7, 8]
+ [5, 6, 7, 8]			=#
 
-KFV = lar2cop(FV)			#=
+KFV = lar2cop(FV::Cells)::ChainOp		#=
 6×8 SparseArrays.SparseMatrixCSC{Int8, Int64} with 24 stored entries:
  1  1  1  1  ⋅  ⋅  ⋅  ⋅
  ⋅  ⋅  1  1  1  1  ⋅  ⋅
@@ -148,17 +148,21 @@ KFV = lar2cop(FV)			#=
  1  1  ⋅  ⋅  ⋅  ⋅  1  1
  ⋅  ⋅  ⋅  ⋅  1  1  1  1			=#
 \end{lstlisting}
-Of course, |(typeof(FV)==Cells) && (typeof(KFV)==ChainOp) # => true|.
+Of course, |(typeof(FV)==Cells) && (typeof(KFV)==ChainOp) # => true|, 
+since |lar2cop| : Cells $\to$ |ChainOp|.
 \end{coding}
 
 \begin{remark}[About sparsity]
-While in this small case, the |FV| matrix is not very sparse in this small case, the sparsity overgrows as the cellular complex proliferates since the non-zero elements grow linearly with the number of cells. In contrast, the zero elements grow quadratically (with the matrix elements).
+While in this small case, the |KFV| matrix is not very sparse, the sparsity overgrows as the cellular complex proliferates, since the non-zero elements grow linearly with the number of cells. In contrast, the zero elements grow quadratically (with the matrix elements).
+\end{remark}
+\begin{remark}[Global view of incidencies]
+See, by inspection of |KFV|, that each face is incident to 4 cube vertices and each vertex is incident to 3 faces.
 \end{remark}
 
 
 \section{Plasm parametric primitives}\label{sect:4-2}
 
-In this section, we introduce and exemplify several features of the working of |Plasm| with geometric objects. This system is quite different from most geometric and graphics systems since it is based on |FL|-style combinators.
+In this section, we introduce and exemplify several features of the working of |Plasm| with geometric objects. The |Plasm| package is quite different from most geometric and graphics |API|s since it is based on |FL|-style combinators.
 
 
 \subsection{Geometric Transformations}\label{sect:4-2-1}
@@ -187,7 +191,7 @@ In homogeneous coordinates the Euclidean plane $\mathbb{E}^2 \,\backslash\, \{\v
 
 In |Plasm|, by design choice to make the multidimensional approach to geometric design more accessible, the added homogeneous coordinate is the first, not the last, as we may see in many computer graphics books.
 
-Even more, for the sake of clarity we can use the |HOMO| operator to transform a $d\times d$ matrix in a $(d+1)\times(d+1)$ matrix, i.e., a $3\times 3$ on the 2D plane and $4\times 4$ on 3D space. The type of returned matrix is |MatrixNd|, which is used for dimension-independent programming.
+Even more, for the sake of clarity, we can use the |HOMO| operator to transform a $d\times d$ matrix in a $(d+1)\times(d+1)$ matrix, i.e., a $3\times 3$ on the 2D plane and $4\times 4$ on 3D space. The type of returned matrix is |MatrixNd|, which is used for dimension-independent programming.
 
 Homogeneous coordinates allow to combine linearly all transformations, using products of their matrices in homogeneous coordinates. In the remainder of this section we describe the geometric effect of each transformation and the structure of the corresponding matrices. 
 
@@ -601,6 +605,240 @@ VIEW(stair)
 
 
 \section{Hierarchical assembly of geometric objects}\label{sect:4-3}
+
+Complex solid shapes are defined as hierarchical assemblies of either solid primitives or more  complex shapes, each defined in a local coordinate system. 
+
+Most graphics and modeling systems implement this semantics as a \emph{hierarchical graph} or tree, where affine geometry within the \emph{nodes} is defined in local coordinate frames, and arcs are associated to affine transformations that move the whole subgraph rooted in the ending node onto the coordinate system of the first node of the arc, called \emph{root} of the data structure.
+
+
+\subsection*{Object Transform}\label{sect:4-3-1} Any |Plasm| geometric value of |Hpc| type can be affinely transformed by direct application of an affine tensor to it.
+
+Alternatively, can be orderly transformed by all tensors before it in the parameter sequence (or array) of a |STRUCT| combinator.
+
+\begin{coding}[Example.1]\ 
+First, arrange two \emph{wire-frame} (1D) objects:
+\begin{lstlisting}[language=JuliaLocal, style=julia, mathescape=false]
+SK = SKELETON;
+cube, tetra = map(SK(1), [CUBOID([1,1,1]), SIMPLEX(3)]);
+\end{lstlisting}
+\end{coding}
+
+\begin{coding}[Example.2]\ 
+Then, aggregate two objects within the \emph{same} coordinate frame:
+\begin{lstlisting}[language=JuliaLocal, style=julia, mathescape=false]
+singleframe = STRUCT(cube, tetra);
+VIEW(SK(1)(singleframe), Dict("line_width" => 4))
+\end{lstlisting}
+\end{coding}
+
+\begin{coding}[Example.3]\ 
+See here the \emph{direct} application of tensor |T(3)(1.)| to |tetra| value; the |tetra| coordinates have changed:
+\begin{lstlisting}[language=JuliaLocal, style=julia, mathescape=false]
+doubleframe = STRUCT(cube, R(1,2)(-π/2)$$T(3)(1.)(tetra), FRAME3(Point3d(0,0,0),Point3d(2,2,2)) )
+\end{lstlisting}
+\end{coding}
+
+\begin{coding}[Example.4]\ 
+Exactly the same effect could be obtained by the following expression, because \emph{a transformation tensor is implicitly applied to every geometric value following it} in the parameter sequence of a |STRUCT| combinator. The order of evaluation starts from the end.
+\begin{lstlisting}[language=JuliaLocal, style=julia, mathescape=false]
+doubleframe = STRUCT(cube, R(1,2)(-π/2), T(3)(1.), tetra )
+\end{lstlisting}
+\end{coding}
+
+
+\begin{coding}[To check !!]\ 
+\begin{lstlisting}[language=JuliaLocal, style=julia, mathescape=false]
+VIEW(PROPERTIES(doubleframe,Dict("line_width"=>4)), Dict("title"=>"TEST","background_color"=>[1.,1.,1.]))
+\end{lstlisting}
+\end{coding}
+
+
+\subsection*{Assembly of components}\label{sect:4-3-2}
+
+Hierarchical models of complex assemblies are generated by aggregation of cellular complexes, each one defined in a local coordinate system, and possibly
+relocated by affine transformations of coordinates.  This operation may be repeated
+hierarchically, with subassemblies defined by aggregation of simpler parts, and so
+on, until to obtain a set of elementary models, which cannot be further decomposed.
+
+Two main advantages can be found in a hierarchical modeling approach. Each component complex  and each partial assembly, at every hierarchical level, are defined independently from each other, using their |PROPERTIES| and local coordinate frame, suitably chosen to make the  definition easier.
+Furthermore, only one copy of each component is stored in memory, and may be instanced
+in different locations and orientations how many times it is needed.
+
+\begin{figure}[htbp] %  figure placement: here, top, bottom, or page
+   \includegraphics[width=\linewidth]{chapter-04/figs/refectory.png}
+   \hspace{5mm}
+   \caption{Hierarchical assembly of cellular 3-complexes.}
+   \label{fig:refectory}
+\end{figure}  
+
+
+\subsection*{Directed Acyclic Graph (DAG)}\label{sect:4-3-2-1}
+
+A \emph{hierarchical model}, defined inductively as an assembly of component parts,
+is described by an \emph{acyclic directed multigraph}, often called a \emph{scene graph} or \emph{hierarchical structure} in computer graphics and modeling.  The main algorithm with hierarchical assemblies is the \emph{traversal} function, which transforms every component from \emph{local coordinates} to global coordinates, called \emph{world coordinates}.
+
+\begin{definition}[Directed graph] A directed graph $G$ is a pair $(N,A)$, where
+$N$ is a set of \emph{nodes} and $A$ is a set of directed \emph{arcs}, given as ordered pairs of nodes.  
+\end{definition}
+Such a definition is not sufficient when more than one arc must be considered
+between the same pair of nodes.
+The notion of \emph{multigraph} is hence introduced.  
+
+\begin{definition}[Directed multigraph] A directed multigraph is a
+triplet $G := (N,A,f)$ where $N$ and $A$ are sets of nodes and arcs, respectively, and $f:
+A \to \mathbf{N}^{2}$ is a mapping from arcs to node pairs.  
+\end{definition}
+In a multigraph, the same pair of nodes can be connected by multiple arcs.
+
+Directed graphs or multigraphs are said to be \emph{acyclic} when they do not contain cycles,
+i.e. when no path starts and ends at the same vertex.  \emph{Trees} are common examples of
+acyclic graphs. A tree, where each non-leaf node is the root of a subtree, is the best
+model of the concept of \emph{hierarchy}. Nodes in a tree can be associated with their integer
+\emph{distance} from the root, defined by the number of edges on the unique path from the root
+to the node.  A tree can be layered by \emph{levels}, by putting in the same subset (level) all
+the nodes with equal distance from the root.  
+
+\subsubsection*{Hierarchical graphs}
+
+Acyclic graphs/multigraphs are also called \emph{hierarchical graphs}, because they can be
+associated to a tree, generated at run-time by visiting the graph with some standard
+traversal algorithm~\cite{10.5555/1614191}, e.g. with a depth-first-search (DFS).  The ordered sequence of nodes
+produced by the traversal is sometimes called a \emph{linearized graph}.  Each node in this
+sequence is suitably transformed from local coordinates to \emph{world coordinates}, i.e. to
+the coordinates of the root, by the traversal algorithm.
+
+
+
+\subsection*{Traversal algorithms}\label{sect:4-3-3}
+
+There are many ways to visit a graph or multigraph, traversing at least once every node or arc.
+
+\subsection*{Assembly examples}\label{sect:4-3-4}
+
+\subsection{Refectory room model}\label{sect:4-3-4-1}
+
+Some coordinated coding examples are given here, to show the development bottom-up of the geometric model of a refectory room with its main appliances, tables and user chairs. The room is visualized in Figure~\ref{fig:refectory}.
+
+\begin{coding}[Table]\ 
+Both the |tableTop| and |tablelegs| with $4$ |tableLeg| instances are generated starting from 3D cube of side 1:
+\begin{lstlisting}[language=JuliaLocal, style=julia, mathescape=false]
+cube = T(1,2)(-.5,-.5)(CUBE(1));
+tableTop  = STRUCT( T(3)(.85), S(1,2,3)(1,1,.05), cube );
+tableLeg  = STRUCT( T(1,2)(-.475,-.475), S(1,2,3)(.1,.1,.89), cube );
+tablelegs = STRUCT( CAT(DIESIS(4)([tableLeg, R(1,2)(π/2)])) );
+table = STRUCT( tableTop, tablelegs );
+VIEW( table )
+\end{lstlisting}
+The operator |DIESIS| ($\#$) in old |Plasm| repeats 4 times its second argument.
+\end{coding}
+
+\begin{coding}[Chair]\ 
+The |chair| object is made by a |chairTop| and 4 cylindrical |chairLeg| with radius |0.06| and height |0.5|:
+\begin{lstlisting}[language=JuliaLocal, style=julia, mathescape=false]
+cylinder  = CYLINDER([.06, .5])(8)
+chairTop  = STRUCT( T(3)(0.5), S(1,2,3)(0.5,0.5,0.04), cube );
+chairLeg  = STRUCT( T(1,2)(-.22,-.22), S(1,2)(.5,.5), R(1,2)(π/8), cylinder );
+chairlegs = STRUCT( CAT(DIESIS(4)([chairLeg, R(1,2)(π/2)]) );
+chair = STRUCT( chairTop, chairlegs );
+VIEW( chair )
+\end{lstlisting}
+\end{coding}
+
+\begin{coding}[Four sits]\  Four sits are produced by alternating chairs with local rotations in object |fourChairs|:
+\begin{lstlisting}[language=JuliaLocal, style=julia, mathescape=false]
+theChair   = STRUCT( T(1)(-.8), chair )
+fourChairs = STRUCT( CAT(DIESIS(10)([R(1,2)(π/2), theChair]) );
+fourSit    = STRUCT( fourChairs, table );
+VIEW( fourSit )
+\end{lstlisting}
+\end{coding}
+
+\begin{coding}[Single row of tables and chairs]\ 
+The single 4-sit’s row is generated by alternating 10 instances 
+of |fourSit| and T(2)(2.5) tensors:
+\begin{lstlisting}[language=JuliaLocal, style=julia, mathescape=false]
+singleRow = STRUCT( CAT(DIESIS(10)([fourSit, T(2)(2.5)])) );
+VIEW( singleRow )
+\end{lstlisting}
+\end{coding}
+
+\begin{coding}[Whole refectory]\ 
+Analogously, the refectory room is furnished by juxtaposing 10 instances 
+of |singleRow| and $x$-translations:
+\begin{lstlisting}[language=JuliaLocal, style=julia, mathescape=false]
+refectory = STRUCT( CAT(DIESIS(10)([singleRow, T(1)(3)])) );
+VIEW( refectory )
+\end{lstlisting}
+\end{coding}
+
+\subsection{Plasm design of a turbo pump}\label{sect:4-3-4-1}
+
+This section generates a complex family of geometric objects stepwise. First, a code template |SOLIDHELICOID|, is given, and then a definitive model, |TURBOPUMP|, is produced. This is impossible to define with the any |GUI|-based CAD system.
+
+\begin{coding}[Solid helicoid]\ A parametric helicoid surface and solid follow. The source code represents a whole family of $\infty^6$ different shapes:
+\begin{lstlisting}[language=JuliaLocal, style=julia, mathescape=false]
+function SOLIDHELICOID(; nturns=3,R=1.,r=0.0,shape=[36*nturns, 8], pitch=2, thickness=0.1)
+   totalangle = nturns*2*pi
+   grid2D = INTERVALS(36*nturns)(36*nturns)*INTERVALS(4)(8)
+   Domain2D=T(2)(r)(S(1,2)([totalangle/shape[1],R-r])(grid2D))
+   surface = p->((u,v)=p;[v*cos(u);v*sin(u);u*(pitch/(2*pi))])
+   solidMapping = THINSOLID(surface)
+   Domain3D = Domain2D * INTERVALS(thickness)(1);
+   view = Dict("background_color"=>[1.,1,1])
+   VIEW(MAP(surface)(Domain2D), view)
+   VIEW(MAP(solidMapping)(Domain3D), view)
+end;
+
+julia> SOLIDHELICOID( r=0.4, thickness=0.2 )
+\end{lstlisting}
+\end{coding}
+
+\begin{figure}[htbp] %  figure placement: here, top, bottom, or page
+\begin{minipage}[c]{0.4\textwidth}
+   \includegraphics[width=\linewidth,height=\linewidth]{chapter-04/figs/surf-helicoid}%
+\end{minipage}\hfill
+\begin{minipage}[c]{0.4\textwidth}
+   \includegraphics[width=\linewidth,height=\linewidth]{chapter-04/figs/solid-helicoid}%
+\end{minipage}%
+\caption{Parametrized helicoid values: (a) surface; (b) thin solid.}\label{fig:helicoid}
+\end{figure}
+
+
+\begin{coding}[Turbo pump]\ 
+The main difference with |SOLIDHELICOID| template is the piecewise-linear |Dom2D| mapped from the rectangular |grid2D|.
+\begin{lstlisting}[language=JuliaLocal, style=julia, mathescape=false]
+function TURBOPUMP(; nturns=3, R=1., r=0.0, shape=[36*nturns,8], pitch=2, thickness=0.1)
+   totalangle = nturns*2*pi;  xM = 36*nturns; 
+   (x0,xm1,xm2,xM) = (0.0, xM/2nturns, 6xM/2nturns, xM);
+   G = (x-> x<xm1 ? x/xm1 : (x>xm2 ? 1+(xm2-x)/(xM-xm2) : 1)); 
+   grid2D = Power(INTERVALS(xM)(xM), INTERVALS(1)(8));
+   dom = MAP(p->((u,v)=p; [u, (G(u)+0.1)*v]))(grid2D);
+   Dom2D= T([2])([r])(S([1,2])([totalangle/shape[1],R-r])(dom)); 
+   surface = p->((u,v)=p;[v*cos(u); v*sin(u); u*(pitch/(2*pi))]) 
+   solidMapping = THINSOLID(surface)
+   Domain3D = Power(Dom2D, INTERVALS(thickness)(1));
+   MAP(solidMapping)(Domain3D)
+end;
+\end{lstlisting}
+\end{coding}
+
+The stepwise linearized domain shape is produced by the Julia function assigned to symbol |G|, implemented as a nested conditional triple statement.
+
+\begin{coding}[Turbo pump’s object viewing]\ 
+\begin{lstlisting}[language=JuliaLocal, style=julia, mathescape=false]
+obj = TURBOPUMP( pitch=0.15, thickness=0.015, nturns=5, r=1/2 );
+view = Dict("background_color"=>[1,1,1]); VIEW(obj, view)
+\end{lstlisting}
+The other parameters have default value, given in the definition head.
+\end{coding}
+
+
+\begin{figure}[htbp] %  figure placement: here, top, bottom, or page
+   \includegraphics[width=0.337\linewidth]{chapter-04/figs/turbo-pump01}%
+   \includegraphics[width=0.663\linewidth]{chapter-04/figs/turbo-pump02}%
+\caption{Two prospective images of the turbo pump component: (a) from top; (b) from side.}
+\label{fig:turbopump}
+\end{figure}
 
 
 \section{Attach properties to geometry}\label{sect:4-4}
