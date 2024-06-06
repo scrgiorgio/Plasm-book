@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.9.22)  5 JUN 2024 10:59
+This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.9.22)  6 JUN 2024 18:08
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -5118,7 +5118,301 @@ File: chapter-04/figs/turbo-pump01.pdf Graphic file (type pdf)
 <use chapter-04/figs/turbo-pump01.pdf>
 File: chapter-04/figs/turbo-pump02.pdf Graphic file (type pdf)
 <use chapter-04/figs/turbo-pump02.pdf>
-) [113] [114] (./plasmbook.bbl [130
+
+./chapter-04/04.tex:1066: Package keyval Error: ##numbers undefined.
+
+See the keyval package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1066 ...ther produced or in-progress geometric |
+                                                  Plasm| models, starting fr...
+
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[113]
+
+./chapter-04/04.tex:1068: Package keyval Error: ##numbers undefined.
+
+See the keyval package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1068 Of course, the |
+                       Plasm| platform may also export/import Computer Graph...
+
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+./chapter-04/04.tex:1068: Package keyval Error: ##numbers undefined.
+
+See the keyval package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1068 ...ns, directly representable through the |
+                                                  PolygonSet| entity primiti...
+
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+LaTeX Warning: Citation `' on page 114 undefined on input line 1072.
+
+
+./chapter-04/04.tex:1073: Package keyval Error: ##numbers undefined.
+
+See the keyval package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1073 ... each such file with one or more model |
+                                                  VIEW()|s of the exported b...
+
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+./chapter-04/04.tex:1075: Package keyval Error: ##numbers undefined.
+
+See the keyval package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1075 The expression |
+                       include("source.jl")| causes the contents of the file...
+
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+./chapter-04/04.tex:1075: Package keyval Error: ##numbers undefined.
+
+See the keyval package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1075 ....jl")| causes the contents of the file |
+                                                  "source.jl"| to be evaluat...
+
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+./chapter-04/04.tex:1075: Package keyval Error: ##numbers undefined.
+
+See the keyval package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1075 ...he include call occurs. The expression |
+                                                  include()| can be called m...
+
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[114]
+
+./chapter-04/04.tex:1077: Package keyval Error: ##numbers undefined.
+
+See the keyval package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1077 ...ng}, is more general and powerful. The |
+                                                  import <name>| or |using <...
+
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+./chapter-04/04.tex:1077: Package keyval Error: ##numbers undefined.
+
+See the keyval package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1077 ...l and powerful. The |import <name>| or |
+                                                  using <name>| allows you t...
+
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+./chapter-04/04.tex:1077: Package keyval Error: ##numbers undefined.
+
+See the keyval package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1077 ...software library available by the name |
+                                                  <name>| inside the importi...
+
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+LaTeX Warning: Citation `' on page 115 undefined on input line 1077.
+
+
+./chapter-04/04.tex:1086: Package keyval Error: ##numbers undefined.
+
+See the keyval package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1086 ...design package might import parametric |
+                                                  Plasm| functions already d...
+
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+./chapter-04/04.tex:1094: Package keyval Error: ##numbers undefined.
+
+See the keyval package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1094 Linear Algebraic Representation (|
+                                         LAR|) is the name of the algebraic ...
+
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+./chapter-04/04.tex:1094: Package keyval Error: ##numbers undefined.
+
+See the keyval package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1094 ... last decade, and embedded recently in |
+                                                  Plasm|. This data structur...
+
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+./chapter-04/04.tex:1099: Package keyval Error: ##numbers undefined.
+
+See the keyval package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1099 ...}) where \emph{geometry} is the matrix |
+                                                  Float64| of coordinates of...
+
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+./chapter-04/04.tex:1099: Package keyval Error: ##numbers undefined.
+
+See the keyval package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1099 ...x |Float64| of coordinates of 0-cells (|
+                                                  VE|), and \emph{topology} ...
+
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+./chapter-04/04.tex:1099: Package keyval Error: ##numbers undefined.
+
+See the keyval package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1099 ...$ corresponding to incidence relations |
+                                                  VE|, |EF|, and |FC|. These...
+
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+./chapter-04/04.tex:1099: Package keyval Error: ##numbers undefined.
+
+See the keyval package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1099 ...esponding to incidence relations |VE|, |
+                                                  EF|, and |FC|. These resul...
+
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+./chapter-04/04.tex:1099: Package keyval Error: ##numbers undefined.
+
+See the keyval package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1099 ...to incidence relations |VE|, |EF|, and |
+                                                  FC|. These result by the 3...
+
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+./chapter-04/04.tex:1099: Package keyval Error: ##numbers undefined.
+
+See the keyval package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1099 ...ry surfaces of any given collection of |
+                                                  Brep| solid models.
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[115]
+
+./chapter-04/04.tex:1108: Package keyval Error: ##numbers undefined.
+
+See the keyval package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1108 Our preliminary tests showed that all the |
+                                                  Plasm| geometric shapes we...
+
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+./chapter-04/04.tex:1108: Package keyval Error: ##numbers undefined.
+
+See the keyval package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1108 ...ected are exportable to transport file |
+                                                  IFC| as |PolygonSet| entit...
+
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+./chapter-04/04.tex:1108: Package keyval Error: ##numbers undefined.
+
+See the keyval package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1108 ... exportable to transport file |IFC| as |
+                                                  PolygonSet| entities and t...
+
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+) [116] (./plasmbook.bbl [130
 
 
 
@@ -5171,19 +5465,19 @@ LaTeX Warning: There were undefined references.
 LaTeX Warning: There were multiply-defined labels.
 
 Package rerunfilecheck Info: File `plasmbook.out' has not changed.
-(rerunfilecheck)             Checksum: 785FC13E3B73F29C157BA486564ECD89;2385.
+(rerunfilecheck)             Checksum: 1EE747CE4DA8ABCEE6087800732AE8E1;1765.
  )
 (\end occurred inside a group at level 1)
 
 ### semi simple group (level 1) entered at line 415 (\begingroup)
 ### bottom level 
 Here is how much of TeX's memory you used:
- 22057 strings out of 476683
- 394775 string characters out of 5804047
- 2048018 words of memory out of 5000000
- 41862 multiletter control sequences out of 15000+600000
+ 22064 strings out of 476683
+ 394836 string characters out of 5804047
+ 2049018 words of memory out of 5000000
+ 41869 multiletter control sequences out of 15000+600000
  520797 words of font info for 125 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  86i,13n,114p,9597b,11981s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on plasmbook.pdf (37 pages).
+Output written on plasmbook.pdf (39 pages).

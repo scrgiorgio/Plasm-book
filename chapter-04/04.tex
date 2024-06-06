@@ -1063,12 +1063,48 @@ The other parameters have default value, given in the definition head.
 
 \section{Export geometry}\label{sect:4-6}
 
+There are several ways to export either produced or in-progress geometric |Plasm| models, starting from directly exporting the Julia sources. Depending on the size of the building project, the digital project evaluated within a short number of seconds of computing time could easily amount to datasets many hundreds of thousands of times more significant. 
 
-\subsection{Direct export of sources}\label{sect:4-6-1}
+Of course, the |Plasm| platform may also export/import Computer Graphics standard formats for polyhedral modeling, particularly using the boundary representation of the Boolean algebras’ atoms associated with the building design. The simplest options for file transport of geometry are boundary triangulations or polygons, directly representable through the |PolygonSet| entity primitives of the IFC file standard.
 
+\subsubsection*{Direct export/import of sources}\label{sect:4-6-1}
 
-\subsection{unevaluated/Evaluated LAR format}\label{sect:4-6-2}
+Julia has two mechanisms for loading source code: \emph{code inclusion} and \emph{package loading}~\cite{}.
+Code inclusion is relatively straightforward: it evaluates the given source file in the context of the caller process. It is good practice when writing a source file scheduled to export a geometric model (1) to choose a possibly long but semantically significant name and (2) to conclude each such file with one or more model |VIEW()|s of the exported building parts/aggregates. Inclusion also allows you to split a single program across multiple source files.
 
+The expression |include("source.jl")| causes the contents of the file |"source.jl"| to be evaluated in the global scope of the module where the include call occurs. The expression |include()| can be called multiple times with the same file, and the file is evaluated every time. 
 
-\subsection{IFC PolygonSet file format}\label{sect:4-6-3}
+The second mechanism, \emph{package loading}, is more general and powerful. The |import <name>| or |using <name>| allows you to load a package—i.e., an independent, reusable collection of Julia code, wrapped in one or more module, and makes the resulting software library available by the name |<name>| inside the importing module~\cite{}. 
+
+\begin{remark}
+Creating a specialized Julia module or package for a specific architectural or engineering  project may be of great professional interest and economic satisfaction. 
+E.g., the project could import Julia packages for the building typology under consideration, if any. In architecture, typology refers to identifying and grouping buildings according to their kind of use and similarity of essential characteristics, such as Residential, Educational, Institutional, Commercial, Business, or Industrial Buildings.
+\end{remark}
+
+\begin{remark}
+You can have subtypes in each type with characteristic morphology: for example, in residential higher education, or in various types of specialty hospital establishment, which must follow strict legal requirements, and so on.
+In addition, the specific design package might import parametric |Plasm| functions already developed for similar constructions and enrich them with new function methods finalized to the singular, unique design structure and shape under development.
+\end{remark}
+
+This kind of digital innovation process, on top of BIM and IFC standards (see Chapter~\ref{chapt:10}), could be of significant interest in case of development programs launched as sectorial construction interventions by governments (say housing, schools, etc.) or by charitable foundations in developing countries, where some kind of standardization can greatly reduce the program costs.
+ 
+
+\subsubsection*{Unevaluated/Evaluated/Binary LAR format}\label{sect:4-6-2}
+
+Linear Algebraic Representation (|LAR|) is the name of the algebraic geometrical data structures and computational pipeline developed by the authors and others in the last decade, and embedded recently in |Plasm|. This data structure has various formats, depending of various advancement of computation. In particular, three LAR states may be enuciated: unevaluated, evaluated and binary.
+ \begin{description}
+ 
+\item[Unevaluated LAR] Sparse binary matrices that encode the cells of a cellular complex as incidence relations between $d$-cellls and $0$-cells ($0 \leq d \leq 3$). All the binary relations between cells of different dimensions can be easily generated. The occupied storage space is less or equal to that of common incidence structures in graphics and solid modeling.
+
+\item[Evaluated LAR] is a pair (\emph{geometry}, t\emph{opology}) where \emph{geometry} is the matrix |Float64| of coordinates of 0-cells (|VE|), and \emph{topology} is a triple (in 3D) of sparse binary matrices, encoding the coboundary operators $\delta_0, \delta_1, \delta_2$ corresponding to incidence relations |VE|, |EF|, and |FC|. These result by the 3D algorithmic \emph{arrangement} pipeline that partitions the Euclidean 3s-pace on the boundary surfaces of any given collection of |Brep| solid models.
+
+\item[Binary LAR] is the result of computation of the binary algebra induced by the spatial collocation and orientation of the whole collection of B-rep primitives and solids considered by the designer at the beginning of the computational pipeline, i.e., when all the geometric elements were collocated within the geometric design of the considered building portion. This binary matrix has number of columns equal to the number of computed atoms of the space arrangement and number of rows equal to the number of primitive shapes (of uniform material) used in a geometric design.
+\end{description}
+
+Every noteworthy subset of design atoms, selected by any reason---in particular, to assign material properties, catalog products, or compute volumes or cost---will be easily extracted as a subset of corresponding columns and rows.
+
+\subsubsection*{IFC PolygonSet file format}\label{sect:4-6-3}
+
+Our preliminary tests showed that all the |Plasm| geometric shapes we defined or selected are exportable to transport file |IFC| as |PolygonSet| entities and their associated entities concerning polygons or triangles, vertex indices, and vertex coordinates. This point will be treated extensively in Chapter~\ref{chapt:10}.
+
 

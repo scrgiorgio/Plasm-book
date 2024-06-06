@@ -60,9 +60,6 @@
 \contentsline {section}{\numberline {4.4}Attach properties to geometry}{114}{section.4.4}%
 \contentsline {section}{\numberline {4.5}Design documentation (Jupyter notebooks)}{114}{section.4.5}%
 \contentsline {section}{\numberline {4.6}Export geometry}{114}{section.4.6}%
-\contentsline {subsection}{\numberline {4.6.1}Direct export of sources}{114}{subsection.4.6.1}%
-\contentsline {subsection}{\numberline {4.6.2}unevaluated/Evaluated LAR format}{114}{subsection.4.6.2}%
-\contentsline {subsection}{\numberline {4.6.3}IFC PolygonSet file format}{114}{subsection.4.6.3}%
 \contentsline {chapter}{\numberline {5}Symbolic modeling with Julia Plasm}{113}{chapter.5}%
 \contentsline {section}{\numberline {5.1} Primitive generators}{113}{section.5.1}%
 \contentsline {section}{\numberline {5.2} Plasm topological operators}{113}{section.5.2}%
@@ -109,7 +106,7 @@
 \contentsline {section}{\numberline {11.2} Out-of-Core Potree dataset}{129}{section.11.2}%
 \contentsline {section}{\numberline {11.3} Multidimensional array store}{129}{section.11.3}%
 \contentsline {section}{\numberline {11.4} Mapping to solid models}{129}{section.11.4}%
-\contentsline {section}{References}{130}{section*.24}%
+\contentsline {section}{References}{130}{section*.27}%
 \contentsline {chapter}{\numberline {A}Coding examples}{133}{appendix.A}%
 \contentsline {chapter}{Glossary}{93}{appendix*.65}%
 \contentsline {paragraph}{glossary term}{93}{section*.66}%
