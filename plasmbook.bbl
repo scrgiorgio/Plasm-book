@@ -62,7 +62,9 @@ Cimrman, R.: Sparse matrices in scipy.
 \bibitem{10.5555/1614191}
 Cormen, T.H., Leiserson, C.E., Rivest, R.L., Stein, C.: Introduction to
   Algorithms, Third Edition, 3rd edn.
-\newblock The {MIT} Press (2009)
+\newblock The {MIT} Press (2009).
+\newblock
+  \urlprefix\url{https://mitpress.mit.edu/9780262533058/introduction-to-algorithms/}
 
 \bibitem{JuliaGPU}
 Danisc, S., Kavalar, M., Dombrowski, M., Markovics, P.: An Introduction to GPU
@@ -197,6 +199,19 @@ JuliaGPU: A gentle introduction to parallelization and GPU programming in
 \bibitem{julia4data}
 Kamiski, B.: Julia for Data Analysis.
 \newblock Manning (2023)
+
+\bibitem{10.1093.27.2.97}
+Knuth, D.E.: Literate programming.
+\newblock Comput. J. \textbf{27}(2), 97–111 (1984).
+\newblock \doi{10.1093/comjnl/27.2.97}.
+\newblock \urlprefix\url{https://doi.org/10.1093/comjnl/27.2.97}
+
+\bibitem{Knuth:92}
+Knuth, D.E.: Literate programming.
+\newblock In: SLI Lecture Notes, 27. Center for the Study of Language and
+  Information (1992).
+\newblock
+  \urlprefix\url{https://web.stanford.edu/group/cslipublications/cslipublications/site/0937073806.shtml}
 
 \bibitem{typestable:21}
 Mainon, P.: Writing type-stable julia code (2021).

@@ -59,55 +59,55 @@
 \contentsline {subsection}{\numberline {4.3.1}Hierarchical graphs}{105}{subsection.4.3.1}%
 \contentsline {section}{\numberline {4.4}Attach properties to geometry}{114}{section.4.4}%
 \contentsline {section}{\numberline {4.5}Design documentation (Jupyter notebooks)}{114}{section.4.5}%
-\contentsline {section}{\numberline {4.6}Export geometry}{114}{section.4.6}%
-\contentsline {chapter}{\numberline {5}Symbolic modeling with Julia Plasm}{113}{chapter.5}%
-\contentsline {section}{\numberline {5.1} Primitive generators}{113}{section.5.1}%
-\contentsline {section}{\numberline {5.2} Plasm topological operators}{113}{section.5.2}%
-\contentsline {section}{\numberline {5.3} Linear and affine operators}{113}{section.5.3}%
-\contentsline {section}{\numberline {5.4} Manifold mapping}{113}{section.5.4}%
-\contentsline {section}{\numberline {5.5} Predefined Plasm functions}{113}{section.5.5}%
-\contentsline {section}{\numberline {5.6} Curve, surface, and solid methods}{113}{section.5.6}%
-\contentsline {chapter}{\numberline {6}Product assembly structure}{115}{chapter.6}%
-\contentsline {section}{\numberline {6.1}Hierarchical assembly definition}{116}{section.6.1}%
-\contentsline {section}{\numberline {6.2}Data structures in solid modeling}{116}{section.6.2}%
-\contentsline {section}{\numberline {6.3}Structure in DOM and Plasm}{116}{section.6.3}%
-\contentsline {section}{\numberline {6.4}Julia Plasm data structures}{116}{section.6.4}%
-\contentsline {subsection}{\numberline {6.4.1}Hierarchical Polyhedral Complex (HPC)}{116}{subsection.6.4.1}%
-\contentsline {subsection}{\numberline {6.4.2}Linear Algebraic Representation (LAR)}{116}{subsection.6.4.2}%
-\contentsline {subsection}{\numberline {6.4.3}Geometric DataSet (GEO)}{116}{subsection.6.4.3}%
-\contentsline {chapter}{\numberline {7}Space arrangements}{117}{chapter.7}%
-\contentsline {section}{\numberline {7.1} Space partition and enumeration}{117}{section.7.1}%
-\contentsline {section}{\numberline {7.2} Cellular and boundary models}{117}{section.7.2}%
-\contentsline {section}{\numberline {7.3} Arrangements and Lattices}{117}{section.7.3}%
-\contentsline {section}{\numberline {7.4} 2D and 3D Examples}{117}{section.7.4}%
-\contentsline {chapter}{\numberline {8}Boolean solid algebras}{119}{chapter.8}%
-\contentsline {section}{\numberline {8.1}Constructive Solid Geometry (CSG)}{119}{section.8.1}%
-\contentsline {section}{\numberline {8.2}Atoms and Generators }{119}{section.8.2}%
-\contentsline {section}{\numberline {8.3}Finite Boolean Algebras}{119}{section.8.3}%
-\contentsline {section}{\numberline {8.4}Computational Pipeline}{119}{section.8.4}%
-\contentsline {part}{Part\ III\hspace {\betweenumberspace }Polyhedral Modeling in AEC}{121}{part.3}%
-\contentsline {chapter}{\numberline {9}Building Information Modeling (BIM)}{123}{chapter.9}%
-\contentsline {section}{\numberline {9.1}BIM history (Chuck Eastman, ...)}{123}{section.9.1}%
-\contentsline {section}{\numberline {9.2}Building taxonomy (UNI 9838)}{123}{section.9.2}%
-\contentsline {section}{\numberline {9.3}Building envelope}{123}{section.9.3}%
-\contentsline {section}{\numberline {9.4}Building skeleton}{123}{section.9.4}%
-\contentsline {section}{\numberline {9.5}Construction Process Modeling}{123}{section.9.5}%
-\contentsline {chapter}{\numberline {10}Industry Foundation Classes (IFC)}{125}{chapter.10}%
-\contentsline {section}{\numberline {10.1}Simple introduction to IFC}{126}{section.10.1}%
-\contentsline {section}{\numberline {10.2}Data scheme for BIM collaboration}{126}{section.10.2}%
-\contentsline {section}{\numberline {10.3}IfcShapeRepresentation (IFC 4.3.x: 8.18.3.14)}{126}{section.10.3}%
-\contentsline {subsection}{\numberline {10.3.1}Representation identifiers}{126}{subsection.10.3.1}%
-\contentsline {subsection}{\numberline {10.3.2}Representation types}{126}{subsection.10.3.2}%
-\contentsline {subsection}{\numberline {10.3.3}Representation Examples}{126}{subsection.10.3.3}%
-\contentsline {section}{\numberline {10.4}Plasm parametric programming to IFC}{126}{section.10.4}%
-\contentsline {part}{Part\ IV\hspace {\betweenumberspace }Geometry from Point Cloud}{127}{part.4}%
-\contentsline {chapter}{\numberline {11}Modeling from Point Clouds}{129}{chapter.11}%
-\contentsline {section}{\numberline {11.1} Geometric survey}{129}{section.11.1}%
-\contentsline {section}{\numberline {11.2} Out-of-Core Potree dataset}{129}{section.11.2}%
-\contentsline {section}{\numberline {11.3} Multidimensional array store}{129}{section.11.3}%
-\contentsline {section}{\numberline {11.4} Mapping to solid models}{129}{section.11.4}%
-\contentsline {section}{References}{130}{section*.27}%
-\contentsline {chapter}{\numberline {A}Coding examples}{133}{appendix.A}%
+\contentsline {section}{\numberline {4.6}Export geometry}{116}{section.4.6}%
+\contentsline {chapter}{\numberline {5}Symbolic modeling with Julia Plasm}{119}{chapter.5}%
+\contentsline {section}{\numberline {5.1} Primitive generators}{119}{section.5.1}%
+\contentsline {section}{\numberline {5.2} Plasm topological operators}{119}{section.5.2}%
+\contentsline {section}{\numberline {5.3} Linear and affine operators}{119}{section.5.3}%
+\contentsline {section}{\numberline {5.4} Manifold mapping}{119}{section.5.4}%
+\contentsline {section}{\numberline {5.5} Predefined Plasm functions}{119}{section.5.5}%
+\contentsline {section}{\numberline {5.6} Curve, surface, and solid methods}{119}{section.5.6}%
+\contentsline {chapter}{\numberline {6}Product assembly structure}{121}{chapter.6}%
+\contentsline {section}{\numberline {6.1}Hierarchical assembly definition}{122}{section.6.1}%
+\contentsline {section}{\numberline {6.2}Data structures in solid modeling}{122}{section.6.2}%
+\contentsline {section}{\numberline {6.3}Structure in DOM and Plasm}{122}{section.6.3}%
+\contentsline {section}{\numberline {6.4}Julia Plasm data structures}{122}{section.6.4}%
+\contentsline {subsection}{\numberline {6.4.1}Hierarchical Polyhedral Complex (HPC)}{122}{subsection.6.4.1}%
+\contentsline {subsection}{\numberline {6.4.2}Linear Algebraic Representation (LAR)}{122}{subsection.6.4.2}%
+\contentsline {subsection}{\numberline {6.4.3}Geometric DataSet (GEO)}{122}{subsection.6.4.3}%
+\contentsline {chapter}{\numberline {7}Space arrangements}{123}{chapter.7}%
+\contentsline {section}{\numberline {7.1} Space partition and enumeration}{123}{section.7.1}%
+\contentsline {section}{\numberline {7.2} Cellular and boundary models}{123}{section.7.2}%
+\contentsline {section}{\numberline {7.3} Arrangements and Lattices}{123}{section.7.3}%
+\contentsline {section}{\numberline {7.4} 2D and 3D Examples}{123}{section.7.4}%
+\contentsline {chapter}{\numberline {8}Boolean solid algebras}{125}{chapter.8}%
+\contentsline {section}{\numberline {8.1}Constructive Solid Geometry (CSG)}{125}{section.8.1}%
+\contentsline {section}{\numberline {8.2}Atoms and Generators }{125}{section.8.2}%
+\contentsline {section}{\numberline {8.3}Finite Boolean Algebras}{125}{section.8.3}%
+\contentsline {section}{\numberline {8.4}Computational Pipeline}{125}{section.8.4}%
+\contentsline {part}{Part\ III\hspace {\betweenumberspace }Polyhedral Modeling in AEC}{127}{part.3}%
+\contentsline {chapter}{\numberline {9}Building Information Modeling (BIM)}{129}{chapter.9}%
+\contentsline {section}{\numberline {9.1}BIM history (Chuck Eastman, ...)}{129}{section.9.1}%
+\contentsline {section}{\numberline {9.2}Building taxonomy (UNI 9838)}{129}{section.9.2}%
+\contentsline {section}{\numberline {9.3}Building envelope}{129}{section.9.3}%
+\contentsline {section}{\numberline {9.4}Building skeleton}{129}{section.9.4}%
+\contentsline {section}{\numberline {9.5}Construction Process Modeling}{129}{section.9.5}%
+\contentsline {chapter}{\numberline {10}Industry Foundation Classes (IFC)}{131}{chapter.10}%
+\contentsline {section}{\numberline {10.1}Simple introduction to IFC}{132}{section.10.1}%
+\contentsline {section}{\numberline {10.2}Data scheme for BIM collaboration}{132}{section.10.2}%
+\contentsline {section}{\numberline {10.3}IfcShapeRepresentation (IFC 4.3.x: 8.18.3.14)}{132}{section.10.3}%
+\contentsline {subsection}{\numberline {10.3.1}Representation identifiers}{132}{subsection.10.3.1}%
+\contentsline {subsection}{\numberline {10.3.2}Representation types}{132}{subsection.10.3.2}%
+\contentsline {subsection}{\numberline {10.3.3}Representation Examples}{132}{subsection.10.3.3}%
+\contentsline {section}{\numberline {10.4}Plasm parametric programming to IFC}{132}{section.10.4}%
+\contentsline {part}{Part\ IV\hspace {\betweenumberspace }Geometry from Point Cloud}{133}{part.4}%
+\contentsline {chapter}{\numberline {11}Modeling from Point Clouds}{135}{chapter.11}%
+\contentsline {section}{\numberline {11.1} Geometric survey}{135}{section.11.1}%
+\contentsline {section}{\numberline {11.2} Out-of-Core Potree dataset}{135}{section.11.2}%
+\contentsline {section}{\numberline {11.3} Multidimensional array store}{135}{section.11.3}%
+\contentsline {section}{\numberline {11.4} Mapping to solid models}{135}{section.11.4}%
+\contentsline {section}{References}{136}{section*.103}%
+\contentsline {chapter}{\numberline {A}Coding examples}{139}{appendix.A}%
 \contentsline {chapter}{Glossary}{93}{appendix*.65}%
 \contentsline {paragraph}{glossary term}{93}{section*.66}%
 \contentsline {paragraph}{glossary term}{93}{section*.67}%

@@ -1036,6 +1036,14 @@ end
 \end{lstlisting}
 \end{coding}
 
+
+\begin{figure}[hbp] %  figure placement: here, top, bottom, or page
+   \includegraphics[width=0.337\linewidth]{chapter-04/figs/turbo-pump01}%
+   \includegraphics[width=0.663\linewidth]{chapter-04/figs/turbo-pump02}%
+\caption{Two prospective images of the turbo pump component: (a) from top; (b) from side.}
+\label{fig:turbopump}
+\end{figure}
+
 The piecewise linear |dom| shape is produced by the Julia function assigned to symbol |G|, implemented as a nested conditional triple statement. The three subdomain of piecewise |G| domain are defined by |(x0,xm1,xm2,xM)|.
 
 \begin{coding}[Turbo pump’s object viewing]\ 
@@ -1047,19 +1055,54 @@ The other parameters have default value, given in the definition head.
 \end{coding}
 
 
-\begin{figure}[htbp] %  figure placement: here, top, bottom, or page
-   \includegraphics[width=0.337\linewidth]{chapter-04/figs/turbo-pump01}%
-   \includegraphics[width=0.663\linewidth]{chapter-04/figs/turbo-pump02}%
-\caption{Two prospective images of the turbo pump component: (a) from top; (b) from side.}
-\label{fig:turbopump}
-\end{figure}
-
 
 \section{Attach properties to geometry}\label{sect:4-4}
 
 
 \section{Design documentation (Jupyter notebooks)}\label{sect:4-5}
 
+A virtual notebook environment is used for literate programming~\cite{10.1093.27.2.97}, a method of writing computer programs together with explanations and documentation, currently using |Markdown| rich text~\footnote{Useful reference:\href{https://www.markdownguide.org/basic-syntax/}{https://www.markdownguide.org/basic-syntax/}.}. “Literate programming is a methodology that combines a programming language with a documentation language, thereby making programs more robust, more portable, more easily maintained, and arguably more fun to write than programs that are written only in a high-level language.”~\cite{Knuth:92}
+
+
+A notebook is a computer document, specifically a file shareable with internet protocols, that merges source code, plain descriptions, data, and visualizations like 3D models. It provides fast, shareable objects (files), to be used through an interactive environment, and useful for prototyping code, exploring and visualizing data, and sharing ideas with others.
+
+\subsubsection*{Install Julia notebook}\label{sect:4-5-1}
+
+
+The Jupyter~\cite{} platform is a web-based interactive computing platform. 
+A Jupyter notebook is a web document (text file) with sufffix |.ipynb| .
+The notebook combines live code, equations, narrative text, and 3D visualizations. It lets you run source code piece by piece, which is helpful when you're just imagining things and testing the ideas to develop with computer code, making it easier to understand what you're doing.
+Project Jupyter's name refers to the three core programming languages supported by Jupyter: Julia, Python, and R. Currently, the Jupyter system supports over 100 programming languages, called "kernels" in the Jupyter ecosystem.
+
+Julia Jupiter notebooks are very easy to install. 
+Just write (the first time) to your Julia |REPL| console. 
+
+\begin{lstlisting}[language=JuliaLocal, style=julia, mathescape=true]
+julia> ]add IJulia 
+\end{lstlisting}
+
+When the package is installed, with |<backspace>| you will return to the standard |julia>| interactive mode.  Now write:
+
+\begin{lstlisting}[language=JuliaLocal, style=julia, mathescape=true]
+julia> using IJulia   
+
+julia> notebook()
+\end{lstlisting}
+and wait few seconds. |Julia| will launch in background a |Jupyter| server and open a page on jour default web browser, asking to navigate the disk and either open a new file to work or one already existent and previously saved.
+
+
+\subsubsection*{Install Plasm kernel}\label{sect:4-5-1}
+
+Even more easier; see Figure~\ref{fig:jupyter}
+
+
+\begin{figure}[htbp] %  figure placement: here, top, bottom, or page
+   \includegraphics[width=\linewidth]{chapter-04/figs/jupyter}%
+\caption{A small test session in Julia Jupiter using Plasm.}
+\label{fig:jupyter}
+\end{figure}
+
+The reader should put attention to some facts: (a) the notebook is a web document named |Untitled1.ipynb| and served locally from machine’s |localhost|; the language kernel (look top-right) is |Julia 1.10.4|. The small circle close to it is black, since the kernel not has already released control, since the 3D window viewer in interactive. It must be closed to go ahead; the page is made by numbered |In| and |Out| cells, four of type code and one of type MarkDown. An asterisk is on the right of the currently working cells.
 
 \section{Export geometry}\label{sect:4-6}
 

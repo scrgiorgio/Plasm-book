@@ -7,8 +7,16 @@ A level-1 auxiliary file: preface.aux
 A level-1 auxiliary file: acknowledgement.aux
 A level-1 auxiliary file: part-I.aux
 A level-1 auxiliary file: chapter-01/01.aux
-A level-1 auxiliary file: chapter-02/02.aux
 The style file: spmpsci.bst
+A level-1 auxiliary file: chapter-02/02.aux
+Illegal, another \bibstyle command---line 87 of file chapter-02/02.aux
+ : \bibstyle
+ :          {spmpsci}
+I'm skipping whatever remains of this command
+Illegal, another \bibdata command---line 88 of file chapter-02/02.aux
+ : \bibdata
+ :         {plasmbook.bib}
+I'm skipping whatever remains of this command
 A level-1 auxiliary file: chapter-03/03.aux
 A level-1 auxiliary file: part-II.aux
 A level-1 auxiliary file: chapter-04/04.aux
@@ -35,46 +43,47 @@ A level-1 auxiliary file: solutions.aux
 Database file #1: plasmbook.bib
 Warning--I didn't find a database entry for "Rootmeansquare:23"
 Warning--I didn't find a database entry for ""
+Warning--I didn't find a database entry for "AhoHopcroftUllman:DSA"
 Warning--empty year in juliaset
-You've used 48 entries,
+You've used 50 entries,
             2945 wiz_defined-function locations,
-            926 strings with 13253 characters,
-and the built_in function-call counts, 20694 in all, are:
-= -- 1745
-> -- 553
+            947 strings with 13731 characters,
+and the built_in function-call counts, 21536 in all, are:
+= -- 1815
+> -- 567
 < -- 7
-+ -- 233
-- -- 181
-* -- 979
-:= -- 2612
-add.period$ -- 101
-call.type$ -- 48
-change.case$ -- 242
++ -- 239
+- -- 185
+* -- 1029
+:= -- 2727
+add.period$ -- 108
+call.type$ -- 50
+change.case$ -- 252
 chr.to.int$ -- 0
-cite$ -- 49
-duplicate$ -- 1978
-empty$ -- 1884
-format.name$ -- 199
-if$ -- 4580
+cite$ -- 51
+duplicate$ -- 2059
+empty$ -- 1975
+format.name$ -- 203
+if$ -- 4764
 int.to.chr$ -- 0
-int.to.str$ -- 48
-missing$ -- 411
-newline$ -- 247
-num.names$ -- 100
-pop$ -- 824
+int.to.str$ -- 50
+missing$ -- 428
+newline$ -- 259
+num.names$ -- 104
+pop$ -- 847
 preamble$ -- 1
-purify$ -- 184
+purify$ -- 190
 quote$ -- 0
-skip$ -- 803
+skip$ -- 822
 stack$ -- 0
-substring$ -- 707
-swap$ -- 1083
+substring$ -- 741
+swap$ -- 1124
 text.length$ -- 7
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 178
+type$ -- 186
 warning$ -- 1
-while$ -- 115
-width$ -- 50
-write$ -- 544
-(There were 2 error messages)
+while$ -- 120
+width$ -- 52
+write$ -- 573
+(There were 4 error messages)
