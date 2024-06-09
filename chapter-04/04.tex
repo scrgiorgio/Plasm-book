@@ -1058,19 +1058,115 @@ The other parameters have default value, given in the definition head.
 
 \section{Attach properties to geometry}\label{sect:4-4}
 
+Any geometric model is usually constituted by its geometry and associated properties or attributes that specify its appearance, like colors, textures, and materials used to render it on the screen or build a concrete instance in the real world. In this section, we shortly discuss some aspects of our interest: (a)~in XML, which was designed to describe the semantics of any kind of data in a computer; (b)  in the IFC standard, oriented to transport building data of architectural, engineering, and construction type between different computer systems. The section concludes with introducing the primitive |PROPERTIES| used by our Julia package |Plasm|.
+
+\subsection*{XML Document Object Model (DOM)}\label{sect:4-4-1}
+
+The eXtensible Markup Language (XML) is a software- and hardware-independent tool for storing and transporting data. An XML file is a text-based document that you can save with the |.xml| extension. 
+
+Extensible Markup Language (XML) is a markup language used to describe the content and structure of the data in a document.
+At the lemma XML of the Oxford English Dictionary~\cite{}, we find “a metalanguage which allows users to define their \emph{customized} markup languages, especially to display documents on the internet.”
+
+\begin{definition}[Document Type Definition] 
+DTD is a Document Type Definition. A DTD defines the structure and the legal \emph{elements} and \emph{attributes} of an XML document.
+\end{definition}
+XML was designed to carry data, hence with focus on what data are, and is extensible. This means that the author must define both the tags (markup) and the document structure.
+The tags used in a document are not defined in any XML standard, but are “invented” by the author of the document.
+
+\begin{definition}[XML Elements] are the basic building block of the XML document. It is used as a container to store text elements, attributes, media objects etc. 
+Every XML documents contain at least one element whose scopes are delimited by start and end tags or in case of empty elements it is delimited by an empty tag.
+\end{definition}
+
+\begin{definition}[XML Attributes] XML elements can have attributes as sequences of pairs |name|=|”value”| separated by commas. Attributes are designed to contain data related to a specific element. Attribute values must always be quoted.
+\end{definition}
+
+
+\begin{definition}[XML Data Object Model (DOM) documents]
+XML DOM documents are modeled using \emph{objects}, and the data model encompasses not only the structure of a document, but also the behavior of the document and the objects of which it is composed. 
+\end{definition}
+
+\begin{definition}[Structure Model] The term \emph{structure model} is used to describe the tree-like representation of a document. A tree structure contains a \emph{root} element (as parent), \emph{child} elements, and so on.
+\end{definition}
+
+The XML DOM defines also a standard way for accessing and manipulating files that presents an XML document as a tree-structure~\cite{}. 
+Everything in such codified documents is a \emph{node}:
+the entire document is a document node; every XML element is an element node; the text in the XML elements are text nodes; every attribute is an attribute node; comments are comment nodes. In particular, the DOM is a  language-independent standard API for how to get, change, add, and delete XML nodes.
+
+
+
+\subsection*{IFC attributes and properties}\label{sect:4-4-2}
+
+IFC (Industry Foundation Classes) is an Open Data schema and set of formats used to store OpenBIM data.  
+The IFC file format and content is discussed in Chapter~\ref{chapt:8}. Some concepts are introduced here for reference and comparison with the definition of |Plasm| function |Properties|.  
+
+\begin{definition}[IFC Entity]
+The IFC Entity is a class of information defined by common attributes and constraints. 
+It is similar to the term “class” in  programming languages but describing data structure only, not behavior such as methods. 
+\end{definition}
+
+All digital data objects in IFC belongs to an IFC class. 
+\emph{Attributes} and \emph{properties} are two ways to assign extra metadata to an IFC class. Although they sound similar, they are not the same~\cite{}. 
+
+The |IfcRoot| Entity is unique since it is the root of the information database and provides the four attributes |GlobalId|, |OwnerHistory|, |Name|, |Description|.
+IFC classes can be divided into two categories: rooted and non-rooted classes. 
+Rooted classes inherit attributes from |IfcRoot| Entity, whereas non-rooted classes do not. 
+
+If a class is a subclass of another class, it inherits the same abilities of that class, such as having specific attributes, properties, or relationships. Subclasses \emph{do not} actually \emph{inherit the values} of the attributes themselves, but only the \emph{ability to have} that attribute. 
+
+
+\subsubsection*{IFC attributes}\label{sect:4-4-2-1}
+
+
+
+Each BIM (Building Information Model) object is assigned to a specific class (Entity), and each class has its attributes. Examples of attributes include Name, Description, PredefinedType, ObjectType, and Tag, where tag (or label) is the identifier at the occurrence level of the particular instance of a product or shape. All IFC classes have attributes. Attributes contain a name, as well as a value.  Attributes may be optional or mandatory. 
+
+\begin{definition}[IFC Attribute]
+is an unit of information within an entity, defined by a particular type or reference to a particular entity.
+There are three kinds of attributes: \emph{direct}, \emph{inverse}, and \emph{derived} attributes, i.e., scalar values, queries for related data, or computations within the schema, respectively.
+\end{definition}
+
+The names of IFC Attributes are fixed, having been defined within the IFC standard. When an IFC class is defined, their attributes must be defined as well, or marked as empty if it is optional. The list of attributes that can be created for each IFC classes is fixed and specified in the IFC specification. 
+
+
+\subsubsection*{IFC properties}\label{sect:4-4-2-2}
+
+\begin{definition}[IFC Property]
+The term “property” is a \emph{unit of information} that is dynamically associated with a particular entity instance, similar to "late-bound" or "run-time" in programming terminology. 
+\end{definition}
+
+This definition of “Property” is bound to “occurrence”, “template”, “set of occurrence”, set of “template”, meaning set of property templates serving a common purpose and having applicability to objects of a particular entity.
+
+Unlike attributes, which are defined with each IFC class, properties themselves are an IFC class, and properties themselves have attributes. Also unlike attributes, related properties can be grouped into a |PropertySet|, or Pset, for short. This Pset can exist as its own IFC class, and then be linked to one or more relevant IFC classes. 
+
+
+\subsection*{Plasm properties}\label{sect:4-4-3}
+
+In |Plasm| we have functions objects and data objects. Every data object of geometric type |obj::Hpc| produced by a geometric |Plasm| function contains a possibly empty field |Properties::Dict{String, Any}| used to allocate a representation of |Any| type of any properties, and in particular of the appearance ones. But each |Hpc| value is a DAG graph node, root of the subtree whose children are provided by its field |childs::Array|. The value of properties in it extends to the whole subgraph it’s root, unless redefined locally explicitly.
+
+The |childs| of a |Hpc| node may be either of |Hpc| or |Geometry| type. The |Geometry| node may have any subset of non-empty elements from:
+\begin{lstlisting}[language=JuliaLocal, style=julia, mathescape=true]
+points::Vector{Vector{Float64}}
+edges::Vector{Vector{Int}}
+faces::Vector{Vector{Int}}
+hulls::Vector{Vector{Int}}
+\end{lstlisting}
+corresponding to 0-, 1-, 2-, and 3-dimensional cells, respectively. 
+
+A list of predefined appearance properties and predefined objects names follows, together with the sets of values they may take. 
+ 
 
 \section{Design documentation (Jupyter notebooks)}\label{sect:4-5}
 
-A virtual notebook environment is used for literate programming~\cite{10.1093.27.2.97}, a method of writing computer programs together with explanations and documentation, currently using |Markdown| rich text~\footnote{Useful reference:\href{https://www.markdownguide.org/basic-syntax/}{https://www.markdownguide.org/basic-syntax/}.}. “Literate programming is a methodology that combines a programming language with a documentation language, thereby making programs more robust, more portable, more easily maintained, and arguably more fun to write than programs that are written only in a high-level language.”~\cite{Knuth:92}
+A virtual notebook environment is used for literate programming~\cite{10.1093.27.2.97}, a method of writing computer programs together with explanations and documentation, mostly using |Markdown| rich text~\footnote{Useful reference:\href{https://www.markdownguide.org/basic-syntax/}{https://www.markdownguide.org/basic-syntax/}.} in the last two decades. “Literate programming is a methodology that combines a programming language with a documentation language, thereby making programs more robust, more portable, more easily maintained, and arguably more fun to write than programs that are written only in a high-level language.”~\cite{Knuth:92}
 
 
-A notebook is a computer document, specifically a file shareable with internet protocols, that merges source code, plain descriptions, data, and visualizations like 3D models. It provides fast, shareable objects (files), to be used through an interactive environment, and useful for prototyping code, exploring and visualizing data, and sharing ideas with others.
+A notebook is a computer document, specifically a file shareable with internet protocols, that merges source code, plain descriptions, data, and visualizations like function graphs and 3D models. It provides fast, shareable objects (files), to be used through an interactive environment, and useful for prototyping code, exploring and visualizing data, and sharing ideas with others.
 
 \subsubsection*{Install Julia notebook}\label{sect:4-5-1}
 
 
-The Jupyter~\cite{} platform is a web-based interactive computing platform. 
-A Jupyter notebook is a web document (text file) with sufffix |.ipynb| .
+The Jupyter platform is a web-based interactive computing software. 
+A Jupyter notebook is a web document (text file) with |.ipynb| sufffix.
 The notebook combines live code, equations, narrative text, and 3D visualizations. It lets you run source code piece by piece, which is helpful when you're just imagining things and testing the ideas to develop with computer code, making it easier to understand what you're doing.
 Project Jupyter's name refers to the three core programming languages supported by Jupyter: Julia, Python, and R. Currently, the Jupyter system supports over 100 programming languages, called "kernels" in the Jupyter ecosystem.
 
@@ -1093,7 +1189,7 @@ and wait few seconds. |Julia| will launch in background a |Jupyter| server and o
 
 \subsubsection*{Install Plasm kernel}\label{sect:4-5-1}
 
-Even more easier; see Figure~\ref{fig:jupyter}
+Even more easier; see Figure~\ref{fig:jupyter}. Of course, the output cell does not exists when the last line of code  terminates with a semicolon punctuation mark.
 
 
 \begin{figure}[htbp] %  figure placement: here, top, bottom, or page
@@ -1102,7 +1198,7 @@ Even more easier; see Figure~\ref{fig:jupyter}
 \label{fig:jupyter}
 \end{figure}
 
-The reader should put attention to some facts: (a) the notebook is a web document named |Untitled1.ipynb| and served locally from machine’s |localhost|; the language kernel (look top-right) is |Julia 1.10.4|. The small circle close to it is black, since the kernel not has already released control, since the 3D window viewer in interactive. It must be closed to go ahead; the page is made by numbered |In| and |Out| cells, four of type code and one of type MarkDown. An asterisk is on the right of the currently working cells.
+The reader should pay attention to some facts: (a) this notebook is a web document named |Untitled1.ipynb| and served locally from the machine’s |localhost|; the language kernel (look top-right) is |Julia 1.10.4|. The small circle close to it is black since the kernel has not already released control since the 3D window viewer is interactive. It must be closed to go ahead; the page is made by numbered |In| and |Out| cells, four of type |Code| and one of type |Markdown|. An asterisk is on the right of the currently working cells.
 
 \section{Export geometry}\label{sect:4-6}
 
