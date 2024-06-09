@@ -59,7 +59,7 @@
 \contentsline {subsection}{\numberline {4.3.1}Hierarchical graphs}{105}{subsection.4.3.1}%
 \contentsline {section}{\numberline {4.4}Attach properties to geometry}{114}{section.4.4}%
 \contentsline {section}{\numberline {4.5}Design documentation (Jupyter notebooks)}{117}{section.4.5}%
-\contentsline {section}{\numberline {4.6}Export geometry}{118}{section.4.6}%
+\contentsline {section}{\numberline {4.6}Export geometry}{119}{section.4.6}%
 \contentsline {chapter}{\numberline {5}Symbolic modeling with Julia Plasm}{123}{chapter.5}%
 \contentsline {section}{\numberline {5.1} Primitive generators}{123}{section.5.1}%
 \contentsline {section}{\numberline {5.2} Plasm topological operators}{123}{section.5.2}%

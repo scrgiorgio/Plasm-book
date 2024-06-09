@@ -358,6 +358,7 @@ The single quote stands for the Julia |transpose| of a matrix.
 rotated = GR([1,1,1],π/3)(CUBE(1))
 VIEW(rotated)
 \end{lstlisting}
+\caption{General rotation (GR) of angle $\pi/3$ about axis [1,1,1]. }
 \end{minipage}
 \end{figure}
 
@@ -1141,7 +1142,9 @@ Unlike attributes, which are defined with each IFC class, properties themselves 
 
 \subsection*{Plasm properties}\label{sect:4-4-3}
 
-In |Plasm| we have functions objects and data objects. Every data object of geometric type |obj::Hpc| produced by a geometric |Plasm| function contains a possibly empty field |Properties::Dict{String, Any}| used to allocate a representation of |Any| type of any properties, and in particular of the appearance ones. But each |Hpc| value is a DAG graph node, root of the subtree whose children are provided by its field |childs::Array|. The value of properties in it extends to the whole subgraph it’s root, unless redefined locally explicitly.
+In |Plasm| we have functions objects and data objects. Every data object of geometric type |obj::Hpc| produced by a geometric |Plasm| function contains a possibly empty field |Properties::Dict{String, Any}| used to allocate a representation of |Any| type of any properties, in particular of appearance ones.  
+
+Each |Hpc| value is a DAG (directed acyclic graph) node, root of the subtree whose children are provided by the field |childs::Array|. The value of properties in it extends to the whole subgraph it’s root, unless redefined locally explicitly.
 
 The |childs| of a |Hpc| node may be either of |Hpc| or |Geometry| type. The |Geometry| node may have any subset of non-empty elements from:
 \begin{lstlisting}[language=JuliaLocal, style=julia, mathescape=true]
@@ -1150,10 +1153,20 @@ edges::Vector{Vector{Int}}
 faces::Vector{Vector{Int}}
 hulls::Vector{Vector{Int}}
 \end{lstlisting}
-corresponding to 0-, 1-, 2-, and 3-dimensional cells, respectively. 
+corresponding to 0-, 1-, 2-, and 3-dimensional (convex) cells, respectively. 
 
-A list of predefined appearance properties and predefined objects names follows, together with the sets of values they may take. 
- 
+The |Plasm| type |Lar| is a flat version of |Hpc|+|Geometry|, allowing to make algebraic topological computations relative to the search of 3D atoms, that are B-reps of the basis  3-chain allowing to compute any symbolic form of the Boolean algebra induced by a collection of solid primitives (see Chapter~\ref{chapt:4}). 
+
+Of course, there is no isomorphism between the two maps |Hpc|$\to$|Lar| and |Lar|$\to$|Hpc|.  In other words, their composition is not the identity map.
+
+The standard properties of a value |obj::Lar| are the incidence relations between its cells, in either |Vector{Vector}| or in |SparseMatrix| form. In both case they can be extracted as |Dict| values associated to Julia’s symbol keys.
+
+\begin{definition}[Appearance properties]
+A list of predefined elementary properties and predefined objects names follows, together with the sets of values they can take.   TODO !!
+\end{definition}
+
+
+
 
 \section{Design documentation (Jupyter notebooks)}\label{sect:4-5}
 
@@ -1161,6 +1174,16 @@ A virtual notebook environment is used for literate programming~\cite{10.1093.27
 
 
 A notebook is a computer document, specifically a file shareable with internet protocols, that merges source code, plain descriptions, data, and visualizations like function graphs and 3D models. It provides fast, shareable objects (files), to be used through an interactive environment, and useful for prototyping code, exploring and visualizing data, and sharing ideas with others.
+
+
+
+
+\begin{figure}[htbp] %  figure placement: here, top, bottom, or page
+   \includegraphics[width=\linewidth]{chapter-04/figs/jupyter}%
+\caption{A small test session in Julia Jupiter using Plasm.}
+\label{fig:jupyter}
+\end{figure}
+
 
 \subsubsection*{Install Julia notebook}\label{sect:4-5-1}
 
@@ -1187,16 +1210,9 @@ julia> notebook()
 and wait few seconds. |Julia| will launch in background a |Jupyter| server and open a page on jour default web browser, asking to navigate the disk and either open a new file to work or one already existent and previously saved.
 
 
-\subsubsection*{Install Plasm kernel}\label{sect:4-5-1}
+\subsubsection*{Install Julia Plasm package}\label{sect:4-5-1}
 
 Even more easier; see Figure~\ref{fig:jupyter}. Of course, the output cell does not exists when the last line of code  terminates with a semicolon punctuation mark.
-
-
-\begin{figure}[htbp] %  figure placement: here, top, bottom, or page
-   \includegraphics[width=\linewidth]{chapter-04/figs/jupyter}%
-\caption{A small test session in Julia Jupiter using Plasm.}
-\label{fig:jupyter}
-\end{figure}
 
 The reader should pay attention to some facts: (a) this notebook is a web document named |Untitled1.ipynb| and served locally from the machine’s |localhost|; the language kernel (look top-right) is |Julia 1.10.4|. The small circle close to it is black since the kernel has not already released control since the 3D window viewer is interactive. It must be closed to go ahead; the page is made by numbered |In| and |Out| cells, four of type |Code| and one of type |Markdown|. An asterisk is on the right of the currently working cells.
 
@@ -1225,7 +1241,7 @@ You can have subtypes in each type with characteristic morphology: for example, 
 In addition, the specific design package might import parametric |Plasm| functions already developed for similar constructions and enrich them with new function methods finalized to the singular, unique design structure and shape under development.
 \end{remark}
 
-This kind of digital innovation process, on top of BIM and IFC standards (see Chapter~\ref{chapt:10}), could be of significant interest in case of development programs launched as sectorial construction interventions by governments (say housing, schools, etc.) or by charitable foundations in developing countries, where some kind of standardization can greatly reduce the program costs.
+This kind of digital innovation process, on top of BIM and IFC standards (see Chapter~\ref{chapt:10}), could be of significant interest in case of development programs launched as sectorial construction interventions by governments (say housing, schools, etc.) or by charitable foundations in developing countries, where some standardization can greatly reduce the program costs.
  
 
 \subsubsection*{Unevaluated/Evaluated/Binary LAR format}\label{sect:4-6-2}
