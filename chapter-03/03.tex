@@ -705,11 +705,11 @@ If the |expr| after |@assert| is |false|, the program stops in |AssertionError:e
 
 \begin{coding}[Execution example.] We can start from an array of simplices of the same length and iterate on their facets, to get a whole simplicial complex.
 \begin{lstlisting}[language=JuliaLocal, style=julia, mathescape = true]
-FV=[[123],[124],[134],[234]] #=
-[[123],[124],[134],[234]] =#
+FV = [[1, 2, 3], [1, 2, 4], [1, 3, 4], [2, 3, 4]] #=
+[[1, 2, 3], [1, 2, 4], [1, 3, 4], [2, 3,4]] =#
 EV = simplexfacets(FV)  #=
-[[12],[13],[14],[23],[24],[34]] =#
-VV = simplexFacets(EV)  #=
+[[1, 2], [1, 3], [1, 4], [2, 3], [2, 4], [3, 4]] =#
+VV = simplexfacets(EV)  #=
 [[1], [2], [3], [4]]     =#
 simplex(3,complex=true).C   #=
 Dict(:c1v => EV, :c3v => [[1,2,3,4], :c0v => VV], :c2v => FV) =#

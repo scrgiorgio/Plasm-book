@@ -10,7 +10,7 @@ In this chapter we introduce the great expressive power of |Plasm| geometric typ
 
 Even if Julia does not pretend the user specifies the type of data objects, which are inferred at compile time, it may always be useful to annotate with their type the parameters and the returned value from function applications in order to get faster codes from the Julia compiler. The best reason concerns program documentation, making it easier to understand the Julia's sources.
 
-Let's remember that |Plasm| derives from three founts: (1) the classic |PLaSM| set up on |FL| functional combinators; (2) the porting to Python (object-oriented language), and finally (3) the embedding into Julia (functional and multi-paradigm), after ten years of algebraic research finalized to understand the role of topology in elaborating digital  geometric models. 
+Let's remember that |Plasm| derives from three founts: (1) the |PLaSM| classic set up on |FL| functional combinators; (2) the porting to Python (object-oriented language), and finally (3) the embedding into Julia (functional and multi-paradigm), after several years of algebraic research finalized to understand the role of topology in elaborating digital  geometric models. 
 
 This development defined different data types and user structures, which the current version of the language proudly unifies by scheduling them to different roles and uses.
  
@@ -153,7 +153,7 @@ since |lar2cop| : Cells $\to$ |ChainOp|.
 \end{coding}
 
 \begin{remark}[About sparsity]
-While in this small case, the |KFV| matrix is not very sparse, the sparsity overgrows as the cellular complex proliferates, since the non-zero elements grow linearly with the number of cells. In contrast, the zero elements grow quadratically (with the matrix elements).
+While in this small case, the |KFV| matrix is not very sparse, the sparsity overgrows as the cellular complex proliferates, since the non-zero elements grow linearly with the number of cells. In contrast, the zero elements grow quadratically (with the matrix dimension).
 \end{remark}
 \begin{remark}[Global view of incidencies]
 See, by inspection of |KFV|, that each face is incident to 4 cube vertices and each vertex is incident to 3 faces.
@@ -162,7 +162,7 @@ See, by inspection of |KFV|, that each face is incident to 4 cube vertices and e
 
 \section{Plasm parametric primitives}\label{sect:4-2}
 
-In this section, we introduce and exemplify several features of the working of |Plasm| with geometric objects. The |Plasm| package is quite different from most geometric and graphics |API|s since it is based on |FL|-style combinators.
+In this section, we introduce and exemplify several features of |Plasm| working with geometric objects. The |Plasm| package is quite different from most geometric and graphics |API|s since it is based on |FL|-style combinators.
 
 
 \subsection{Geometric Transformations}\label{sect:4-2-1}
@@ -1059,7 +1059,7 @@ The other parameters have default value, given in the definition head.
 
 \section{Attach properties to geometry}\label{sect:4-4}
 
-Any geometric model is usually constituted by its geometry and associated properties or attributes that specify its appearance, like colors, textures, and materials used to render it on the screen or build a concrete instance in the real world. In this section, we shortly discuss some aspects of our interest: (a)~in XML, which was designed to describe the semantics of any kind of data in a computer; (b)  in the IFC standard, oriented to transport building data of architectural, engineering, and construction type between different computer systems. The section concludes with introducing the primitive |PROPERTIES| used by our Julia package |Plasm|.
+Any geometric model is usually constituted by its geometry and associated properties or attributes that specify its appearance, like colors, textures, and materials used to render it on the screen or build a concrete instance in the real world. In this section, we shortly discuss some aspects of our interest: (a)~in XML, which was designed to describe the semantics of any kind of data in a computer; (b)  in the IFC standard, oriented to transport building data of architectural, engineering, and construction type between different computer systems. The section concludes with introducing the primitive |PROPERTIES| and |PropertySet| used by our Julia package |Plasm|.
 
 \subsection*{XML Document Object Model (DOM)}\label{sect:4-4-1}
 
@@ -1142,9 +1142,9 @@ Unlike attributes, which are defined with each IFC class, properties themselves 
 
 \subsection*{Plasm properties}\label{sect:4-4-3}
 
-In |Plasm| we have functions objects and data objects. Every data object of geometric type |obj::Hpc| produced by a geometric |Plasm| function contains a possibly empty field |Properties::Dict{String, Any}| used to allocate a representation of |Any| type of any properties, in particular of appearance ones.  
+In |Plasm| we have functions objects and data objects. Every data object of geometric type |obj::Hpc| produced by a geometric |Plasm| function contains a possibly empty field |Properties::Dict{String, Any}| used to allocate a representation of any property, in particular of \emph{appearance} ones.  
 
-Each |Hpc| value is a DAG (directed acyclic graph) node, root of the subtree whose children are provided by the field |childs::Array|. The value of properties in it extends to the whole subgraph it’s root, unless redefined locally explicitly.
+Each |Hpc| value is a DAG (directed acyclic graph) node, root of the subtree whose children are mapped from the field |childs::Array|. The values of properties extend to the whole rooted subgraph, unless redefined locally.
 
 The |childs| of a |Hpc| node may be either of |Hpc| or |Geometry| type. The |Geometry| node may have any subset of non-empty elements from:
 \begin{lstlisting}[language=JuliaLocal, style=julia, mathescape=true]
@@ -1161,14 +1161,50 @@ Of course, there is no isomorphism between the two maps |Hpc|$\to$|Lar| and |Lar
 
 The standard properties of a value |obj::Lar| are the incidence relations between its cells, in either |Vector{Vector}| or in |SparseMatrix| form. In both case they can be extracted as |Dict| values associated to Julia’s symbol keys.
 
-\begin{definition}[Appearance properties]
-A list of predefined elementary properties and predefined objects names follows, together with the sets of values they can take.   TODO !!
+
+The predefined |Plasm| |PropertySet| are mostly related to graphics appearance, and in particular to the |mutable struct GLBatch|, used  by the module |Plasm/Viewer.jl| to send well-formed packets of graphical information to the GPU for rendering.
+
+\begin{definition}[Appearance \sf PropertySet]
+Currently, we have four classes of |PropertySet| to use (1) with general |Hpc| values (default); (2) with {\sf Viewer} objects (viewing); (3) when “exploding” assemplies of |Hpc|s (explode); (4) when showing a cellular complex annotated with cells indices (number).
 \end{definition}
 
+\begin{lstlisting}[language=JuliaLocal, style=julia, mathescape=true]
+julia> typeof(PROPERTIES)
+# typeof(PROPERTIES) (singleton type of function PROPERTIES, subtype of Function)
+
+function PSET()  <: PROPERTIES end;
+function PVIEW() <: PROPERTIES end;
+function PEXPL() <: PROPERTIES end;
+function PNUM()  <: PROPERTIES end;
+
+function PropertySet() <: Union{PSET, PVIEW, PEXPL, PNUM} end 
+# PropertySet (generic function with 1 method)
+\end{lstlisting}
+
+\subsubsection*{\small\sf PSET <: PROPERTIES}\label{4-4-3-1}
+
+|PSET| is the default |PropertySet| associated to the appearance of any geometric value, either isolated of aggregated within a single root of |Hpc| type. 
+
+
+\subsubsection*{\small\sf PVIEW <: PROPERTIES}\label{4-4-3-2}
+
+|PVIEW| associates the default |PropertySet| to the interaction session, i.e., to the ability to handle joystick, keyboard, and mouse within a visualizer window containing an OpenGL context made available by the |ModernGL| package.
+
+
+\subsubsection*{\small\sf PEXPL <: PROPERTIES}\label{4-4-3-3}
+
+In order to manage a parametric explosion of a geometric object, defined as aggregation of simpler objects through a |STRUCT| primitive, we setup the |PEXPL| independent scaling parameters $s_x, s_y, s_z$ of each shape component’s centroid, either as 3-,  2-, and 1-cell complex. 
 
 
 
-\section{Design documentation (Jupyter notebooks)}\label{sect:4-5}
+\subsubsection*{\small\sf PNUM <: PROPERTIES}\label{4-4-3-4}
+
+Similarly to the previous case, the 
+|PNUM| default |PropertySet| is used for the visualization of cells’ indices in  interaction sessions with a complicated geometric value, i.e., when looking at the text oindices of cells. It must specify a number of predefined properties concerning the size of text characters with respect to the bounding box size of current content of the viewing volume, as well as the colors and sizes of the different subsets of $d$-cells. 
+The cell numbering is used for check and debug of geometric values. 
+
+
+\section{Design documentation notebooks}\label{sect:4-5}
 
 A virtual notebook environment is used for literate programming~\cite{10.1093.27.2.97}, a method of writing computer programs together with explanations and documentation, mostly using |Markdown| rich text~\footnote{Useful reference:\href{https://www.markdownguide.org/basic-syntax/}{https://www.markdownguide.org/basic-syntax/}.} in the last two decades. “Literate programming is a methodology that combines a programming language with a documentation language, thereby making programs more robust, more portable, more easily maintained, and arguably more fun to write than programs that are written only in a high-level language.”~\cite{Knuth:92}
 
@@ -1212,9 +1248,9 @@ and wait few seconds. |Julia| will launch in background a |Jupyter| server and o
 
 \subsubsection*{Install Julia Plasm package}\label{sect:4-5-1}
 
-Even more easier; see Figure~\ref{fig:jupyter}. Of course, the output cell does not exists when the last line of code  terminates with a semicolon punctuation mark.
+It is even more easier than the above; see Figure~\ref{fig:jupyter}. Of course, the output cell does not exists when the last line of code  terminates with a semicolon punctuation mark.
 
-The reader should pay attention to some facts: (a) this notebook is a web document named |Untitled1.ipynb| and served locally from the machine’s |localhost|; the language kernel (look top-right) is |Julia 1.10.4|. The small circle close to it is black since the kernel has not already released control since the 3D window viewer is interactive. It must be closed to go ahead; the page is made by numbered |In| and |Out| cells, four of type |Code| and one of type |Markdown|. An asterisk is on the right of the currently working cells.
+The reader should pay attention to some facts: (a) this notebook is a web document named |Untitled1.ipynb| and served locally from the machine’s |localhost|; (b) the language kernel (look top-right) is |Julia 1.10.4|; (c) the small circle close to it is black since the kernel has not already released control since the 3D window viewer is interactive; (d) it must be closed to go ahead; (e) the page is made by numbered |In| and |Out| cells, four of type |Code| and one of type |Markdown|; (f) an asterisk is on the right of the currently working cells.
 
 \section{Export geometry}\label{sect:4-6}
 
@@ -1246,17 +1282,17 @@ This kind of digital innovation process, on top of BIM and IFC standards (see Ch
 
 \subsubsection*{Unevaluated/Evaluated/Binary LAR format}\label{sect:4-6-2}
 
-Linear Algebraic Representation (|LAR|) is the name of the algebraic geometrical data structures and computational pipeline developed by the authors and others in the last decade, and embedded recently in |Plasm|. This data structure has various formats, depending of various advancement of computation. In particular, three LAR states may be enuciated: unevaluated, evaluated and binary.
- \begin{description}
- 
+Linear Algebraic Representation (|LAR|) is the name of the algebraic geometrical data structures and computational pipeline developed by the authors and others in the last decade, and embedded recently in |Plasm|. This data structure has various formats, depending on the advancement of computation. In particular, three LAR states may be expressed as unevaluated, evaluated, and binary.
+
+\begin{description} 
 \item[Unevaluated LAR] Sparse binary matrices that encode the cells of a cellular complex as incidence relations between $d$-cellls and $0$-cells ($0 \leq d \leq 3$). All the binary relations between cells of different dimensions can be easily generated. The occupied storage space is less or equal to that of common incidence structures in graphics and solid modeling.
 
-\item[Evaluated LAR] is a pair (\emph{geometry}, t\emph{opology}) where \emph{geometry} is the matrix |Float64| of coordinates of 0-cells (|VE|), and \emph{topology} is a triple (in 3D) of sparse binary matrices, encoding the coboundary operators $\delta_0, \delta_1, \delta_2$ corresponding to incidence relations |VE|, |EF|, and |FC|. These result by the 3D algorithmic \emph{arrangement} pipeline that partitions the Euclidean 3s-pace on the boundary surfaces of any given collection of |Brep| solid models.
+\item[Evaluated LAR] is a pair (\emph{geometry}, \emph{topology}) where \emph{geometry} is the matrix |V::Matrix{Float64{| of coordinates of 0-cells (|V::Matrix{Float64}|), and \emph{topology} is a triple (in 3D) of sparse binary matrices, encoding the coboundary operators $\delta_0, \delta_1, \delta_2$ corresponding to incidence relations |VE|, |EF|, and |FC|. These result by the 3D algorithmic \emph{arrangement} pipeline that partitions the Euclidean 3-space on the boundary surfaces of any given collection of |Brep| solid models.
 
 \item[Binary LAR] is the result of computation of the binary algebra induced by the spatial collocation and orientation of the whole collection of B-rep primitives and solids considered by the designer at the beginning of the computational pipeline, i.e., when all the geometric elements were collocated within the geometric design of the considered building portion. This binary matrix has number of columns equal to the number of computed atoms of the space arrangement and number of rows equal to the number of primitive shapes (of uniform material) used in a geometric design.
 \end{description}
 
-Every noteworthy subset of design atoms, selected by any reason---in particular, to assign material properties, catalog products, or compute volumes or cost---will be easily extracted as a subset of corresponding columns and rows.
+Every noteworthy subset of design atoms, selected by any reason---in particular, to assign material properties, catalog products, or compute volumes or cost---will be  extracted as a subset of corresponding columns and rows.
 
 \subsubsection*{IFC PolygonSet file format}\label{sect:4-6-3}
 
