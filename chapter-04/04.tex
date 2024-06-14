@@ -274,7 +274,8 @@ Just note that in all |Plasm| geometric operators, the constraint of using funct
 \end{remark}
 
 
-\begin{coding}[Permutahedron] The reader might be curious to see how such important and beautiful polyhedron~\cite{wiki:pao:100} whose vertex coordinates are the permutations of the first $d$ natural numbers. Iy is generated in |Plasm|:
+\begin{coding}[Permutahedron]\label{4-2-permutaheron}
+The reader might be curious to see how such important and beautiful polyhedron~\cite{wiki:pao:100} whose vertex coordinates are the permutations of the first $d$ natural numbers. Iy is generated in |Plasm|:
 \begin{lstlisting}[language=JuliaLocal, style=julia, mathescape=true]
 function PERMUTAHEDRON(d)
 	vertices = ToFloat64(PERMUTATIONS(collect(1:d+1)))
@@ -1169,7 +1170,7 @@ Currently, we have four classes of |PropertySet| to use (1) with general |Hpc| v
 \end{definition}
 
 \begin{lstlisting}[language=JuliaLocal, style=julia, mathescape=true]
-julia> typeof(PROPERTIES)
+typeof(PROPERTIES)
 # typeof(PROPERTIES) (singleton type of function PROPERTIES, subtype of Function)
 
 function PSET()  <: PROPERTIES end;
@@ -1183,7 +1184,7 @@ function PropertySet() <: Union{PSET, PVIEW, PEXPL, PNUM} end
 
 \subsubsection*{\small\sf PSET <: PROPERTIES}\label{4-4-3-1}
 
-|PSET| is the default |PropertySet| associated to the appearance of any geometric value, either isolated of aggregated within a single root of |Hpc| type. 
+|PSET| is the default |PropertySet| associated to the appearance of any geometric value, either isolated or aggregated within a single root of |Hpc| type. 
 
 
 \subsubsection*{\small\sf PVIEW <: PROPERTIES}\label{4-4-3-2}

@@ -64,3 +64,10 @@
 \contentsline {coding}{{Coding}{4.3.{12}}{Solid helicoid}}{112}{coding.4.3.12}%
 \contentsline {coding}{{Coding}{4.3.{13}}{Turbo pump}}{112}{coding.4.3.13}%
 \contentsline {coding}{{Coding}{4.3.{14}}{Turbo pump’s object viewing}}{113}{coding.4.3.14}%
+\contentsline {coding}{{Coding}{5.1.{1}}{\sf INTERVALS(size::Numrber)(n::Int)}}{124}{coding.5.1.1}%
+\contentsline {coding}{{Coding}{5.1.{2}}{\sf QUOTE(measures::Array{Number})}}{124}{coding.5.1.2}%
+\contentsline {coding}{{Coding}{5.1.{3}}{\sf Q(measure::Number)}}{124}{coding.5.1.3}%
+\contentsline {coding}{{Coding}{5.1.{4}}{\sf CUBOID(size)}}{124}{coding.5.1.4}%
+\contentsline {coding}{{Coding}{5.1.{5}}{\sf ICOSPHERE(seed::Hpc)::Hpc}}{125}{coding.5.1.5}%
+\contentsline {plist}{{Script}{5.1.{1}}{Building frame}}{126}{plist.5.1.1}%
+\contentsline {plist}{{Script}{5.1.{2}}{Building skeleton}}{127}{plist.5.1.2}%
