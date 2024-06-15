@@ -51,18 +51,18 @@
 \contentsline {coding}{{Coding}{4.2.{11}}{Parametric linear ladder stair}}{103}{coding.4.2.11}%
 \contentsline {coding}{{Coding}{4.3.{1}}{Direct use of Tensor}}{105}{coding.4.3.1}%
 \contentsline {coding}{{Coding}{4.3.{2}}{Example.2}}{105}{coding.4.3.2}%
-\contentsline {coding}{{Coding}{4.3.{3}}{Example.3}}{105}{coding.4.3.3}%
+\contentsline {coding}{{Coding}{4.3.{3}}{Example.3}}{106}{coding.4.3.3}%
 \contentsline {coding}{{Coding}{4.3.{4}}{Example.4}}{106}{coding.4.3.4}%
 \contentsline {coding}{{Coding}{4.3.{5}}{STRUCT assembly (1)}}{108}{coding.4.3.5}%
 \contentsline {coding}{{Coding}{4.3.{6}}{STRUCT assembly (2)}}{109}{coding.4.3.6}%
 \contentsline {plist}{{Script}{4.3.{1}}{Traversal of a multigraph}}{110}{plist.4.3.1}%
 \contentsline {coding}{{Coding}{4.3.{7}}{Table}}{111}{coding.4.3.7}%
 \contentsline {coding}{{Coding}{4.3.{8}}{Chair}}{111}{coding.4.3.8}%
-\contentsline {coding}{{Coding}{4.3.{9}}{Four sits}}{111}{coding.4.3.9}%
+\contentsline {coding}{{Coding}{4.3.{9}}{Four sits}}{112}{coding.4.3.9}%
 \contentsline {coding}{{Coding}{4.3.{10}}{Single row of tables and chairs}}{112}{coding.4.3.10}%
 \contentsline {coding}{{Coding}{4.3.{11}}{Whole refectory}}{112}{coding.4.3.11}%
 \contentsline {coding}{{Coding}{4.3.{12}}{Solid helicoid}}{112}{coding.4.3.12}%
-\contentsline {coding}{{Coding}{4.3.{13}}{Turbo pump}}{112}{coding.4.3.13}%
+\contentsline {coding}{{Coding}{4.3.{13}}{Turbo pump}}{113}{coding.4.3.13}%
 \contentsline {coding}{{Coding}{4.3.{14}}{Turbo pump’s object viewing}}{113}{coding.4.3.14}%
 \contentsline {coding}{{Coding}{5.1.{1}}{\sf INTERVALS(size::Numrber)(n::Int)}}{124}{coding.5.1.1}%
 \contentsline {coding}{{Coding}{5.1.{2}}{\sf QUOTE(measures::Array{Number})}}{124}{coding.5.1.2}%
@@ -70,4 +70,6 @@
 \contentsline {coding}{{Coding}{5.1.{4}}{\sf CUBOID(size)}}{124}{coding.5.1.4}%
 \contentsline {coding}{{Coding}{5.1.{5}}{\sf ICOSPHERE(seed::Hpc)::Hpc}}{125}{coding.5.1.5}%
 \contentsline {plist}{{Script}{5.1.{1}}{Building frame}}{126}{plist.5.1.1}%
-\contentsline {plist}{{Script}{5.1.{2}}{Building skeleton}}{127}{plist.5.1.2}%
+\contentsline {coding}{{Coding}{5.1.{6}}{Building skeleton}}{128}{coding.5.1.6}%
+\contentsline {coding}{{Coding}{5.1.{7}}{alternate method for vertical aggregation}}{129}{coding.5.1.7}%
+\contentsline {coding}{{Coding}{5.1.{8}}{}}{130}{coding.5.1.8}%

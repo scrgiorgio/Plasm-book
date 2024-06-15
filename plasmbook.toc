@@ -62,10 +62,10 @@
 \contentsline {section}{\numberline {4.6}Export geometry}{120}{section.4.6}%
 \contentsline {chapter}{\numberline {5}Symbolic modeling with Julia Plasm}{123}{chapter.5}%
 \contentsline {section}{\numberline {5.1} Primitive generators}{123}{section.5.1}%
-\contentsline {section}{\numberline {5.2} Plasm topological operators}{128}{section.5.2}%
-\contentsline {section}{\numberline {5.3} Linear and affine operators}{128}{section.5.3}%
-\contentsline {section}{\numberline {5.4} Manifold mapping}{128}{section.5.4}%
-\contentsline {section}{\numberline {5.5} Curve, surface, and solid methods}{128}{section.5.5}%
+\contentsline {section}{\numberline {5.2} Plasm topological operators}{131}{section.5.2}%
+\contentsline {section}{\numberline {5.3} Linear and affine operators}{131}{section.5.3}%
+\contentsline {section}{\numberline {5.4} Manifold mapping}{131}{section.5.4}%
+\contentsline {section}{\numberline {5.5} Curve, surface, and solid methods}{131}{section.5.5}%
 \contentsline {chapter}{\numberline {6}Product assembly structure}{127}{chapter.6}%
 \contentsline {section}{\numberline {6.1}Hierarchical assembly definition}{128}{section.6.1}%
 \contentsline {section}{\numberline {6.2}Data structures in solid modeling}{128}{section.6.2}%
@@ -105,7 +105,7 @@
 \contentsline {section}{\numberline {11.2} Out-of-Core Potree dataset}{141}{section.11.2}%
 \contentsline {section}{\numberline {11.3} Multidimensional array store}{141}{section.11.3}%
 \contentsline {section}{\numberline {11.4} Mapping to solid models}{141}{section.11.4}%
-\contentsline {section}{References}{142}{section*.6}%
+\contentsline {section}{References}{142}{section*.7}%
 \contentsline {chapter}{\numberline {A}Coding examples}{145}{appendix.A}%
 \contentsline {chapter}{Glossary}{93}{appendix*.65}%
 \contentsline {paragraph}{glossary term}{93}{section*.66}%

@@ -615,7 +615,7 @@ Most graphics and modeling systems implement this semantics as a tree or \emph{h
 
 \subsection{Hierarchical graphs}
 
-Acyclic graphs/multigraphs are also called \emph{hierarchical graphs}, because can be associated to a tree, generated at run-time by visiting the graph with some standard traversal algorithm~\cite{10.5555/1614191}, e.g., with a depth-first-search (DFS).  The ordered sequence of nodes produced by the traversal is sometimes called a \emph{linearized graph}.  Each node in this sequence is suitably transformed from local coordinates to \emph{world coordinates}, i.e. to the coordinates of the root, by the traversal algorithm.
+Acyclic graphs/multigraphs are also called \emph{hierarchical scene graphs}, because can be associated to a tree, generated at run-time by visiting the graph with some standard traversal algorithm~\cite{10.5555/1614191}, e.g., with a depth-first-search (DFS).  The ordered sequence of nodes produced by the traversal is sometimes called a \emph{linearized graph}.  Each node in this sequence is suitably transformed from local coordinates to \emph{world coordinates}, i.e. to the coordinates of the root, by the traversal algorithm.
 
 The main ideas concerning \emph{scene graphs} can be summarized as
 follows.
@@ -631,6 +631,14 @@ The composite transformations of coordinates applied to the linearized
 graph generated at traversal time are collectively known as the
 \emph{modeling transformation}.
 
+\begin{remark}\ 
+The arcs of scene graphs are normally specified \emph{implicitly}
+in real graphical systems.  For example, an arc is actually specified
+when a node is contained or referred within another one. In particular, 
+it is possible to specify a new container node together with either the 
+matrix or the parameters of the transformation to be associated with the 
+the arc that ideally connects the new container to the current node.
+\end{remark}
 
 \subsection*{Object Transform}\label{sect:4-3-1} Any |Plasm| geometric value of |Hpc| type can be affinely transformed by direct application of an affine tensor to it.
 
