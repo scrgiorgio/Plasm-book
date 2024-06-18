@@ -6,21 +6,21 @@
 \newlabel{chapt:5}{{5}{123}{Symbolic modeling with Julia Plasm}{chapter.5}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {5.1} Primitive generators}{123}{section.5.1}\protected@file@percent }
 \newlabel{sect:5-1}{{5.1}{123}{Primitive generators}{section.5.1}{}}
-\newlabel{sect:5-1-0}{{5.1}{123}{Higher order and partial functions}{section*.2}{}}
+\newlabel{sect:5-1-0}{{5.1}{123}{Higher order and partial functions}{section*.112}{}}
 \@writefile{thm}{\contentsline {coding}{{Coding}{5.1.{1}}{\sf INTERVALS(size::Numrber)(n::Int)}}{124}{coding.5.1.1}\protected@file@percent }
 \@writefile{thm}{\contentsline {coding}{{Coding}{5.1.{2}}{\sf QUOTE(measures::Array{Number})}}{124}{coding.5.1.2}\protected@file@percent }
 \@writefile{thm}{\contentsline {coding}{{Coding}{5.1.{3}}{\sf Q(measure::Number)}}{124}{coding.5.1.3}\protected@file@percent }
-\newlabel{sect:5-1-1}{{5.1}{124}{Single convex cell}{section*.3}{}}
+\newlabel{sect:5-1-1}{{5.1}{124}{Single convex cell}{section*.113}{}}
 \@writefile{thm}{\contentsline {coding}{{Coding}{5.1.{4}}{\sf CUBOID(size)}}{124}{coding.5.1.4}\protected@file@percent }
 \@writefile{thm}{\contentsline {coding}{{Coding}{5.1.{5}}{\sf ICOSPHERE(seed::Hpc)::Hpc}}{125}{coding.5.1.5}\protected@file@percent }
 \@writefile{lof}{\contentsline {figure}{\numberline {5.1}{\ignorespaces (a) Icosahedron; (b) icosphere with 42 vertices; (c) icosphere with 162 vertices. }}{126}{figure.5.1}\protected@file@percent }
 \newlabel{5:icospheres}{{5.1}{126}{(a) Icosahedron; (b) icosphere with 42 vertices; (c) icosphere with 162 vertices}{figure.5.1}{}}
-\newlabel{sect:5-1-1}{{5.1}{126}{Multiple cell objects}{section*.4}{}}
+\newlabel{sect:5-1-1}{{5.1}{126}{Multiple cell objects}{section*.114}{}}
 \@writefile{thm}{\contentsline {plist}{{Script}{5.1.{1}}{Building frame}}{126}{plist.5.1.1}\protected@file@percent }
 \global\def\markiiiplist{\ensuremath {\square }}
 \@writefile{lof}{\contentsline {figure}{\numberline {5.2}{\ignorespaces \sf  frame = STRUCT(pillars, trusses, trusses1, floorslab);}}{127}{figure.5.2}\protected@file@percent }
 \newlabel{fig:example}{{5.1}{127}{Multiple cell objects}{figure.5.2}{}}
-\newlabel{sect:5-1-1}{{5.1}{127}{Assembly combinator {\sf STRUCT}}{section*.5}{}}
+\newlabel{sect:5-1-1}{{5.1}{127}{Assembly combinator {\sf STRUCT}}{section*.115}{}}
 \citation{Wernecke:94:TIM}
 \citation{Sowizral:2000:J3DAPI}
 \citation{Gaskins92}
@@ -29,28 +29,46 @@
 \@writefile{thm}{\contentsline {coding}{{Coding}{5.1.{6}}{Building skeleton}}{128}{coding.5.1.6}\protected@file@percent }
 \newlabel{5:1:skeleton}{{5.1.{6}}{128}{Assembly combinator {\sf STRUCT}}{coding.5.1.6}{}}
 \global\def\marklxxcoding{\ensuremath {\square }}
-\newlabel{sect:5-1-1}{{5.1}{129}{Alignment aggregators {\sf TOP, BOTTOM, LEFT, RIGTH}}{section*.6}{}}
+\newlabel{sect:5-1-1}{{5.1}{129}{Alignment aggregators {\sf TOP, BOTTOM, LEFT, RIGTH}}{section*.116}{}}
 \@writefile{thm}{\contentsline {coding}{{Coding}{5.1.{7}}{alternate method for vertical aggregation}}{129}{coding.5.1.7}\protected@file@percent }
 \@writefile{lof}{\contentsline {figure}{\numberline {5.4}{\ignorespaces \sf  skeleton = STRUCT(NN(7)([frame, T(3)(3.3)])));}}{130}{figure.5.4}\protected@file@percent }
-\newlabel{fig:5:1:skeleton}{{5.1}{130}{Alignment aggregators {\sf TOP, BOTTOM, LEFT, RIGTH}}{figure.5.4}{}}
+\newlabel{fig:5:1:fourcolumns}{{5.1}{130}{Alignment aggregators {\sf TOP, BOTTOM, LEFT, RIGTH}}{figure.5.4}{}}
 \@writefile{thm}{\contentsline {coding}{{Coding}{5.1.{8}}{}}{130}{coding.5.1.8}\protected@file@percent }
-\global\def\marklxxiicoding{\ensuremath {\square }}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.5}{\ignorespaces A fully parameterized {\sf  Temple()} function, where several parameters are linked to each other by algebraic equations. Let’s note the number of side and front columns, and their relations with column height and gable width. The whole function code is about 15 rows.}}{131}{figure.5.5}\protected@file@percent }
 \@writefile{toc}{\contentsline {section}{\numberline {5.2} Plasm topological operators}{131}{section.5.2}\protected@file@percent }
 \newlabel{sect:5-2}{{5.2}{131}{Plasm topological operators}{section.5.2}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {5.3} Linear and affine operators}{131}{section.5.3}\protected@file@percent }
-\newlabel{sect:5-3}{{5.3}{131}{Linear and affine operators}{section.5.3}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {5.4} Manifold mapping}{131}{section.5.4}\protected@file@percent }
-\newlabel{sect:5-4}{{5.4}{131}{Manifold mapping}{section.5.4}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {5.5} Curve, surface, and solid methods}{131}{section.5.5}\protected@file@percent }
-\newlabel{sect:5-5}{{5.5}{131}{Curve, surface, and solid methods}{section.5.5}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.6}{\ignorespaces The numbered unit 3-cube cellular complex. The ordinal numbers for vertices, edges and faces are set at the middle of each 1-, 2-, and 3-cell. Note that the indexes have lexicographic and not geometric order (say, clockwise or counterclockwise), but this is not a constraint. }}{132}{figure.5.6}\protected@file@percent }
+\newlabel{fig:5:1:cube}{{5.6}{132}{Plasm topological operators}{figure.5.6}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.2.1}Incidence operators}{133}{subsection.5.2.1}\protected@file@percent }
+\newlabel{sect:5-2-1}{{5.2.1}{133}{Incidence operators}{subsection.5.2.1}{}}
+\citation{DBLP:journals/cad/DiCarloPS14}
+\@writefile{thm}{\contentsline {coding}{{Coding}{5.2.{1}}{Algebraic computation of FE = $\delta _1$}}{134}{coding.5.2.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.2.2}Adiacency operators}{135}{subsection.5.2.2}\protected@file@percent }
+\newlabel{sect:5-2-1}{{5.2.2}{135}{Adiacency operators}{subsection.5.2.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.2.3}Atomic decomposition}{136}{subsection.5.2.3}\protected@file@percent }
+\newlabel{sect:5-2-3}{{5.2.3}{136}{Atomic decomposition}{subsection.5.2.3}{}}
+\newlabel{sect:5-2-3}{{5.2.3}{136}{Logic of algebraic geometric computing}{section*.117}{}}
+\citation{DBLP:conf/hpec/KepnerABBFGHKLM16}
+\@writefile{thm}{\contentsline {coding}{{Coding}{5.2.{2}}{Examples of chain-based computing}}{137}{coding.5.2.2}\protected@file@percent }
+\@writefile{thm}{\contentsline {coding}{{Coding}{5.2.{3}}{Examples of chain-based computing}}{137}{coding.5.2.3}\protected@file@percent }
+\@writefile{thm}{\contentsline {coding}{{Coding}{5.2.{4}}{Examples of chain-based computing}}{137}{coding.5.2.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {5.3} Linear and affine operators}{138}{section.5.3}\protected@file@percent }
+\newlabel{sect:5-3}{{5.3}{138}{Linear and affine operators}{section.5.3}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {5.4} Manifold mapping}{138}{section.5.4}\protected@file@percent }
+\newlabel{sect:5-4}{{5.4}{138}{Manifold mapping}{section.5.4}{}}
+\newlabel{sect:5-4-1}{{5.4}{138}{Definitions}{section*.118}{}}
+\newlabel{sect:5-4-2}{{5.4}{138}{The mapping machinery}{section*.119}{}}
+\newlabel{sect:5-4-3}{{5.4}{138}{First examples}{section*.120}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {5.5} Curve, surface, and solid methods}{138}{section.5.5}\protected@file@percent }
+\newlabel{sect:5-5}{{5.5}{138}{Curve, surface, and solid methods}{section.5.5}{}}
 \@setckpt{chapter-05/05}{
-\setcounter{page}{132}
+\setcounter{page}{139}
 \setcounter{equation}{0}
 \setcounter{enumi}{3}
 \setcounter{enumii}{5}
 \setcounter{enumiii}{0}
-\setcounter{enumiv}{50}
-\setcounter{footnote}{0}
+\setcounter{enumiv}{51}
+\setcounter{footnote}{1}
 \setcounter{mpfootnote}{0}
 \setcounter{part}{2}
 \setcounter{section}{5}
@@ -58,14 +76,14 @@
 \setcounter{subsubsection}{0}
 \setcounter{paragraph}{0}
 \setcounter{subparagraph}{0}
-\setcounter{figure}{4}
+\setcounter{figure}{6}
 \setcounter{table}{0}
 \setcounter{chapter}{5}
 \setcounter{theorem}{0}
 \setcounter{case}{0}
 \setcounter{conjecture}{0}
 \setcounter{corollary}{0}
-\setcounter{definition}{2}
+\setcounter{definition}{4}
 \setcounter{example}{0}
 \setcounter{exercise}{0}
 \setcounter{lemma}{0}
@@ -77,10 +95,10 @@
 \setcounter{library}{0}
 \setcounter{question}{0}
 \setcounter{solution}{0}
-\setcounter{remark}{0}
+\setcounter{remark}{6}
 \setcounter{prob}{0}
 \setcounter{merk}{0}
-\setcounter{endNonectr}{33}
+\setcounter{endNonectr}{14}
 \setcounter{currNonectr}{0}
 \setcounter{currproofctr}{0}
 \setcounter{endproofctr}{0}
@@ -92,15 +110,15 @@
 \setcounter{contribution}{0}
 \setcounter{section@level}{1}
 \setcounter{Item}{49}
-\setcounter{Hfootnote}{11}
+\setcounter{Hfootnote}{12}
 \setcounter{Hy@AnnotLevel}{0}
-\setcounter{bookmark@seq@number}{51}
+\setcounter{bookmark@seq@number}{54}
 \setcounter{parentequation}{0}
-\setcounter{lstnumber}{8}
+\setcounter{lstnumber}{1}
 \setcounter{currconditionctr}{0}
 \setcounter{endconditionctr}{0}
 \setcounter{condition}{0}
-\setcounter{currcodingctr}{72}
+\setcounter{currcodingctr}{76}
 \setcounter{endcodingctr}{0}
 \setcounter{coding}{0}
 \setcounter{lstlisting}{0}

@@ -945,7 +945,7 @@ A \emph{$p$-chain} can be seen, with some abuse of language, as \emph{any subset
 In this sense we write $U_p = \Lambda_p - \Lambda_{p-1}$ for the set of \emph{unit} (or \emph{elementary}) $p$-chains ($0\leq p\leq d$), where $\Lambda_p$ is the $p$-skeleton of $X$ and $\Lambda_{-1} = \emptyset$.
 \end{definition}
 
-\begin{definition}[Linear $p$-ppace]
+\begin{definition}[Linear $p$-space]
 $C_p = \mathcal{P}(U_p)$ is the space of $p$-chains, where $\mathcal{P}$ is the power set.
 \end{definition}
 
@@ -1000,22 +1000,16 @@ The reader should note, as rule of dumb to remember the meaning of boundary and 
 
 \subsection{Linear chain operators}\label{sect:3-3-2}
 
-{In the remainder of this book we identify chains  and cochains, as in \cite{PAOLUZZI2023103436}.
-In this way we express to be only interested to combinatorial topology aspects of cell complexes, and not in differential ones. 
-
-A standard basis, also called a natural basis, is a special orthonormal vector basis in which each basis vector has a single nonzero entry with value 1~\cite{Wolfram:algebra:StandardBasis}.
-Being only interested in topological properties, we have identified elementwise the natural bases of the corresponding chain and cochain spaces. 
-
-As a consequence, the boundary and coboundary matrices are related by transposition, and given the coordinate vector of a $p$-cell, provide both the incident $p-1$ and $p+1$ cells, respectively.
-
+\begin{definition}[Chain complex]
+A \emph{chain complex} is a sequence of linear spaces \(C_p\) of chains and linear
+boundary/coboundary maps \(\partial_p, \delta_p\) between them: 
+\end{definition}
 Given a collection \(\mathit{S}\) of geometric
 objects\footnote{Examples include, but are not limited to: line segments, quads, triangles, polygons, meshes, pixels, voxels, volume images, B-reps, \emph{etc.} 
 In mathematical terms, a geometric object is a topological space embedded in some $\E^d$ \cite{Edelsbrunner:95}.},
 we shall compute the topology of their space
-arrangement \(\mathcal{A}(\mathit{S})\) as a \emph{chain complex},
-\emph{i.e.},~as a sequence of linear spaces \(C_p\) of chains and linear
-boundary/coboundary maps \(\partial_p\) and
-\(\delta_p=\partial_{p+1}^\top\) between them: 
+arrangement \(\mathcal{A}(\mathit{S})\) as a chain complex (see Section~\ref{chapt:7})
+
 \[ 
 C_\bullet = (C_p, \partial_p) := 
 C_3 \ 
@@ -1039,10 +1033,22 @@ C_3 \
 \longrightarrow \\
 \partial_1 
 }
-\ C_0 .
-\] 
+\ C_0\ ;\] 
+\[
+\delta_p=\partial_{p+1}^\top\qquad 3\leq p\leq 0
+\]
 
 
+
+
+
+{In the remainder of this book we identify chains  and cochains, as in \cite{PAOLUZZI2023103436}.
+In this way we express to be only interested to combinatorial topology aspects of cell complexes, and not in differential ones. 
+
+A standard basis, also called a natural basis, is a special orthonormal vector basis in which each basis vector has a single nonzero entry with value 1~\cite{Wolfram:algebra:StandardBasis}.
+Being only interested in topological properties, we have identified elementwise the natural bases of the corresponding chain and cochain spaces. 
+
+As a consequence, the boundary and coboundary matrices are related by transposition, and given the coordinate vector of a $p$-cell, provide both the incident $p-1$ and $p+1$ cells, respectively.
 
 
 

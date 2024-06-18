@@ -200,6 +200,16 @@ JuliaGPU: A gentle introduction to parallelization and GPU programming in
 Kamiski, B.: Julia for Data Analysis.
 \newblock Manning (2023)
 
+\bibitem{DBLP:conf/hpec/KepnerABBFGHKLM16}
+Kepner, J., Aaltonen, P., Bader, D.A., Bulu{\c{c}}, A., Franchetti, F.,
+  Gilbert, J.R., Hutchison, D., Kumar, M., Lumsdaine, A., Meyerhenke, H.,
+  McMillan, S., Yang, C., Owens, J.D., Zalewski, M., Mattson, T.G., Moreira,
+  J.E.: Mathematical foundations of the graphblas.
+\newblock In: 2016 {IEEE} High Performance Extreme Computing Conference, {HPEC}
+  2016, Waltham, MA, USA, September 13-15, 2016, pp. 1--9. {IEEE} (2016).
+\newblock \doi{10.1109/HPEC.2016.7761646}.
+\newblock \urlprefix\url{https://doi.org/10.1109/HPEC.2016.7761646}
+
 \bibitem{10.1093.27.2.97}
 Knuth, D.E.: Literate programming.
 \newblock Comput. J. \textbf{27}(2), 97–111 (1984).

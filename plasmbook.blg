@@ -44,46 +44,49 @@ Database file #1: plasmbook.bib
 Warning--I didn't find a database entry for "Rootmeansquare:23"
 Warning--I didn't find a database entry for ""
 Warning--I didn't find a database entry for "AhoHopcroftUllman:DSA"
+Warning--I didn't find a database entry for "Wernecke:94:TIM"
+Warning--I didn't find a database entry for "Sowizral:2000:J3DAPI"
+Warning--I didn't find a database entry for "Gaskins92"
 Warning--empty year in juliaset
-You've used 50 entries,
+You've used 51 entries,
             2945 wiz_defined-function locations,
-            947 strings with 13731 characters,
-and the built_in function-call counts, 21536 in all, are:
-= -- 1815
-> -- 567
-< -- 7
-+ -- 239
-- -- 185
-* -- 1029
-:= -- 2727
-add.period$ -- 108
-call.type$ -- 50
-change.case$ -- 252
+            962 strings with 14425 characters,
+and the built_in function-call counts, 22647 in all, are:
+= -- 1893
+> -- 649
+< -- 8
++ -- 272
+- -- 217
+* -- 1116
+:= -- 2881
+add.period$ -- 112
+call.type$ -- 51
+change.case$ -- 273
 chr.to.int$ -- 0
-cite$ -- 51
-duplicate$ -- 2059
-empty$ -- 1975
-format.name$ -- 203
-if$ -- 4764
+cite$ -- 52
+duplicate$ -- 2138
+empty$ -- 2042
+format.name$ -- 236
+if$ -- 4987
 int.to.chr$ -- 0
-int.to.str$ -- 50
-missing$ -- 428
-newline$ -- 259
-num.names$ -- 104
-pop$ -- 847
+int.to.str$ -- 51
+missing$ -- 452
+newline$ -- 265
+num.names$ -- 106
+pop$ -- 894
 preamble$ -- 1
-purify$ -- 190
+purify$ -- 208
 quote$ -- 0
-skip$ -- 822
+skip$ -- 837
 stack$ -- 0
-substring$ -- 741
-swap$ -- 1124
-text.length$ -- 7
+substring$ -- 762
+swap$ -- 1179
+text.length$ -- 8
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 186
+type$ -- 190
 warning$ -- 1
-while$ -- 120
-width$ -- 52
-write$ -- 573
+while$ -- 125
+width$ -- 53
+write$ -- 588
 (There were 4 error messages)
