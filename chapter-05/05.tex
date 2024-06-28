@@ -77,18 +77,18 @@ The |Plasm| coding of the “icosphere”, polyhedral approximation of the 2-sph
 First we generate the cell complex of the input |obj| using the |LAR| combinator, then for each edge we compute the mean point, then we aggregate to the old vertices the new ones, scaled by the factor |r1/s1| built with the distance from |[0,0,0]| center of both models.
 \begin{lstlisting}[language=JuliaLocal, style=julia, mathescape=true]
 function ICOSPHERE(obj::Hpc)::Hpc
-   W  = LAR(obj).V
-   EV = LAR(obj).C[:EV]
-   W  = [W[:,k] for k=1:size(W,2)]
-   V  = [(W[v1]+W[v2])./2 for (v1,v2) in EV]
-   r1 = sqrt(sum(W[1].^2))
-   s1 = sqrt(sum(V[1].^2))
-   CONVEXHULL([W; V*(r1/s1)]);
+ W  = LAR(obj).V
+ EV = LAR(obj).C[:EV]
+ W  = [W[:,k] for k=1:size(W,2)]
+ V  = [(W[v1]+W[v2])./2 for (v1,v2) in EV]
+ r1 = sqrt(sum(W[1].^2))
+ s1 = sqrt(sum(V[1].^2))
+ CONVEXHULL([W; V*(r1/s1)]);
 end
 \end{lstlisting}
 Finally, the |[W; V*(r1/s1)]::Vector{Vector{Float64}}| made by old vertices and by new scaled ones is given to the operator |CONVEXHULL| that transforms such a |Vector| of point (|Vector{Float64}|) in their geometric \emph{convex hull}.
 Just remember that such polyhedra are convex sets, hence they have a \emph{single} (convex) cell. \begin{lstlisting}[language=JuliaLocal, style=julia, mathescape=true]
-out0 = ICOSAHEDRON();   VIEW(out0)
+out0 = ICOSAHEDRON(); VIEW(out0)
 out1 = ICOSPHERE(out0); VIEW(out1)
 out2 = ICOSPHERE(out1); VIEW(out2)
 out3 = ICOSPHERE(out2); VIEW(out3)
@@ -99,9 +99,9 @@ Let’s remark the extreme simplicity of such polyhedral generations.
 \end{coding}
 
 \begin{figure}[htbp] %  figure placement: here, top, bottom, or page
-   \includegraphics[width=0.34\linewidth]{chapter-05/figs/icosphere0}%
-   \includegraphics[width=0.33\linewidth]{chapter-05/figs/icosphere1}%
-   \includegraphics[width=0.325\linewidth]{chapter-05/figs/icosphere2}%
+ \includegraphics[width=0.34\linewidth]{chapter-05/figs/icosphere0}%
+ \includegraphics[width=0.33\linewidth]{chapter-05/figs/icosphere1}%
+ \includegraphics[width=0.325\linewidth]{chapter-05/figs/icosphere2}%
 \hfill
 \caption{(a) Icosahedron; (b) icosphere with 42 vertices; (c)  icosphere with 162 vertices. }
 \label{5:icospheres}
@@ -147,10 +147,10 @@ VIEW(frame, Dict("background_color"=>WHITE))
 
 
 \begin{figure}[htbp] %  figure placement: here, top, bottom, or page
-   \sidecaption[t]
-   \includegraphics[width=\linewidth]{chapter-05/figs/frame1} 
-   \caption{\sf frame = STRUCT(pillars, trusses, trusses1, floorslab);}.}
-   \label{fig:example}
+ \sidecaption[t]
+ \includegraphics[width=\linewidth]{chapter-05/figs/frame1} 
+ \caption{\sf frame = STRUCT(pillars, trusses, trusses1, floorslab);}.}
+ \label{fig:example}
 \end{figure}
 \subsection*{Assembly combinator {\sf STRUCT}}\label{sect:5-1-1}
 
@@ -168,10 +168,10 @@ It is worth noting that such “modeling transformations" --- as they are called
 
 
 \begin{figure}[htbp] %  figure placement: here, top, bottom, or page
-   \sidecaption[t]
-   \includegraphics[width=0.6\linewidth]{chapter-05/figs/skeleton1} 
-   \caption{\sf skeleton = STRUCT(NN(7)([frame, T(3)(3.3)])));}.}
-   \label{fig:5:1:skeleton}
+ \sidecaption[t]
+ \includegraphics[width=0.6\linewidth]{chapter-05/figs/skeleton1} 
+ \caption{\sf skeleton = STRUCT(NN(7)([frame, T(3)(3.3)])));}.}
+ \label{fig:5:1:skeleton}
 \end{figure}
 
 \begin{coding}[Building skeleton]\label{5:1:skeleton}
@@ -205,7 +205,7 @@ conversely needed in hierarchical scene graphs.
 \begin{coding}[alternate method for vertical aggregation]\
 \begin{lstlisting}[language=JuliaLocal, style=julia, mathescape=true]
 multifloor(model,n) = STRUCT(INSR(TOP)(N(n+1)(model))) #=
-multifloor (generic function with 1 method)		  	   =#
+multifloor (generic function with 1 method)		  	 =#
 VIEW(multifloor(frame,7))
 \end{lstlisting}
 The object generated here is equal to the |skeleton| model of Figure \ref{fig:5:1:skeleton}. 
@@ -238,30 +238,30 @@ DOWN = ALIGN([[2, MIN, MAX], [3, MIN, MIN]])
 
 
 \begin{figure}[htbp] %  figure placement: here, top, bottom, or page
-   \sidecaption[t]
-   \includegraphics[width=\linewidth]{chapter-05/figs/fourcolumns} 
-   \caption{\sf skeleton = STRUCT(NN(7)([frame, T(3)(3.3)])));}.}
-   \label{fig:5:1:fourcolumns}
+ \sidecaption[t]
+ \includegraphics[width=\linewidth]{chapter-05/figs/fourcolumns} 
+ \caption{\sf skeleton = STRUCT(NN(7)([frame, T(3)(3.3)])));}.}
+ \label{fig:5:1:fourcolumns}
 \end{figure}
 
 \begin{coding}\
 A very simplified view of a column is built here, to show the use of the |INSR(TOP)| and |INSR(RIGHT)| functions applied to a list of geometric object, each given in its local coordinate system:
 \begin{lstlisting}[language=JuliaLocal, style=julia, mathescape=true]
 function Column(r,h)
-   basis = CUBOID([ 2*r*1.2, 2*r*1.2, h/12.0 ]) 
-   trunk = CYLINDER([ r, (10.0/12.0)*h ])(12)
-   capital = CUBOID([ 2*r*1.2, 2*r*1.2, h/12.0 ])
-   beam = S(1)(3)(capital) 
-   return INSR(TOP)([basis,trunk,capital,beam])
+ basis = CUBOID([ 2*r*1.2, 2*r*1.2, h/12.0 ]) 
+ trunk = CYLINDER([ r, (10.0/12.0)*h ])(12)
+ capital = CUBOID([ 2*r*1.2, 2*r*1.2, h/12.0 ])
+ beam = S(1)(3)(capital) 
+ return INSR(TOP)([basis,trunk,capital,beam])
 end
 # Column (generic function with 2 methods)
 \end{lstlisting}
 
 \begin{lstlisting}[language=JuliaLocal, style=julia, mathescape=true]
 function ColRow(N,r,h)
-   col = Column(r,h)
-   columnlist = [col for k in 1:N+1]
-   return INSR(RIGHT)(columnlist)
+ col = Column(r,h)
+ columnlist = [col for k in 1:N+1]
+ return INSR(RIGHT)(columnlist)
 end
 # ColRow (generic function with 2 methods)
 \end{lstlisting}
@@ -299,11 +299,11 @@ First, in this model we have a 3D chain complex (see section~\ref{sect:3-3-2}) w
 one 3-cell, 6 faces (2-cells |FV|), 12 edges (1-cells |EV|), and 8 vertices (0-cells |V|).
 
 \begin{figure}[htbp] %  figure placement: here, top, bottom, or page
-   \sidecaption[t]
-   \includegraphics[width=0.5\linewidth]{chapter-05/figs/cube} 
-   \caption{The numbered unit 3-cube cellular complex. 
-   The ordinal numbers  for vertices, edges and faces are set at the middle of each 1-, 2-, and 3-cell. Note that the indexes have lexicographic and not geometric order (say, clockwise or counterclockwise), but this is not a constraint. }
-   \label{fig:5:1:cube}
+ \sidecaption[t]
+ \includegraphics[width=0.5\linewidth]{chapter-05/figs/cube} 
+ \caption{The numbered unit 3-cube cellular complex. 
+ The ordinal numbers  for vertices, edges and faces are set at the middle of each 1-, 2-, and 3-cell. Note that the indexes have lexicographic and not geometric order (say, clockwise or counterclockwise), but this is not a constraint. }
+ \label{fig:5:1:cube}
 \end{figure}
 The reader is instructed to check for comparison the following dataset with the Figure~\ref{fig:5:1:cube}. In general, the cell indices are unordered.
 \begin{lstlisting}[language=JuliaLocal, style=julia, mathescape=true]
@@ -550,7 +550,7 @@ The result of the sparse matrix-vector computation is $\beta = e_1+ e_2+ e_3+ e_
 
 \begin{coding}[Examples of chain-based computing] Conversely, compute the faces incident of edge $e_5 \in C_1$ :
 \begin{lstlisting}[language=JuliaLocal, style=julia, mathescape=true]
-julia> 𝛾 = findnz(KFE' .* [0,0,0,0,0,1,0,0,0,0,0,0])[2]'  #=
+𝛾 = findnz(KFE' .* [0,0,0,0,0,1,0,0,0,0,0,0])[2]'  #=
 1×2 adjoint(::Vector{Int64}) with eltype Int64:
  2  4		=#
 \end{lstlisting}
@@ -583,23 +583,1059 @@ Note that to get a binary result using the native Julia operations and functions
 \end{remark}
 
 
-\section{ Linear and affine operators}\label{sect:5-3}
+\section{ Manifold mapping}\label{sect:5-3}
+
+This section presents concepts useful for fully understanding curves and surfaces, which will be discussed later. In particular, we introduce the notion of a curve and a surface as a point-valued function of one or two real variables, respectively.
+
+\subsubsection*{ Definitions}\label{sect:5-3-1}
+
+A \emph{manifold} is a topological space in which every point has a neighborhood that is homeomorphic to the interior of a sphere in Euclidean space of the same number of dimensions. 
+Two-dimensional manifolds are also called surfaces.  
+In this case, a manifold is a collection of points forming a topologically closed or open surface. 
+A surface is said closed when it has no boundary.
+Surfaces arise as the boundaries of three-dimensional solids.
+One-dimensional manifolds include lines and circles, but not self-crossing curves. 
 
 
-\section{ Manifold mapping}\label{sect:5-4}
+\begin{definition}[Curve]
+A \emph{curve} in $ \E^d$ is a point-valued mapping defined by summing
+to the origin of a Cartesian system $\{ \p{o}, (\v{e}_{i}) \}$ a
+vector-valued function $\v{\alpha}: \R \rightarrow \R^{d}$ of a real
+parameter, so that a point of the curve is generated as:
+\[
+\p{c}(u) = \p{o} + \v{\alpha}(u), \qquad u\in[a,b]\subset\R.
+\]
+\end{definition}
 
 
-\subsubsection*{ Definitions}\label{sect:5-4-1}
+\begin{definition}[Image  and domain]
+The \emph{image} of the curve is the set $\p{c}[a,b]$ of its $ \E^d$
+points.  The \emph{domain} of the curve is the parameter interval
+$[a,b]$, i.e.~the set $\{u\in\R : a\leq u\leq b \}$, often norm\-alized to
+the standard unit interval~$[0,1]$.
+\end{definition}
 
 
-\subsubsection*{ The mapping machinery}\label{sect:5-4-2}
+The important part of the curve definition is the vector-valued
+function ${\v\alpha}$, so that sometimes we use the word ``curve" for
+it.  From a notational viewpoint, we normally use a bold Latin letter,
+say $\v{a}$, $\v{b}$ or $\v{c}$, to indicate a map $\R \rightarrow
+\E^d$, and a bold Greek letter, say $\p{\alpha}$, $\p{\beta}$ or
+$\p{\gamma}$, to indicate a map $\R \rightarrow \R^d$.  
 
 
-\subsubsection*{ First examples}\label{sect:5-4-3}
+
+\begin{condition}[3D curve]
+
+A curve $\p{c}$ in three-dimensional space has 3 \emph{coordinate
+functions}, and is often denoted as
+\[
+\v{c}(u) = (x(u),  y(u), z(u))^T,
+\qquad u\in [a,b]
+\]
+where ${x}(u) = \v{\alpha}(u) \cdot \v{e}_{1}$, ${y}(u) =
+\v{\alpha}(u) \cdot \v{e}_{2}$ and ${z}(u) = \v{\alpha}(u) \cdot
+\v{e}_{3}$.  The \emph{tangent} vector function $\p{t}$ is defined
+by
+\[
+\p{t}(u) = \deriv{}{u} \v{c}(u) = \deriv{}{u} \v{\alpha}(u) =
+(x'(u), y'(u), z'(u))^T, \qquad u\in [a,b].
+\]
+
+\end{condition}
+
+\begin{coding}[Toolbox]\
+\begin{lstlisting}[language=JuliaLocal, style=julia, mathescape=true]
+INTERVALS(a,b) = n -> T(1)(a)(INTERVALS(b-a)(n))		#=
+INTERVALS (generic function with 2 methods)	=#
+
+INTERVALS(5,10)(8)		#=
+Hpc(MatrixNd([[1.0, 0.0], [5.0, 1.0]]), Hpc(MatrixNd(2), Geometry([[0.0], [0.625], [1.25], [1.875], [2.5], [3.125], [3.75], [4.375], [5.0]], hulls=[[1, 2], [2, 3], [3, 4], [4, 5], [5, 6], [6, 7], [7, 8], [8, 9]])))	=#
+
+INTERVAL2D(m1,m2,M1,M2) = 
+	(n1,n2) -> INTERVALS(M1-m1)(n1) * INTERVALS(M2-m2)(n2)	#=
+INTERVAL2D (generic function with 1 method)	=#
+
+INTERVAL2D(0.,0,1,1)(5,5)	#=
+Hpc(MatrixNd(3), Hpc(MatrixNd(3), Geometry([[0.0, 0.0], [0.0, 0.2], [0.2, 0.0], [0.2, 0.2], . . . 	=#
+\end{lstlisting}
+\label{script:5:toolbox}
+\end{coding}\vspace{3mm}
+
+
+
+\subsubsection*{ The mapping machinery}\label{sect:5-3-2}
+\label{sec:5:free}
+
+Accordingly with the functional approach of the \pl\ language, we
+often denote a 3D curve, as well as its derivative curves, by using
+a variable-free notation:
+\[
+\v{c} = (x,  y, z)^T
+\]
+with ${x} = \v{\alpha} \cdot \v{e}_{1}$, ${y} = \v{\alpha} \cdot
+\v{e}_{2}$, and ${z} = \v{\alpha} \cdot \mathbf{e}_{3}$.%, and so on.
+
+It should be clearly understood that $x, y, z$ %as  $x^{u}, y^{u}, z^{u}$
+are here maps $\R\rightarrow\R$ and that each $\v{e}_{i}$ has the
+constant maps $\underline{0}:\R\rightarrow 0$ and
+$\underline{1}:\R\rightarrow 1$ as components.
+
+Analogously, we write a curve $\p{c}:\R\rightarrow \E^{d}$, as
+$\p{c}=\p{o}+\v{\alpha}$, with $\v{\alpha}=(\alpha_{i})$, where
+$\alpha_{i}: \R\rightarrow\R$, for all $i$.  The variable-free
+notation, where functions are directly added and multiplied, exactly
+like numbers, is very useful for quickly and easily implementing
+curves and surfaces in our language, as seen in the following.
+
+\subsubsection*{Useful maps}\index{Useful maps}
+
+Some special maps are needed to perform such variable-free calculus
+with functions.  As the reader already knows, they have a direct
+translation in \pl.
+\begin{enumerate}
+  
+  \item  
+  $\textrm{id}: \R\rightarrow\R; x\mapsto x$
+  \hfill ({identity})
+  
+  \item  
+  $\underline{c}: \R\rightarrow\R; x\mapsto c$
+  \hfill (constant)
+  
+  \item  
+  $\sigma: \{1,\ldots,d\}\times \R^{d}\rightarrow\R;
+  (i,(x_{1},\ldots,x_{d}))\mapsto x_{i}$ \hfill (selection)
+
+\end{enumerate}
+
+A computer scientist would probably prefer the following 
+specification, just to point out that $\sigma$ is often used as a 
+\emph{partial} function, i.e.~a function which may be applied to a 
+subset of its arguments:
+\begin{enumerate}
+  
+  \item[3.]
+  $\sigma: \{1,\ldots,d\}\rightarrow(\R^{d}\rightarrow\R);
+  i\mapsto((x_{1},\ldots,x_{d})\mapsto x_{i})$ \hfill (selection)
+
+\end{enumerate}
+
+Actually, the \fl\ primitives \textsf{ID}, \textsf{K} and \textsf{SEL}
+used by the \pl\ language have no domain restrictions, and can be
+applied to any type of data objects.
+
+\subsubsection*{ {Algebraic operations}\index{Algebraic!operations}
+
+We also need to recall how to perform algebraic operations in the
+linear algebra of maps $\R\rightarrow\R$.  For each map
+$\v{\alpha},\v{\beta}: \R\rightarrow\R$ and each scalar $a\in\R$
+\[
+\v{\alpha} + \v{\beta}: u \mapsto \v{\alpha}(u) + \v{\beta}(u),
+\quad 
+\v{\alpha}  \v{\beta} : u \mapsto \v{\alpha}(u)  \v{\beta}(u), 
+\quad
+a\,\v{\beta} : u \mapsto a\,\v{\beta}(u).
+\]
+
+Consequently, we have that
+\[
+\v{\alpha} - \v{\beta} : u \mapsto \v{\alpha}(u) - \v{\beta}(u),
+\quad 
+\v{\alpha} / \v{\beta} : u \mapsto \v{\alpha}(u) / \v{\beta} (u).
+\]
+
+\begin{coding}\ 
+Therefore, we have extended several infix Julia functions in Julia |Base| package to work with function arguments:
+\begin{lstlisting}[language=JuliaLocal, style=julia, mathescape=true]
+import Base.-
+-(f::Function, g::Function) = (x...) -> f(x...) - g(x...)  
+import Base.+  
++(f::Function, g::Function) = (x...) -> f(x...) + g(x...)  
+import Base./  
+/(f::Function, g::Function) = (x...) -> f(x...) / g(x...)  
+import Base.*  
+*(f::Function, g::Function) = (x...) -> f(x...) * g(x...)  
+import Base.*
+*(pol1::Hpc, pol2::Hpc) = Power(pol1, pol2)
+import Base.^
+^(f1::Function, f2::Function) = (x,y) -> f1(x)^f2(y) 
+import Base.sqrt
+SQRT(f::Function) = x -> f(x)^(1/2) 
+\end{lstlisting}
+In particular, the infix product |*| may also work with geometric type |Hpc|.
+\end{coding}
 
 
 
 
-\section{ Curve, surface, and solid methods}\label{sect:5-5}
+\subsubsection*{Coordinate representation}\index{Coordinate!representation}
+
+Finally, let’s note that the coordinate functions of a curve $\v{\alpha}
+= (\alpha_{i})$ are maps $\R\rightarrow\R$.  The variable-free
+vector notation stands for the linear combination of coordinate
+functions with the basis vectors $\v{e}_{i}$ of the target space:
+\[
+\v{\alpha} = ({\alpha}_{1}, \cdots, {\alpha}_{d})^{T}:\
+\R\rightarrow\R^{d} ;\ u \mapsto
+\sum_{i=1}^{d} {\alpha}_{i} \v{e}_{i}.
+\]
+
+
+%
+%
+%\subsubsection*{ First generation examples}\label{sect:5-3-3}
+%
+%
+%
+\begin{condition}[Circular arc]
+\label{ex:5:4:circumference}
+Some different curves are given here.  They have the same image in $
+\E^{2}$ but different coordinate representation in the space of
+functions $\R\rightarrow\R$.  All such curves generate a circular arc
+of unit radius centered at the origin.
+\begin{enumerate}
+  
+\item  trigonometric representation:
+
+\[
+\p{\alpha}(u) = \left(\cos \left({\pi \over 2}u\right), \sin \left({\pi \over
+2}u\right)\right)^T \qquad u\in[0,1]
+\]
+
+\item  rational representation:
+\[
+\p{\beta}(u) = \left({1-u^2 \over 1+u^2}, {2u \over 1+u^2}\right)^T
+\qquad u\in[0,1]
+\]
+
+
+\item  Cartesian representation:
+
+\[
+\p{\gamma}(u) = \left(u, \sqrt{1-u^2}\right)^T
+\qquad u\in[0,1]
+\]
+
+\end{enumerate}
+% \end{itemize}
+
+It is possible to verify that the image sets of such curves coincide, 
+i.e.~that $\p{\alpha}[0,1]=\p{\beta}[0,1]=\p{\gamma}[0,1]$.
+
+\end{condition}
+
+
+\begin{condition}[Variable-free circular arc]
+\label{ex:5:4:freearc}
+  
+It may be useful to give the variable-free representation of the three
+maps on the $[0,1]$ interval shown in Example~\ref{ex:circumference},
+that is exactly the representation we need to give a \pl\
+implementation of such maps:
+\begin{eqnarray}
+\p{\alpha} &=& \left(\cos \circ \left( \underline{\pi \over 2} 
+\textrm{id}\right), \
+\sin \circ \left( \underline{\pi \over 2} \textrm{id} \right) \right)^T
+\\
+\p{\beta} &=& \left(\frac{\underline{1} - 
+\textrm{id}^2 }{ \underline{1}+ \textrm{id}^2}, \
+{\underline{2} \,\textrm{id} \over \underline{1}+ \textrm{id}^2} 
+\right)^T
+\\
+\p{\gamma} &=& \left( \textrm{id}, \ \textrm{id}^{1\over 2}\circ 
+(\underline{1}- \textrm{id}^2) \right)^T
+\label{eq:5:alpha}
+\end{eqnarray}
+
+According to the semantics of the |MAP| function, the curve
+mapping is applied to all vertices of a simplicial decomposition of
+the polyhedral domain.  But all vertices are represented as
+\emph{sequences} of coordinates, say |[$u$]| for a curve, so
+that in order to act on $u$ the mapping must necessarily \emph{select}
+it from the sequence through the |SEL| function.
+
+\begin{lstlisting}[language=JuliaLocal, style=julia, mathescape=true]
+alpha = [cos ∘ (K(PI/2) * ID), sin ∘ (K(PI/2) * ID)];
+beta  = [(K(1) - SQR)/(K(1) + SQR), (K(2) * ID)/(K(1) + SQR)]; 
+gamma = [ID,sqrt ∘ (K(1) - (ID * ID))];
+
+VIEW( MAP(CONS(alpha)∘S1)(INTERVALS(1)(32)) )
+VIEW( MAP(CONS(beta) ∘S1)(INTERVALS(1)(32)) )
+VIEW( MAP(CONS(gamma)∘S1)(INTERVALS(1)(32)) )
+\end{lstlisting}
+\end{condition}
+
+The circle segment representations of Example~\ref{ex:5:4:circumference} are directly
+used in the \pl\ implementation of curves in
+Script~\ref{ex:5:4:freearc}.  To understand the implementation, notice
+that we generate a polyhedral complex by mapping the curve vector
+function (either $\v{\alpha}$, $\v{\beta}$ or $\v{\gamma}$ of
+Example~\ref{ex:5:4:freearc}) on the polyhedral representation of the
+$[0,1]\subset\R$ domain.
+
+
+
+
+%\paragraph{Toolbox}\index{Toolbox}
+%
+%Some predicates and functions needed by the operators in this
+%chapter are given in Script~\ref{script:5:toolbox}.  In particular,
+%the \texttt{interval} operator provides a simplicial decomposition with
+%\texttt{n} elements of the real interval $[\texttt{a},\texttt{b}]$,
+%whereas the \texttt{INTERVAL2D} operator returns a decomposition with
+%$\texttt{n1} \times \texttt{n2}$ subintervals of the domain
+%$[\texttt{a1},\texttt{b1}]\times
+%[\texttt{a2},\texttt{b2}]\subset\R^{2}$.
+%
+%\begin{script}[Toolbox] 
+%\begin{smallplasm} 
+%% DEF IsPoint \index{Library functions!Vectors library!{\tt  Ispoint}} = IsSeqOf:IsReal;\\
+%% DEF IsVect \index{Library functions!Vectors library!{\tt  Isvect}} ~= IsSeqOf:IsReal;\\
+%% DEF SQR \index{Library functions!General library!{\tt  Sqr}} ~~~~= ID * ID;\\
+%DEF interval (a,b::IsReal)(n::IsIntPos) = 
+%  (T:1:a  $\sim$  QUOTE  $\sim$  \#:n):((b-a)/n);\\
+%DEF INTERVAL2D (a1,a2,b1,b2::IsReal)(n1,n2::IsIntPos) = \+\\
+%  interval:<a1,b1>:n1 * interval:<a2,b2>:n2;
+%\end{smallplasm} 
+%\label{script:5:toolbox}
+%\end{script}
+%
+%Few other functions of general utility are used in the remainder of
+%this chapter.  In particular, the \texttt{SQR} function, that returns
+%its squared input, was defined in Script~\ref{script:UnitVect};
+%the predicates \texttt{IsVect} and \texttt{IsPoint} were given in
+%Script~\ref{script:IsVect} and~\ref{script:3:parametricplane}, 
+%respectively.  The vector operations used here were
+%defined in Chapter~3.
+
+
+
+%Hence we might substitute each $id$ function instance with the \pl\
+%denotation \texttt{S1} for the $\sigma(1)$ selector function.  
+%Exactly the same result is obtained by using either
+%$\v{\alpha}\circ\sigma(1), \v{\beta}\circ\sigma(1)$ or
+%$\v{\gamma}\circ\sigma(1)$, as done in the following code. 
+
+%\begin{script} [Circular arc maps]
+%\begin{smallplasm}
+%DEF SQRT~~\== ID ** K:(1/2);\\[0.3cm]
+%DEF alpha \>= < cos $\sim$ (K:(PI/2) * ID), sin $\sim$ (K:(PI/2) * 
+%ID) >; \\
+%DEF beta  \>= < (K:1 - SQR)/(K:1 + SQR),  (K:2 * ID)/(K:1 + SQR) >;\\
+%DEF gamma \>= < ID, SQRT $\sim$ (K:1 - SQR) >;\\[0.3cm]
+%
+%MAP:(CONS:alpha $\sim$ S1):(interval:<0,1>:10);\\
+%MAP:(CONS:beta~ $\sim$ S1):(interval:<0,1>:10);\\
+%MAP:(CONS:gamma $\sim$ S1):(interval:<0,1>:10);
+%\end{smallplasm}
+%\label{script:freearc}
+%\end{script}
+
+
+\begin{remark}\index{Coordinate!functions}
+Let us note that, e.g., |alpha| is a \emph{sequence} of
+coordinate functions.  Conversely, |CONS(alpha)| is the correct
+implementation of the \emph{vector-valued} function $\v{\alpha}$,
+which only can be \emph{composed} with other functions, say
+|S1|.
+Notice also that |SQR = ID*ID| (square) is a \pl\ implementation of the
+$\mbox{id}^{2}$ function and that the language explicitly requires the
+operator |*| to denote the product of functions.
+\end{remark}
+
+
+\begin{condition}[Circle]
+The following |MAP| expression generates a pol\-y\-gonal approximation with 36 line segments  of the unit circle centered in the origin, i.e.~of the set  $\v{c}[0,2\pi]$, with $\v{c}(u) = (0, 0) + (\cos u, \sin u)$. A manifold curve with different radiuses may be obtained via uniform scaling transformation of the |Hpc| value returned by the |MAP| functional.
+\begin{lstlisting}[language=JuliaLocal, style=julia, mathescape=true]
+circle = MAP(CONS([cos, sin])∘S1)(INTERVALS(2π)(36))	#=
+Hpc(MatrixNd(3), Hpc(MatrixNd(3), Geometry([[1.0, 0.0], [0.984807753012208, 0.17364817766693033], [0.9396926207859084, 0.3420201433256687], [0.8660254037844387, 0.499999999999999, ... =#
+VIEW( circle )
+\end{lstlisting}
+\end{condition}
+
+
+
+
+%$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+\section{ Parametric curves, surfaces, and solids }\label{sect:5-4}
+%$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+
+In this section, we discuss several geometric programming methods for implementing curve, surface, and solid-generating functions. Among the various classes of mathematical methods, we discuss the parametric ones in particular. In fact, they are both more used by industrial CAD platforms and more adaptable to being implemented by a functional language like Plasm.
+
+We make extensive use, in quite all the discussed examples, of the |MAP| combinator (function of the second order), to be applied first to a vector-valued function coding the \emph{parametric} expression of one, two, or three coordinate function $\R \to \R$ to apply to domain vertices, then to a polyhedral complex of |Hpc| type to transform correspondingly. A |MAP| output will always be generated using the |Hpc| type.
+
+Of course, all the manifold shapes generated by |Plasm|, like in practice by any geometric or graphical computing or visualization platform, are a linearized approximation of the curved shape. The piecewise-linear approximation is obtained using linear segments, triangles, or tetrahedra.
+
+\begin{remark}[“Transfinite implementation”]
+In some cases, the name of a class of geometry-generating curves, say |Bezier| or |Hermite|, for example, will be followed by a selector function (e.g., |S1| or |S2| or |S3|) since some class of manifold-generating functions are implemented in a “transfinite” way and may accept as input either control points or vector-valued control functions.
+\end{remark}
+
+
+\begin{definition}[Curve definition]\ 
+A curve $\v{c}: dom\to \E^d$ is a vector-valued function of a parameter $u\in |dom| \subset \R$, with often $|dom| = [0,1]$. The points supported by the curve image may belong to any $\E^d$, with $d\geq 1$. In each case $\v{c}$ will contain $d$ \emph{coordinate functions}.
+\end{definition}
+
+\subsection{ Curve generation methods}\label{sect:5-4-1}
+
+The primary |Plasm| generator of curves is the second order |MAP(curve::Function)(domain::Hpc)| combinator function. 
+
+\begin{remark}[Semantics of {\sf MAP} operator]
+The first argument function of the |MAP| combinator will extract the |1D| points from the polyhedral complex decomposition of the curve |domain|, second argument of the |MAP| operator. The mapped points remain embedded in |dom|, changing its shape, but not its topology, including connectness.
+\end{remark}
+
+
+\begin{condition}[Hermite cubic curve and surface]
+In the case of Hermite cubic curves four constraints impose the passage through assigned initial and final points (|P1|, |P2|), with assigned initial and final tangents (|T1|,|T2|).
+\begin{lstlisting}[language=JuliaLocal, style=julia, mathescape=true]
+function HERMITE(args)
+	P1, P2, T1, T2 = args
+	return CUBICHERMITE(S1)([P1, P2, T1, T2])
+end
+\end{lstlisting}
+
+We see here four |CUBICHERMITE| curves, with growing values of extreme tangents. At some point the curve self-intersect, which is bad for geometric design. Anyway, the Low-degree Hermite curve are useful to use in spline, where to interpolate long sequences of points and tangents.
+\begin{lstlisting}[language=JuliaLocal, style=julia, mathescape=true]
+domain = INTERVALS(1.0)(20)
+VIEW( STRUCT([		# aggregation of four curves
+MAP(CUBICHERMITE(S1)([[1,0],[1,1],[ -1, 1],[ 1,0]]))(domain),
+MAP(CUBICHERMITE(S1)([[1,0],[1,1],[ -2, 2],[ 2,0]]))(domain),
+MAP(CUBICHERMITE(S1)([[1,0],[1,1],[ -4, 4],[ 4,0]]))(domain),
+MAP(CUBICHERMITE(S1)([[1,0],[1,1],[-10,10],[10,0]]))(domain)]))
+\end{lstlisting}
+\end{condition}
+
+\begin{condition}[Transfinite Hermite surface]
+The transfinite Hermite implementation of Julia |Plasm| is used here.
+Let us note that |c1| and |c2| are curves, since their expressions contain the |S1| selector; conversely, |sur3| is a surface, since contains |S2|. The two extreme curves are interpolated here. Of course, the |domain| is 2D, obtained as Cartesian product of two polyhedral complexes of dimension one.
+\begin{lstlisting}[language=JuliaLocal, style=julia, mathescape=true]
+c1 = CUBICHERMITE(S1)([[1  ,0,0],[0  ,1,0],[0,3,0],[-3,0,0]])
+c2 = CUBICHERMITE(S1)([[0.5,0,0],[0,0.5,0],[0,1,0],[-1,0,0]])
+cubic = CUBICHERMITE(S2)([c1,c2,[1,1,1],[-1,-1,-1]])		
+# cubic : domain $\to \E^2$
+domain = INTERVALS(1.0)(14) * INTERVALS(1.0)(14)
+VIEW( MAP(cubic)(domain)), Dict("background_color"=>WHITE)s)
+\end{lstlisting}
+\end{condition}
+
+
+
+\begin{definition}[Bézier curve]
+Bézier curves of degree $n$ are entirely defined by an ordered sequence of $n+1$ control points. Such curves enjoy several useful properties, including (a) the interpolation of the first and last control point, and (b) the curve containment in the convex hull of |controlpoints|.  
+\end{definition}
+With two control points, we have a linear curve, three a quadratic curve, four a cubic curve, and so on. A cubic Bézier may have one flex (bend) point, a quartic two, a $n$-degree $n-2$ such points, so the shape is \emph{flexible}. For numerical reasons, it is better to maintain a low curve degree.
+
+%///////////////////////////////////////////////////////////////////////////////
+\begin{condition}[Bézier quartic curve]\
+This script shows the first simple example of the important class of Bézier curves.  The curve |domain| is here a partition into |32| segments of the interval $[0,1]$. 
+\begin{lstlisting}[language=JuliaLocal, style=julia, mathescape=true]
+controlpoints = [[0,0],[1,0],[1,1],[2,1],[3,1]]
+curve  = BEZIER(S1)(controlpoints)
+domain = INTERVALS(1.0)(32)
+
+VIEW( MAP(curve)(domain) ) 
+\end{lstlisting}
+\end{condition}
+
+\begin{definition}[Spline curve]
+A \emph{spline} is a continuous curve constructed so as to pass through a given set of points and have a certain number of continuous derivatives. Splines may be either interpolating or approximating the control points. Each coordinate of control points generates a coordinate function of the curve.
+\end{definition}
+
+%///////////////////////////////////////////////////////////////////////////////
+\begin{condition}[Cubic spline curves]\
+Here we show two examples of 2D cubic splines, piecewise curve defined by joining several segments of low-degree curve. In case of cubic splines each consecutive quadruple of points defines a different curve segment. In Figure~\ref{} we see together the |polyline|  of control points, a cardinal (interpolating) and a uniform B-spline (approximating) curve.
+\begin{lstlisting}[language=JuliaLocal, style=julia, mathescape=true]
+domain = INTERVALS(1.0)(20)
+points = [[-3.0, 6.0], [-4.0, 2.0], [-3.0,-1.0], [-1.0, 1.0], [1.5, 1.5], [3.0, 4.0], [5.0, 5.0], [7.0, 2.0], [6.0,-2.0], [2.0,-3.0]]
+polyline = POLYLINE(points) 
+cardinal_spline = SPLINE(CUBICCARDINAL(domain))(points);
+uniform_Bspline = SPLINE(CUBICUBSPLINE(domain))(points);
+
+VIEW( STRUCT( polyline, cardinal_spline, uniform_Bspline ) )
+\end{lstlisting}
+\end{condition}
+
+
+%///////////////////////////////////////////////////////////////////////////////
+\begin{condition}[Exact ellipse curve]\
+Exact ellipse curve, whose quarter is generated as exact quadratic rational Bézier curvehown here s is. The example shows one of two ellipses degenerating to a rational circle. The are three control points because each quarter is a cubic Bezier curve.
+\begin{lstlisting}[language=JuliaLocal, style=julia, mathescape=true]
+function ELLIPSE(args::Vector{Float64})
+	A, B = args
+	function ELLIPSE0(N::Int)
+		C = 0.5*sqrt(2)
+		mapping = RATIONALBEZIER([[A, 0.0, 1.0], [A*C, B*C, C], 		[0.0, B, 1.0]])
+		quarter = MAP(mapping)((INTERVALS(1.0)(N)))
+		half = STRUCT([quarter, S(2)(-1.0)(quarter)])
+		return STRUCT([half, S(1)(-1.0)(half)])
+	end
+	return ELLIPSE0
+end
+
+VIEW( STRUCT( ELLIPSE([1.0,2.0])(15), ELLIPSE([2.0,2.0])(15) ) )
+\end{lstlisting}
+\end{condition}
+
+%///////////////////////////////////////////////////////////////////////////////
+\begin{condition}[Non Uniform cubic B-spline]\
+This class of splines has consecutive curve segments defined between pairs of consecutive parameter values, called \emph{knots}. To interpolate the extreme control points, the extreme knots must have \emph{multiplicity} equal to $degree + 1$. 
+
+In this example, for the number of control points we have $n = m - (degree + 1) = 14 - 4 = 10$, where $m = n+degree+1$ is the number of knots. The number of cubic curve segments is $n - degree = 7$.  The knots are not necessarily integer. The knots (in parameter space) may be subject of affine maps (translation and scaling.
+
+\begin{lstlisting}[language=JuliaLocal, style=julia, mathescape=true]
+degree = 3
+ControlPoints = [[0.,0],[-1,2],[1,4],[2,3],[1,1],[1,2],[2.5,1],[2.5,3],[4,4],[5,0]]  
+# 10 control points
+knots=[0,0,0,0, 1,2,3,4,5,6, 7,7,7,7] # 14 knots
+VIEW(DISPLAYNUBSPLINE(degree, knots, ControlPoints))
+\end{lstlisting}
+\end{condition
+
+\begin{remark}
+As a rule of thumb, start fixing the control points and, hence, the approximate spline shape by viewing their |POLYLINE|. Choose the degree and, consequently, the number of curve segments and knots ($m=n+degree+1$). Finally, write the knot sequence starting from zero and repeat $n+1$ times, then append a knot at a time until it reaches the number of segments, and repeat the last knot.
+Other examples of |NUBSPLINE| (non rational NURBS) with 10 control points are given below:
+
+n=10; degree=2; segments=8; m=13 ; knots=0,0,0, 1,2,3,4,5,6,7, 8,8,8 
+
+n=10; degree=4; segments=6; m=15 ; knots=0,0,0,0,0 1,2,3,4,5, 6,6,6,6,6 }\\
+\end{remark}
+
+
+%///////////////////////////////////////////////////////////////////////////////
+\begin{condition}[Quadratic NURBS circle]\
+There are several ways to construct an exact 1D circle with NURBS curves of degrees two, three, and \four~\cite{Eberly/ww.geometrictools.com/}. In the case implemented in this example (see also Figure~\ref{}) we have
+$n=9 (2 coincidenti), degree=2, m=12$ satisfying our parameter relation formulas:
+\begin{lstlisting}[language=JuliaLocal, style=julia, mathescape=true]
+knots = [0,0,0,1,1,2,2,3,3,4,4,4]
+_p=sqrt(2)/2.0
+controlpoints = [[-1,0,1], [-_p,_p,_p], [0,1,1], [_p,_p,_p],[1,0,1], [_p,-_p,_p], [0,-1,1], [-_p,-_p,_p], [-1,0,1]]
+VIEW(MAP: DISPLAYNURBSPLINE([2, knots, controlpoints])(domain), Dict("background_color"=>WHITE))
+\end{lstlisting}
+\end{condition}
+
+
+%$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+\subsection{ Surface generation methods}\label{sect:5-4-2}
+%$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+
+Parametric curves can be combined to give parametric surfaces or
+solids or higher dimensional manifolds.  In this section we introduce \emph{generative methods} for parametric surfaces as
+vector functions of two real parameters, but also presents extensions
+to some three-variate solids.  Useful classes of surfaces are discussed, i.e.~the \emph{profile
+product} surfaces, including rotational surfaces; the \emph{ruled}
+surfaces, including generalized cylinders and cones; the surfaces
+generated by \emph{tensor product} of curves or splines. 
+The simple combinatorial semantics of the |Plasm| language
+may give the reader useful insights into tensor operations and
+transfinite combinations.
+
+
+To generate a 2D surface, i.e. a 2-dimensional manifold embedded in $\E^3$, we have to produce a vector-valued function with 3 coordinate functions $S(u,v) = [x(u,v), y(u,v), z(u,v)]$.
+
+
+%///////////////////////////////////////////////////////////////////////////////
+\begin{condition}[Parametric sphere]\
+A unit sphere centered in the origin is given here. the default |domain| is a cell  decomposition of the $[0,\pi] \times [0,2\pi]$ rectangle into $16\times 32$ quads.
+The |SPHERE| generating function in 3D is quickly generated as |Hpc| with some empty triangles at poles and double vertices and edges at the $v$ edges of $u,v$ discretized domain. 
+\begin{lstlisting}[language=JuliaLocal, style=julia, mathescape=true]
+function SPHERE(radius=1.0::Number)
+   function SPHERE0(subds=[16,32]::Vector{Int})
+      N, M = subds
+      dom = INTERVALS(π)(N) * INTERVALS(2π)(M)
+      domain = T(1,2)(-π/2,-π)(dom)
+      fx = p -> radius * (-cos(p[1])) * sin(p[2])
+      fy = p -> radius * cos(p[1]) * cos(p[2])
+      fz = p -> radius * sin(p[1])
+      return MAP([fx, fy, fz])(domain)
+   end
+   return SPHERE0
+end
+\end{lstlisting}
+A |SPHERE| surface with unit radius and piecewise-linearly approximated by  $16\times 32$ quads (default) is given here:
+\begin{lstlisting}[language=JuliaLocal, style=julia, mathescape=true]
+VIEW( SPHERE(1.0)([16,32]), Dict(“background_color”=>WHITE) )
+\end{lstlisting}
+In order to curate the |Hpc| surface from empty triangles and double vertices and edges,
+the sphere representation must be ported to |Lar| data structure.
+Maximum correct refinement is |LAR(SPHERE(2)([73,40]))|.
+\end{condition}
+
+%///////////////////////////////////////////////////////////////////////////////
+\begin{condition}[Parametric torus]\
+The parametric equation of torus surface in 3D can be computed by rotating about the $z$ axis a parametric circle in the plane x=0. The reader may construct it by exercise. The three coordinate functions are called |fx, fy, fz|, The |domain| is $[0,2\pi]\times[2\pi]$. The surface depends on a minor and a major radii (|r1|, |r2|).
+
+The |TORUS|, function of second order, is given below.
+Instead than using a |Plasm| vector function |CONS([x,y,z])∘S1| a different technique is used here, by mapping a vector $of$ bivariate functions of |p = (u,v)| on the 2D |domain|.
+\begin{lstlisting}[language=JuliaLocal, style=julia, mathescape=true]
+function TORUS(radii=[1.0,2]::Vector)
+	r1, r2 = radii
+	function TORUS0(subds=[16,32]::Vector{Int})
+		N, M = subds
+		a = 0.5 * (r2-r1)
+		c = 0.5 * (r1+r2)
+		domain = INTERVALS(2*pi)(N) * INTERVALS(2*pi)(M)
+		fx = p -> (c + a*cos(p[2])) * cos(p[1])
+		fy = p -> (c + a*cos(p[2])) * sin(p[1])
+		fz = p -> a * sin(p[2])
+		return MAP([fx, fy, fz])(domain)
+	end
+	return TORUS0
+end
+\end{lstlisting}
+An application example of the |TORUS| function to actual parameters follows. 
+|[1.0,2.0]| are the smaller and bigger radii.
+\begin{lstlisting}[language=JuliaLocal, style=julia, mathescape=true]
+VIEW( TORUS([1.0,2.0])([20,80]),Dict("background_color"=>WHITE ) 
+\end{lstlisting}
+\end{condition}
+
+%///////////////////////////////////////////////////////////////////////////////
+\begin{condition}[Cubic Bézier surface generated by Bézier curves]\ 
+
+A transfinite generation is given here, where the four parameters of a cubic Bézier manifold are given by |C0,C1,C2,C3| Bézier’s curves of various degrees.
+\begin{lstlisting}[language=JuliaLocal, style=julia, mathescape=true]
+C0 = BEZIER(S1)([[0,0,0],[10,0,0]])
+C1 = BEZIER(S1)([[0,2,0],[8,3,0],[9,2,0]])
+C2 = BEZIER(S1)([[0,4,1],[7,5,-1],[8,5,1],[12,4,0]])
+C3 = BEZIER(S1)([[0,6,0],[9,6,3],[10,6,-1]])
+domain = INTERVALS(1.0)(10) * INTERVALS(1.0)(10)
+VIEW(MAP(BEZIER(S2)([C0,C1,C2,C3]))(domain))
+\end{lstlisting}
+\end{condition}
+
+
+%///////////////////////////////////////////////////////////////////////////////
+\begin{condition}[Coons’ patch]\
+The Coons patch provides a method to construct a surface supported on a given contour, when the latter is composed of 4 arcs of curves.
+\begin{lstlisting}[language=JuliaLocal, style=julia, mathescape=true]
+Su0 = BEZIER(S1)([[0,0,0],[10,0,0]])
+Su1 = BEZIER(S1)([[0,10,0],[2.5,10,3],[5,10,-3],[7.5,10,3],[10,10,0]])
+Sv0 = BEZIER(S2)([[0,0,0],[0,0,3],[0,10,3],[0,10,0]])
+Sv1 = BEZIER(S2)([[10,0,0],[10,5,3],[10,10,0]])
+domain = INTERVALS(1.0)(10) * INTERVALS(1.0)(10)
+VIEW(MAP(COONSPATCH([Su0,Su1,Sv0,Sv1]))(domain))
+\end{lstlisting}
+\end{condition}
+
+%///////////////////////////////////////////////////////////////////////////////
+\begin{condition}[Ruled surface]\
+The |RULEDSURFACE| function is used to build a ruled 2-manifold between two given curves. Of course, the domain must be 2D ,and embedded in a Euclidean space of at least dimension $d=2$.
+\begin{lstlisting}[language=JuliaLocal, style=julia, mathescape=true]
+alpha = point -> [point[1], point[1], 0 ]
+beta = point -> [ -1,  +1, point[1] ]
+domain = T([1,2])([-1,-1])(INTERVALS(2.0)(10) * INTERVALS(2.0)(10))
+VIEW( MAP(RULEDSURFACE([alpha,beta]))(domain) )
+\end{lstlisting}
+The two parametric functions |alpha| and |beta| define a patch  of hyperbolic paraboloid surface, with two parametric maps $\E^2\to\E^3$ such that $(u,v)\mapsto[u,u,0]$ and $(u,v)\mapsto[-1,1,u]$ over the |domain| patch $$|T|(1,2)(-1.-1)([0,2]\times[0,2])=([-1,1]\times[-1,1])\subset\E^2$$.
+A hyperbolic paraboloid is a saddle surface (see Figure~\ref{}), as its Gauss curvature is negative at every point. Therefore, although it is a ruled surface, it is not developable. 
+\end{condition}
+
+%///////////////////////////////////////////////////////////////////////////////
+\begin{condition}[Profile product patch]\ A similar development pattern is used here, using a profile curve and a section curve. A rotational curve is a |profile| product with a circle |section|. A surface $\p{S}$ is called the {\it profile
+product} of two plane curves $\p{\alpha}$ and $\p{\beta}$, embedded
+into two coordinate subspaces and respectively called {\it profile}
+and {\it cross-section} curve:
+\[ 
+\p{\alpha}(u) = \vet{\alpha_1(u) & 0 & \alpha_3(u)}^{T}, \quad
+\p{\beta}(v) = \vet{\beta_1(v) & \beta_2(v) & 0}^{T}
+\]
+when it is of the form
+\[
+\p{S}(u,v) = 
+\vet{\alpha_1(u)\ \beta_1(v), \  \alpha_1(u)\ \beta_2(v), \  
+\alpha_3(u)}^{T}
+\]
+\begin{lstlisting}[language=JuliaLocal, style=julia, mathescape=true]
+profile = BEZIER(S1)([[0.1,0,0],[2,0,0],[0,0,4],[1,0,5]])
+section = BEZIER(S2)([[0,0,0],[3,-0.5,0],[3,3.5,0],[0,3,0]])
+domain = INTERVALS(1.0)(20) * INTERVALS(1.0)(20)
+VIEW( STRUCT( MAP(profile)(domain), MAP(section)(domain) ), Dict(background_color=>WHITE)”)
+VIEW( MAP(PROFILEPRODSURFACE([profile, section])(domain) ))
+\end{lstlisting}
+\end{condition}
+
+%///////////////////////////////////////////////////////////////////////////////
+\begin{condition}[Rotational surface and solid]\
+The primitive function |ROTATIONALSURFACE| is a profile product where the |section| function is already known. The control points of the |profile| curve are set to start with horizontal tangent vector at $u=0$. Of course, the |profile| curve rules entirely the surface shape. In figures \ref{} and \ref{} we show both the rotational surface and the thin solid derived from it.
+\begin{lstlisting}[language=JuliaLocal, style=julia, mathescape=true]
+profile = BEZIER(S1)([[0,0,0],[3,0,0],[4,0,1],[4,0,4]]) 
+domain = INTERVALS(1.0)(10) * INTERVALS(2*PI)(30)
+suface = ROTATIONALSURFACE(profile)
+VIEW( MAP(suface)(domain) )
+VIEW( MAP(THINSOLID(suface))(domain*INTERVALS(0.25)(1))) 
+\end{lstlisting}
+\end{condition}
+
+%///////////////////////////////////////////////////////////////////////////////
+\begin{condition}[Cylindrical surface and solid]\
+A cilindrical surface is given here implemented by the |CYLINDRICALSURFACE| primitive by tensor product of a Bézier curve |alpha| in $z=0$ and a vertical vector |[0,0,1]|. 
+\begin{lstlisting}[language=JuliaLocal, style=julia, mathescape=true]
+alpha = BEZIER(S1)([[1,1,0],[-1,1,0],[1,-1,0],[-1,-1,0]])
+Udomain = INTERVALS(1.0)(20)
+Vdomain = INTERVALS(1.0)(6)
+domain = Udomain * Vdomain
+fn = CYLINDRICALSURFACE([alpha,[0,0,1]])
+VIEW(MAP(fn)(domain))
+VIEW(MAP(THINSOLID(fn))(domain*Vdomain))
+\end{lstlisting}
+\end{condition}
+
+%///////////////////////////////////////////////////////////////////////////////
+\begin{condition}[Conical surface]\
+A conical surface is a ruled surface whose straight lines join a base curve, the |beta| Bézier in this example and a fixed point, in this case |[0,0,1]| out of the curve.
+\begin{lstlisting}[language=JuliaLocal, style=julia, mathescape=true]
+domain = Power(INTERVALS(1.0)(20),INTERVALS(1.0)(6))
+beta = BEZIER(S1)([ [1,1,0],[-1,1,0],[1,-1,0],[-1,-1,0] ])
+VIEW(MAP(CONICALSURFACE([[0,0,1],beta]))(domain), Dict("background_color"=>WHITE))
+\end{lstlisting}
+\end{condition}
+
+\begin{definition}[Tensor product surface]
+The parametric surfaces called \emph{tensor product surfaces} are a
+bivariate generalization of parametric curves, e.g., 
+polynomial surfaces are a linear combination of either points or
+vectors with a suitable basis of \emph{bivariate} polynomial
+functions.  
+\end{definition}
+Such a bivariate basis is obtained by \emph{tensor product}
+of two univariate bases.  Let us remember that the basis of tensor product of two function bases (say, univariate Hermite o Bézier) can be obtained as $m\times n$ matrix product of first basis as $m\times 1$ column-vector times the second basis as $1\times n$ row-vector. 
+
+The result of the linear combination of so generated 
+bivariate basis with a $m\times n$ set of geometric handles is a point-valued
+function of two real parameters, whose image set is the surface
+considered as a point locus. 
+ 
+The following examples show more than one generation method in action, encouraging the reader to reason about and distinguish between bivariate parametric surface functions, coordinate functions, transfinite combinations, and polynomial tensor product functions, which are directly mapped on $ m \times n$ matrices of control points. In some cases, the interested reader will directly look at the open-source implementation of the primitive functions.
+
+%///////////////////////////////////////////////////////////////////////////////
+\begin{condition}[Transfinite Hermite surface]\
+In this case we present a cubic transfinite Hermite interpolating two |CUBICHERMITE| curves, and with two constant ($u$) fields (initial and final), of partial derivatives in the $v$ directions (see Figure \ref{}).
+ \begin{lstlisting}[language=JuliaLocal, style=julia, mathescape=true]
+c1 = CUBICHERMITE(S1)([[1,0,0],[0,1,0],[0,3,0],[-3,0,0]])
+c2 = CUBICHERMITE(S1)([[0.5,0,0],[0,0.5,0],[0,1,0],[-1,0,0]])
+sur3 = CUBICHERMITE(S2)([c1,c2,[1,1,1],[-1,-1,-1]])
+domain = INTERVALS(1.0)(14) * INTERVALS(1.0)(14)
+VIEW( MAP(sur3)(domain), Dict("background_color"=>WHITE) )
+\end{lstlisting}
+\end{condition}
+
+
+%///////////////////////////////////////////////////////////////////////////////
+\begin{condition}[Bilinear surface]\
+Tensor product surface function generated by the |Plasm| operator |TENSORPRODUCT| with arguments two array of 3D |controlpoints|, each containing two points, the first and the last of a linear curve in one parametric direction. the same for the transposed tensor in the other parametric coordinate direction. It is the ruled surface generated by four given points, that is interpolated at the four extreme points of |domain| $[0,1]\times[0,1]$. 
+
+\begin{lstlisting}[language=JuliaLocal, style=julia, mathescape=true]
+controlpoints = [
+   [[0.0,0.0,0.0],[2.0,-4.0,2.0]],
+   [[0.0,3.0,1.0],[4.0,0.0,0.0]]] .* 0.25
+domain = INTERVALS(1.0)(10) * INTERVALS(1.0)(10)
+mapping = BILINEARSURFACE(controlpoints)
+VIEW( MAP(mapping)(domain), Dict("background_color"=>WHITE) )
+\end{lstlisting}
+The |Plasm| implementation of the |BILINEARSURFACE| operator follows. The
+|BERNSTEINBASIS| of first degree is just the convex combinator of two control points: $[1-u, u]$.
+\begin{lstlisting}[language=JuliaLocal, style=julia, mathescape=true]
+function BILINEARSURFACE(controlpoints)
+	return TENSORPRODSURFACE([BERNSTEINBASIS(S1)(1), BERNSTEINBASIS(S1)(1)])(controlpoints)
+end
+\end{lstlisting}
+\end{condition}
+
+%///////////////////////////////////////////////////////////////////////////////
+\begin{condition}[Biquadratic surface]\
+The operator, in this case\\ |BIQUADRATICSURFACE|, is generated by |TENSORPRODSURFACE| of two instances of  quadratic Bézier , given as 
+$basis = [ (1-u)^{2},\ 2(1-u)u,\ u^{2} ]\ (0\leq u\leq 1).$
+
+\begin{lstlisting}[language=JuliaLocal, style=julia, mathescape=true]
+controlpoints = [[[0,0,0],[2,0,1],[3,1,1]],[[1,3,-1],[3,2,0],[4,2,0]],[[0,9,0],[2,5,1],[3,3,2]]]
+domain = INTERVALS(1.0)(10) * INTERVALS(1.0)(10)
+mapping = BIQUADRATICSURFACE(controlpoints)
+VIEW(MAP(mapping)(domain), Dict("background_color"=>WHITE))
+\end{lstlisting}
+\end{condition}
+
+
+
+%///////////////////////////////////////////////////////////////////////////////
+\begin{condition}[Bicubic Hermite surface]\
+Theis surface is an extension of Hermite curve. It is defined by 16 parameters (4 end points, 8 tangent vectors at end points, 4 twist vectors). You have (a) position vectors: the four corner points; (b) tangent vectors: the tangent vectors in u, w directions at the four position vectors of the surface; (c) twist vectors: the twist vectors at all the four position vectors of the surface. The elements of |controlpoints| tensor can be put in correspondence with the function of the basis tensor:
+
+\[
+\T{\cal G}_{hh} = \mat{
+\T{S}(0,0) & \T{S}(0,1) && \T{S}^u(0,0) & \T{S}^u(0,1) \\
+\T{S}(1,0) & \T{S}(1,1) && \T{S}^u(1,0) & \T{S}^u(1,1) \\ \\
+\T{S}^v(0,0) & \T{S}^v(0,1) && \T{S}^{uv}(0,0) & \T{S}^{uv}(0,1) \\
+\T{S}^v(1,0) & \T{S}^v(1,1) && \T{S}^{uv}(1,0) & \T{S}^{uv}(1,1) 
+}
+\]
+It is easy to see that the |controlpoints| geometric tensor $\T{\cal G}_{hh}$ can be decomposed into four submatrices corresponding to the surface $\T{S}$, its first partial
+derivatives $\T{S}^u$, $\T{S}^v$ and its mixed second partial derivative $\T{S}^{uv}$, called twist vectors, respectively evaluated in the four corners of [0,1]^{2}$ domain:
+
+\begin{lstlisting}[language=JuliaLocal, style=julia, mathescape=true]
+controlpoints = [
+   [[0,0,0 ],[2,0,1], [3,1,1],[4,1,1]],
+   [[1,3,-1],[3,2,0], [4,2,0],[4,2,0]],
+   
+   [[0,4,0 ],[2,4,1], [3,3,2],[5,3,2]],
+   [[0,6,0 ],[2,5,1], [3,4,1],[4,4,0]]
+]
+domain = INTERVALS(1.0)(10) * INTERVALS(1.0)(10)
+mapping = HERMITESURFACE(controlpoints)
+VIEW( MAP(mapping)(domain), Dict("background_color"=>WHITE) )
+\end{lstlisting}
+\end{condition}
+
+%///////////////////////////////////////////////////////////////////////////////
+\begin{condition}[Bicubic Beziér surface]\
+Conversely, the generating |controlpoints| of a cubic Bézier surface in 3D are a $4\times 4$ matrix of 3D point coordinates. This kind of suface interpolates the four extreme points, and the two cubic curves generated by the first and last row, as well the two cubic curves generated by the first and last column of the tensor of points.  
+\begin{lstlisting}[language=JuliaLocal, style=julia, mathescape=true]
+controlpoints = [
+   [[ 0,0,0],[0 ,3  ,4],[0, 6, 3],[0,10,0]],
+   [[ 3,0,2],[2 ,2.5,5],[3, 6, 5],[4,8,2]],
+   [[ 6,0,2],[8 ,3 , 5],[7,6,4.5],[6,10,2.5]],
+   [[10,0,0],[11,3  ,4],[11,6, 3],[10,9,0]]
+]
+domain = INTERVALS(1.0)(10) * INTERVALS(1.0)(10)
+mapping = BEZIERSURFACE(controlpoints)
+VIEW(MAP(mapping)(domain), Dict("background_color"=>WHITE))
+\end{lstlisting}
+\end{condition}
+
+%///////////////////////////////////////////////////////////////////////////////
+\begin{condition}[From polyline 2D to polygon]\
+A polyline is a list of points, where line segments are drawn between consecutive points.  a polygon is the set on points of a 2D domain, whose boundary gives a closed polyline. A polyline is said closed when has no boundary points.
+\begin{lstlisting}[language=JuliaLocal, style=julia, mathescape=true]
+VIEW(SOLIDIFY(STRUCT(AA(POLYLINE)([
+   [[0,0],[4,2],[2.5,3],[4,5],[2,5],[0,3],[-3,3],[0,0]],
+   [[0,3],[0,1],[2,2],[2,4],[0,3]],
+   [[2,2],[1,3],[1,2],[2,2]]]))), Dict("background_color"=>WHITE))
+\end{lstlisting}
+\end{condition}
+
+
+
+
+
+%$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+\subsection{ Solid generation examples}\label{sect:5-4-3}
+%$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+
+Here, we discuss several generations of 3D solids. In particular, we use the |TENSORPRODUCT| primitive, performing either the polynomial combination of two or more parametric curves or a parametric surface and a curve. Another method is called |SOLIDIFY| and consists of applying the same operation seen for the generation of solid polygons from closed and hollow polylines.
+Another method, Minkowski projection, will be used with 4D solids to generate a 3D view through a central projection within one of their faces.
+
+%///////////////////////////////////////////////////////////////////////////////
+\begin{condition}[CUBE primitive]\
+This primitive generator of the 3D cube has only one argument, the size of edges. 
+\begin{lstlisting}[language=JuliaLocal, style=julia, mathescape=true]
+cube = CUBE(3)
+VIEW( cube, Dict("background_color"=>WHITE) )
+\end{lstlisting}
+\end{condition}
+
+
+%///////////////////////////////////////////////////////////////////////////////
+\begin{condition}[$d$-Permutahedron]\ 
+The permutahedron of order $d$ is a ($d−1$)-dimensional polytope embedded in $d$D space. It is the boundary of a $d$-solid generated by permutation of first $d$-integers. The examples of 2- and 3-permutahedra follow. The generating operator |PERMUTAHEDRON| is multidimensional, with $d\geq 2$.
+\begin{lstlisting}[language=JuliaLocal, style=julia, mathescape=true]
+VIEW( PERMUTAHEDRON(2), Dict("background_color"=>WHITE) )
+VIEW( PERMUTAHEDRON(3), Dict("background_color"=>WHITE) )
+\end{lstlisting}
+\end{condition}
+
+
+%///////////////////////////////////////////////////////////////////////////////
+%\begin{condition}[Schegel projection in 3D]\
+%The \emph{Schlegel diagram} of a polytope
+%$P\subset\E^{d}$, with $\dim P = d$, is defined as the polytopal
+%complex ${\cal S}(P, F, \p{y})$, of dimension $d-1$, which is obtained
+%by projecting $P$ onto a facet $F\in{\cal F}(P)$ from an
+%external point~$\p{y}$.
+%In some sense, the Schlegel diagram ${\cal S}(P)$ encodes the
+%combinatorial structure of a $d$-polytope $P$ into a $(d-1)$-complex
+%${\cal S}(P)$.
+%Such perspective transformation can be directly applied in \pl\ to a
+%polyhedral domain by using the primitive operator \texttt{MAP}, as
+%shown in Script~\ref{script:4:Schlegel}, where two different operators
+%\texttt{schlegel2D} and \texttt{schlegel3D} are given, to generate the
+%diagrams of 3D and 4D polytopes, respectively.
+%
+%
+%\begin{lstlisting}[language=JuliaLocal, style=julia, mathescape=true]
+%	VIEW(SCHLEGEL3D(0.2)((T([1,2,3,4])([-1.0/3.0,-1.0/3.0,-1,+1])(SIMPLEX(4)))), Dict("background_color"=>WHITE))
+%	VIEW(SCHLEGEL3D(0.2)((SKELETON(1)∘T(1,2,3,4)(-1,-1,-1,1))(CUBOID([2,2,2,2])))), Dict("background_color"=>WHITE))
+%	VIEW(SCHLEGEL3D(0.2)((T([1,2,3,4])([-1.0/3.0,-1.0/3.0,-1,+1])(Power(SIMPLEX(2),SIMPLEX(2))))), Dict("background_color"=>WHITE))
+%\end{lstlisting}
+%\end{condition}
+
+%///////////////////////////////////////////////////////////////////////////////
+\begin{condition}[Quadratic Bézier 3-manifold]\ In this case the fundamental function is |BEZIERMANIFOLD| that accepts the list of degrees in parametric coordinates $u,v,w$ and three second order tensors (in this case all $3\times 3\times 3$) that if assembled provide a 3-tensor of points. The result is a decomposed solid into a 3D grid, deformed according to the 3-tensor ox control points. 
+\begin{lstlisting}[language=JuliaLocal, style=julia, mathescape=true]
+grid1D = INTERVALS(1.0)(10)
+domain3D = grid1D * grid1D *grid1D
+degrees = [2,2,2]
+Xtensor = [[[0,1,2],[-1,0,1],[0,1,2]],[[0,1,2],[-1,0,1],[0,1,2]], [[0,1,2],[-1,0,1],[0,1,2]]]
+Ytensor = [[[0,0,0.8],[1,1,1],[2,3,2]], [[0,0,0.8],[1,1,1],[2,3,2]], [[0,0,0.8],[1,1,1],[2,3,2]]]
+Ztensor = [[[0,0,0],[0,0,0],[0,0,0]],[[1,1,1], [1,1,1],[1,1,1]], [[2,2,1],[2,2,1],[2,2,1]]] 
+mapping = BEZIERMANIFOLD(degrees)([Xtensor,Ytensor,Ztensor])
+VIEW( MAP(mapping)(domain3D), Dict("background_color"=>WHITE) )
+\end{lstlisting}
+\end{condition}
+
+
+%///////////////////////////////////////////////////////////////////////////////
+\begin{condition}[Minkowski sum of wireframe end cuboid]
+This example shows the offset of a 1D graph-like cell-complex. The solid kernel traveling along the edges of the wire frame model is a parallolopiped with sides $[0.1,0.2,0.1]$.
+The generative algorithm works by using higher dimension (up to six) that the normal workspace $\E^3$.
+
+\begin{lstlisting}[language=JuliaLocal, style=julia, mathescape=true]
+verts = [[0,0,0],[3,0,0],[3,2,0],[0,2,0],[0,0,1.5], [3,0,1.5],[3,2,1.5],[0,2,1.5],[0,1,2.2],[3,1,2.2]]
+cells = [[1,2],[2,3],[3,4],[4,1],[5,6],[6,7],[7,8],[8,5], [1,5],[2,6],[3,7],[4,8],[5,9],[8,9],[6,10],[7,10], [9,10]]
+pols = [[1]]
+House = MKPOL(verts,cells,pols)
+
+VIEW( STRUCT( OFFSET([0.1,0.2,0.25])(House), T(2)(1.2*SIZE(2)(House))(House)), Dict("background_color"=>WHITE) )
+\end{lstlisting}
+\end{condition}
+
+
+%///////////////////////////////////////////////////////////////////////////////
+\begin{condition}[aaaaaaa]\
+\begin{lstlisting}[language=JuliaLocal, style=julia, mathescape=true]
+function TestThinSolid()
+	Su0 = COMP([BEZIERCURVE([[0,0,0],[10,0,0]]),CONS([S1])])
+	Su1 = COMP([BEZIERCURVE([[0,10,0],[2.5,10,3],[5,10,-3],[7.5,10,3],[10,10,0]]),CONS([S1]) ])
+	S0v = COMP([BEZIERCURVE([[0,0,0],[0,0,3],[0,10,3],[0,10,0]]) , CONS([S2]) ]) 
+	S1v = COMP([BEZIERCURVE([[10,0,0],[10,5,3],[10,10,0]]) ,CONS([S2]) ])
+	surface = COONSPATCH([Su0,Su1,S0v,S1v])
+	VIEW(MAP(surface)(Power(INTERVALS(1.0)(10),INTERVALS(1.0)(10))), Dict("background_color"=>WHITE))
+	solidMapping = THINSOLID(surface)
+	Domain3D = Power(Power(INTERVALS(1.0)(5),INTERVALS(1.0)(5)),INTERVALS(0.5)(5))
+	VIEW(MAP(solidMapping)(Domain3D), Dict("background_color"=>WHITE))
+end
+\end{lstlisting}
+\end{condition}
+
+%///////////////////////////////////////////////////////////////////////////////
+\begin{condition}[aaaaaaa]\
+\begin{lstlisting}[language=JuliaLocal, style=julia, mathescape=true]
+function TestBezierStripe()
+	vertices = ToFloat64([[0,0],[1.5,0],[-1,2],[2,2],[2,0]])
+	VIEW(Struct([POLYLINE(vertices),Power(BEZIERSTRIPE([vertices,0.25,22]),QUOTE([0.9]))]), Dict("background_color"=>WHITE))
+end
+\end{lstlisting}
+\end{condition}
+
+%///////////////////////////////////////////////////////////////////////////////
+\begin{condition}[aaaaaaa]\
+\begin{lstlisting}[language=JuliaLocal, style=julia, mathescape=true]
+function TestMinkowski()
+	p = MKPOL(
+		[[0.0,0.0]],
+		[[1]],
+		[[1]])
+	B = MINKOWSKI([  [-1.0/2.0,-1*sqrt(3.0/2.0)] , [-1.0/2.0,sqrt(3.0/2.0)] , [1,0] ])(p)
+	vertices = [[0,0],[1,0],[1,0.5],[0.5,0.5],[0.5,1],[0,1]]
+	pol1D = MKPOL(vertices,[[1,2],[2,3],[3,4],[4,5],[5,6],[6,1]],[[1],[2],[3],[4],[5],[6]])
+	pol2D = MKPOL(vertices,[[1,2,3,4],[4,5,6,1]],[[1,2]])
+	Min0 = STRUCT([T([1,2])(v)(S([1,2])([0.1,0.1])(B)) for v in vertices ])
+	Min1 = MINKOWSKI([[0.1*-1.0/2.0,0.1*-1*sqrt(3.0/2.0)],[0.1*-1.0/2.0,0.1*sqrt(3.0/2.0)] , [0.1*1,0.1*0] ])(pol1D)
+	Min2 = MINKOWSKI([[0.1*-1.0/2.0,0.1*-1*sqrt(3.0/2.0)],[0.1*-1.0/2.0,0.1*sqrt(3.0/2.0)] , [0.1*1,0.1*0] ])(pol2D)
+	VIEW(Struct([Min0,Min1,Min2]), Dict("background_color"=>WHITE))
+end
+\end{lstlisting}
+\end{condition}
+
+%///////////////////////////////////////////////////////////////////////////////
+\begin{condition}[aaaaaaa]\
+\begin{lstlisting}[language=JuliaLocal, style=julia, mathescape=true]
+function TestThinsolid()
+	Su0 = COMP([BEZIERCURVE([[0,0,0],[10,0,0]]),CONS([S1])])
+	Su1 = COMP([BEZIERCURVE([[0,10,0],[2.5,10,3],[5,10,-3],[7.5,10,3],[10,10,0]]),CONS([S1]) ])
+	S0v = COMP([BEZIERCURVE([[0,0,0],[0,0,3],[0,10,3],[0,10,0]]) , CONS([S2]) ]) 
+	S1v = COMP([BEZIERCURVE([[10,0,0],[10,5,3],[10,10,0]]) ,CONS([S2]) ])
+	surface = COONSPATCH([Su0,Su1,S0v,S1v])
+	VIEW(MAP(surface)(Power(INTERVALS(1.0)(10),INTERVALS(1.0)(10))), Dict("background_color"=>WHITE))
+	solidMapping = THINSOLID(surface)
+	unit = INTERVALS(1.0)(5)
+	Domain3D = unit * unit * unit
+	VIEW(MAP(solidMapping)(Domain3D), Dict("background_color"=>WHITE))
+end
+\end{lstlisting}
+\end{condition}
+
+%///////////////////////////////////////////////////////////////////////////////
+\begin{condition}[aaaaaaa]\
+\begin{lstlisting}[language=JuliaLocal, style=julia, mathescape=true]
+function TestSOLIDHELICOID(; nturns=3, R=1., r=0.0, shape=[36*nturns, 8], pitch=2, thickness=0.1)
+ totalangle = nturns*2*pi
+ grid2D = Power(INTERVALS(36*nturns)(36*nturns), INTERVALS(4)(8));
+ Domain2D = T([2])([r])(S([1,2])([totalangle/shape[1],R-r])(grid2D));
+ surface = p->let(u, v)=p;[v*cos(u); v*sin(u); u*(pitch/(2*pi))] end
+ VIEW(MAP(surface)(Domain2D), Dict("background_color"=>WHITE))
+ solidMapping = THINSOLID(surface)
+ Domain3D = Power(Domain2D, INTERVALS(thickness)(1));
+ VIEW(MAP(solidMapping)(Domain3D), Dict("background_color"=>WHITE))
+end;
+\end{lstlisting}
+\end{condition}
+
+
+
+%///////////////////////////////////////////////////////////////////////////////
+\begin{condition}[aaaaaaa]\
+\begin{lstlisting}[language=JuliaLocal, style=julia, mathescape=true]
+function TestPolar()
+	VIEW(POLAR(CUBOID([1,1,1])), Dict("background_color"=>WHITE))
+end
+\end{lstlisting}
+\end{condition}
+
+%///////////////////////////////////////////////////////////////////////////////
+\begin{condition}[aaaaaaa]\
+\begin{lstlisting}[language=JuliaLocal, style=julia, mathescape=true]
+function TestSolidify()
+VIEW(SOLIDIFY(STRUCT(AA(POLYLINE)([
+		[[0,0],[4,2],[2.5,3],[4,5],[2,5],[0,3],[-3,3],[0,0]],
+		[[0,3],[0,1],[2,2],[2,4],[0,3]],
+		[[2,2],[1,3],[1,2],[2,2]]]))), Dict("background_color"=>WHITE))
+end
+\end{lstlisting}
+\end{condition}
+
+%///////////////////////////////////////////////////////////////////////////////
+\begin{condition}[aaaaaaa]\
+\begin{lstlisting}[language=JuliaLocal, style=julia, mathescape=true]
+function TestDiff()
+	mypol1 = T([1,2])([-5,-5])(CUBOID([10,10]))
+	mypol2 = S([1,2])([0.9,0.9])(mypol1)
+	mypol3 = DIFF([mypol1,mypol2])
+	VIEW(STRUCT([
+			EX([0,10])(mypol3), T(1)(12),
+			LEX([0,10])(mypol3), T(1)(25),
+			S(3)(3)(SEX([0,PI])(16)(mypol3))
+	]), Dict("background_color"=>WHITE))
+end
+\end{lstlisting}
+\end{condition}
+
+%///////////////////////////////////////////////////////////////////////////////
+\begin{condition}[Cell visualization and numbering]\
+\begin{lstlisting}[language=JuliaLocal, style=julia, mathescape=true]
+function TestViewText()
+   geometry = ToGeometry(CUBOID([1.0, 1.0]))
+   batches = Vector{GLBatch}()
+   append!(batches, GetBatchesForGeometry(geometry))
+   append!(batches, GLText(geometry.points, EV=geometry.edges, FV=geometry.faces))
+   VIEW(batches, Dict("background_color"=>WHITE))
+   
+   geometry = ToGeometry(CUBOID([1.0, 1.0, 1.0]))
+   batches = Vector{GLBatch}()
+   append!(batches,GetBatchesForGeometry(geometry))
+   append!(batches,GLText(geometry.points, EV=geometry.edges, FV=geometry.faces))
+   VIEW(batches, Dict("background_color"=>WHITE))
+end
+\end{lstlisting}
+\end{condition}
+
 
 

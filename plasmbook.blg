@@ -47,46 +47,47 @@ Warning--I didn't find a database entry for "AhoHopcroftUllman:DSA"
 Warning--I didn't find a database entry for "Wernecke:94:TIM"
 Warning--I didn't find a database entry for "Sowizral:2000:J3DAPI"
 Warning--I didn't find a database entry for "Gaskins92"
+Warning--I didn't find a database entry for "DBLP:conf/hpec/KepnerABBFGHKLM16"
 Warning--empty year in juliaset
 You've used 51 entries,
             2945 wiz_defined-function locations,
-            962 strings with 14425 characters,
-and the built_in function-call counts, 22647 in all, are:
-= -- 1893
-> -- 649
-< -- 8
-+ -- 272
-- -- 217
-* -- 1116
-:= -- 2881
-add.period$ -- 112
+            961 strings with 14078 characters,
+and the built_in function-call counts, 21848 in all, are:
+= -- 1839
+> -- 574
+< -- 7
++ -- 242
+- -- 187
+* -- 1043
+:= -- 2774
+add.period$ -- 110
 call.type$ -- 51
-change.case$ -- 273
+change.case$ -- 256
 chr.to.int$ -- 0
 cite$ -- 52
-duplicate$ -- 2138
-empty$ -- 2042
-format.name$ -- 236
-if$ -- 4987
+duplicate$ -- 2092
+empty$ -- 2006
+format.name$ -- 205
+if$ -- 4829
 int.to.chr$ -- 0
 int.to.str$ -- 51
-missing$ -- 452
-newline$ -- 265
+missing$ -- 435
+newline$ -- 264
 num.names$ -- 106
-pop$ -- 894
+pop$ -- 861
 preamble$ -- 1
-purify$ -- 208
+purify$ -- 193
 quote$ -- 0
-skip$ -- 837
+skip$ -- 831
 stack$ -- 0
-substring$ -- 762
-swap$ -- 1179
-text.length$ -- 8
+substring$ -- 746
+swap$ -- 1136
+text.length$ -- 7
 text.prefix$ -- 0
 top$ -- 0
 type$ -- 190
 warning$ -- 1
-while$ -- 125
+while$ -- 122
 width$ -- 53
-write$ -- 588
+write$ -- 584
 (There were 4 error messages)

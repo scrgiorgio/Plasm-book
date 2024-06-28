@@ -1,0 +1,3568 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+                               
+    \documentclass{31x47jw}   
+    \usepackage{epsf}         
+    \usepackage{latexsym}     
+    \usepackage{epsfig}       
+    \usepackage{theorem}      
+    \usepackage{hyperref}     
+    % \psfigdriver{oztex}     
+    \input{macros.tex}        
+    \nonstopmode              
+    \begin{document}          
+                              
+    \setcounter{chapter}{4}   
+    \setcounter{page}{13}     
+ 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\chapter{Elements of differential geometry}
+\index{Elements!of differential geometry}
+\label{chapt:diffgeom}
+\gp4cad
+
+This chapter presents various concepts useful to fully
+understand curves and surfaces discussed in later sections.  In
+particular, we introduce here the notion of a curve as a point-valued
+function of a real variable, the variable-free representation of
+functions and the Fr\'echet derivative for functions of one and
+several variables.  This derivative gives the framework for
+introducing the concepts of manifold, tangent space and vector field
+from a geometrical perspective.  Then, more standard topics on
+curves are briefly outlined, including tangent, curvature, centre of
+curvature and osculating circles.  Finally, some elements of
+differential geometry of surfaces are discussed, including first and
+second fundamental forms and Gauss curvature.  As usual in this book,
+the mathematics is normally given without proofs, but is often coupled
+with a \pl\ implementation of the important ideas.  We hope that
+the implementation and the examples may help to clarify subtle
+mathematical details.
+
+
+%-------------------------------------------------------------------------
+\section{Curves}\index{Curve}
+\label{sec:curves}
+%-------------------------------------------------------------------------
+
+A \emph{curve} in $ \E^d$ is a point-valued mapping defined by summing
+to the origin of a Cartesian system $\{ \p{o}, (\v{e}_{i}) \}$ a
+vector-valued function $\v{\alpha}: \R \rightarrow \R^{d}$ of a real
+parameter, so that a point of the curve is generated as:
+\[
+\p{c}(u) = \p{o} + \v{\alpha}(u), \qquad u\in[a,b]\subset\R.
+\]
+The \emph{image} of the curve is the set $\p{c}[a,b]$ of its $ \E^d$
+points.  The \emph{domain} of the curve is the parameter interval
+$[a,b]$, i.e.~the set $\{u\in\R | a\leq u\leq b \}$, often norm\-alized to
+the standard unit interval~$[0,1]$.
+
+The important part of the curve definition is the vector-valued
+function ${\v\alpha}$, so that sometimes we use the word ``curve" for
+it.  From a notational viewpoint, we normally use a bold Latin letter,
+say $\p{a}$, $\p{b}$ or $\p{c}$, to indicate a map $\R \rightarrow
+\E^d$, and a bold Greek letter, say $\p{\alpha}$, $\p{\beta}$ or
+$\p{\gamma}$, to indicate a map $\R \rightarrow \R^d$.  This
+convention will sometimes be  broken according to the standard usage of
+symbols, e.g.~for the \emph{intrinsic triplet} of vector functions
+$\R\rightarrow\R^{3}$, that are denoted by $\v{t}$, $\v{n}$ and
+$\v{b}$, respectively.
+
+\begin{example}[3D curve]
+
+A curve $\p{c}$ in three-dimensional space has 3 \emph{coordinate
+functions}, and is often denoted as
+\[
+\v{c}(u) = (x(u),  y(u), z(u))^T,
+\qquad u\in [a,b]
+\]
+where ${x}(u) = \v{\alpha}(u) \cdot \v{e}_{1}$, ${y}(u) =
+\v{\alpha}(u) \cdot \v{e}_{2}$ and ${z}(u) = \v{\alpha}(u) \cdot
+\v{e}_{3}$.  The \emph{tangent} vector function $\p{t}$ is defined
+by
+\[
+\p{t}(u) = \deriv{}{u} \v{c}(u) = \deriv{}{u} \v{\alpha}(u) =
+(x'(u), y'(u), z'(u))^T, \qquad u\in [a,b].
+\]
+
+\end{example}
+
+
+% \begin{example}[Circle]
+% 
+% The following
+% expression generates a polygonal approximation with 36 line segments
+% of the unit circle centered in the origin, i.e.~of the set 
+% $\v{c}[0,2\pi]$, with \v{c}(u) = (0, 0) + (\cos u, \sin u).
+% 
+%   
+% \begin{smallplasm} 
+% MAP:([COS, SIN] $\sim$ S1):(interval:<0,2*PI>:36)
+% \end{smallplasm} 
+% 
+% \end{example}
+
+
+
+\subsection{Variable-free notation}\index{Variable!-free notation}
+\label{sec:5:free}
+
+Accordingly with the functional approach of the \pl\ language, we
+often denote a 3D curve, as well as its derivative curves, by using
+the variable-free notation:
+\[
+\v{c} = (x,  y, z)^T
+\]
+with ${x} = \v{\alpha} \cdot \v{e}_{1}$, ${y} = \v{\alpha} \cdot
+\v{e}_{2}$, and ${z} = \v{\alpha} \cdot \v{e}_{3}$.%, and so on.
+
+It should be clearly understood that $x, y, z$ %as  $x^{u}, y^{u}, z^{u}$
+are here maps $\R\rightarrow\R$ and that each $\v{e}_{i}$ has the
+constant maps $\underline{0}:\R\rightarrow 0$ and
+$\underline{1}:\R\rightarrow 1$ as components.
+
+Analogously, we write a curve $\p{c}:\R\rightarrow \E^{d}$, as
+$\p{c}=\p{o}+\v{\alpha}$, with $\v{\alpha}=(\alpha_{i})$, where
+$\alpha_{i}: \R\rightarrow\R$, for all $i$.  The variable-free
+notation, where functions are directly added and multiplied, exactly
+like numbers, is very useful for quickly and easily implementing
+curves and surfaces in our language.
+
+\paragraph{Useful maps}\index{Useful maps}
+
+Some special maps are needed to perform such variable-free calculus
+with functions.  As the reader already knows, they have a direct
+translation in \pl.
+\begin{enumerate}
+    
+    \item    
+    $\textrm{id}: \R\rightarrow\R; x\mapsto x$
+    \hfill ({identity})
+    
+    \item    
+    $\underline{c}: \R\rightarrow\R; x\mapsto c$
+    \hfill (constant)
+    
+    \item    
+    $\sigma: \{1,\ldots,d\}\times \R^{d}\rightarrow\R;
+    (i,(x_{1},\ldots,x_{d}))\mapsto x_{i}$ \hfill (selection)
+
+\end{enumerate}
+
+A computer scientist would probably prefer the following 
+specification, just to point out that $\sigma$ is often used as a 
+\emph{partial} function, i.e.~a function which may be applied to a 
+subset of its arguments:
+\begin{enumerate}
+    
+    \item[3.]
+    $\sigma: \{1,\ldots,d\}\rightarrow(\R^{d}\rightarrow\R);
+    i\mapsto((x_{1},\ldots,x_{d})\mapsto x_{i})$ \hfill (selection)
+
+\end{enumerate}
+
+Actually, the \fl\ primitives \texttt{ID}, \texttt{K} and \texttt{SEL}
+used by the \pl\ language have no domain restrictions, and can be
+applied to any type of data objects.
+
+\paragraph{Algebraic operations}\index{Algebraic!operations}
+
+We also need to recall how to perform algebraic operations in the
+linear algebra of maps $\R\rightarrow\R$.  For each map
+$\v{\alpha},\v{\beta}: \R\rightarrow\R$ and each scalar $a\in\R$
+\[
+\v{\alpha} + \v{\beta}: u \mapsto \v{\alpha}(u) + \v{\beta}(u),
+\quad 
+\v{\alpha}  \v{\beta} : u \mapsto \v{\alpha}(u)  \v{\beta}(u), 
+\quad
+a\,\v{\beta} : u \mapsto a\,\v{\beta}(u).
+\]
+
+Consequently we have that
+\[
+\v{\alpha} - \v{\beta} : u \mapsto \v{\alpha}(u) - \v{\beta}(u),
+\quad 
+\v{\alpha} / \v{\beta} : u \mapsto \v{\alpha}(u) / \v{\beta} (u).
+\]
+
+\paragraph{Coordinate representation}\index{Coordinate!representation}
+
+Finally, remember that the coordinate functions of a curve $\v{\alpha}
+= (\alpha_{i})$ are maps $\R\rightarrow\R$.  The variable-free
+vector notation stands for the linear combination of coordinate
+functions with the basis vectors of the target space:
+\[
+({\alpha}_{1}, \cdots, {\alpha}_{d})^{T}:\
+\R\rightarrow\R^{d} ;\ u \mapsto
+\sum_{i=1}^{d} {\alpha}_{i} \v{e}_{i}.
+\]
+
+
+\begin{example}[Circular arc]
+\label{ex:circumference}
+Some different curves are given here.  They have the same image in $
+\E^{2}$ but different coordinate representation in the space of
+functions $\R\rightarrow\R$.  All such curves generate a circular arc
+of unit radius centered at the origin.
+
+% \begin{itemize}
+%     \item[]
+\begin{enumerate}
+    
+\item  trigonometric representation:
+
+\[
+\p{\alpha}(u) = \left(\cos \left({\pi \over 2}u\right), \sin \left({\pi \over
+2}u\right)\right)^T \qquad u\in[0,1]
+\]
+
+\item  rational representation:
+\[
+\p{\beta}(u) = \left({1-u^2 \over 1+u^2}, {2u \over 1+u^2}\right)^T
+\qquad u\in[0,1]
+\]
+
+
+\item  Cartesian representation:
+
+\[
+\p{\gamma}(u) = \left(u, \sqrt{1-u^2}\right)^T
+\qquad u\in[0,1]
+\]
+
+\end{enumerate}
+% \end{itemize}
+
+It is possible to verify that the image sets of such curves coincide, 
+i.e.~that $\p{\alpha}[0,1]=\p{\beta}[0,1]=\p{\gamma}[0,1]$.
+
+\end{example}
+
+
+\begin{example}[Variable-free circular arc]
+\label{ex:freearc}
+    
+It may be useful to give the variable-free representation of the three
+maps on the $[0,1]$ interval shown in Example~\ref{ex:circumference},
+that is exactly the representation we need to give a \pl\
+implementation of such maps, provided in Script~\ref{script:freearc}:
+\begin{eqnarray}
+\p{\alpha} &=& \left(\cos \circ \left( \underline{\pi \over 2} 
+\textrm{id}\right), \
+\sin \circ \left( \underline{\pi \over 2} \textrm{id} \right) \right)^T
+\\
+\p{\beta} &=& \left(\frac{\underline{1} - 
+\textrm{id}^2 }{ \underline{1}+ \textrm{id}^2}, \
+{\underline{2} \,\textrm{id} \over \underline{1}+ \textrm{id}^2} 
+\right)^T
+\\
+\p{\gamma} &=& \left( \textrm{id}, \ \textrm{id}^{1\over 2}\circ 
+(\underline{1}- \textrm{id}^2) \right)^T
+\label{eq:5:alpha}
+\end{eqnarray}
+
+\end{example}
+
+
+\paragraph{Toolbox}\index{Toolbox}
+
+Some predicates and functions needed by the operators in this
+chapter are given in Script~\ref{script:5:toolbox}.  In particular,
+the \texttt{interval} operator provides a simplicial decomposition with
+\texttt{n} elements of the real interval $[\texttt{a},\texttt{b}]$,
+whereas the \texttt{interval2D} operator returns a decomposition with
+$\texttt{n1} \times \texttt{n2}$ subintervals of the domain
+$[\texttt{a1},\texttt{b1}]\times
+[\texttt{a2},\texttt{b2}]\subset\R^{2}$.
+
+\begin{script}[Toolbox] 
+\begin{smallplasm} 
+% DEF IsPoint \index{Library functions!Vectors library!{\tt  Ispoint}} = IsSeqOf:IsReal;\\
+% DEF IsVect \index{Library functions!Vectors library!{\tt  Isvect}} ~= IsSeqOf:IsReal;\\
+% DEF SQR \index{Library functions!General library!{\tt  Sqr}} ~~~~= ID * ID;\\
+DEF interval (a,b::IsReal)(n::IsIntPos) = 
+  (T:1:a  $\sim$  QUOTE  $\sim$  \#:n):((b-a)/n);\\
+DEF interval2D (a1,a2,b1,b2::IsReal)(n1,n2::IsIntPos) = \+\\
+  interval:<a1,b1>:n1 * interval:<a2,b2>:n2;
+\end{smallplasm} 
+\label{script:5:toolbox}
+\end{script}
+Few other functions of general utility are used in the remainder of
+this chapter.  In particular, the \texttt{SQR} function, that returns
+its squared input, was defined in Script~\ref{script:UnitVect};
+the predicates \texttt{IsVect} and \texttt{IsPoint} were given in
+Script~\ref{script:IsVect} and~\ref{script:3:parametricplane}, 
+respectively.  The vector operations used here were
+defined in Chapter~3.
+
+\paragraph{Implementation}\index{Implementation!circular arc maps}
+
+The circle segment representations of Example~\ref{ex:freearc} are directly
+used in the \pl\ implementation of curves in
+Script~\ref{script:freearc}.  To understand the implementation, notice
+that we generate a polyhedral complex by mapping the curve vector
+function (either $\v{\alpha}$, $\v{\beta}$ or $\v{\gamma}$ of
+Example~\ref{ex:freearc}) on the polyhedral representation of the
+$[0,1]\subset\R$ domain.
+
+According to the semantics of the \texttt{MAP} function, the curve
+mapping is applied to all vertices of a simplicial decomposition of
+the polyhedral domain.  But all vertices are represented as
+\emph{sequences} of coordinates, say \texttt{<$u$>} for a curve, so
+that in order to act on $u$ the mapping must necessarily \emph{select}
+it from the sequence.
+
+Hence we might substitute each $id$ function instance with the \pl\
+denotation \texttt{S1} for the $\sigma(1)$ selector function.  
+
+Exactly the same result is obtained by using either
+$\v{\alpha}\circ\sigma(1), \v{\beta}\circ\sigma(1)$ or
+$\v{\gamma}\circ\sigma(1)$, as done in the following code. 
+
+\begin{script} [Circular arc maps]
+\begin{smallplasm}
+DEF SQRT~~\== ID ** K:(1/2);\\[0.3cm]
+DEF alpha \>= < cos $\sim$ (K:(PI/2) * ID), sin $\sim$ (K:(PI/2) * 
+ID) >; \\
+DEF beta  \>= < (K:1 - SQR)/(K:1 + SQR),  (K:2 * ID)/(K:1 + SQR) >;\\
+DEF gamma \>= < ID, SQRT $\sim$ (K:1 - SQR) >;\\[0.3cm]
+
+MAP:(CONS:alpha $\sim$ S1):(interval:<0,1>:10);\\
+MAP:(CONS:beta~ $\sim$ S1):(interval:<0,1>:10);\\
+MAP:(CONS:gamma $\sim$ S1):(interval:<0,1>:10);
+\end{smallplasm}
+\label{script:freearc}
+\end{script}
+
+\paragraph{Remarks}\index{Coordinate!functions}
+
+Let us note that, e.g., \texttt{alpha} is a \emph{sequence} of
+coordinate functions.  Conversely, \texttt{CONS:alpha} is the correct
+implementation of the \emph{vector-valued} function $\v{\alpha}$,
+which only can be \emph{composed} with other functions, say
+\texttt{S1}.
+
+Notice also that \texttt{SQR} (square), given in
+Script~\ref{script:UnitVect}, is the \pl\ implementation of the
+$\mbox{id}^{2}$ function and that the language explicitly requires the
+operator \texttt{*} to denote the product of functions.
+
+Finally, we remark that \texttt{SQRT} (square root), which is actually
+primitive in \pl, can be also defined easily using standard algebraic
+rules, where \texttt{**} is the predefined power operator.
+
+    
+
+\begin{example}[Comparing parametrizations]
+\label{ex:5:compare}
+
+The parametrizations of the arcs generated by maps $\v{\alpha}$,
+$\v{\beta}$ and $\v{\gamma}$ are quite different.  It is possible to
+see this fact by looking at Figure~\ref{fig:arcs}, where the graphical
+markers associated with the mapped image of each point of a uniform
+sampling of the curve domain generated by
+Script~\ref{script:freearcpar} are shown.  The \texttt{polymarker} and
+\texttt{markerSize} implementation is given in
+Script~\ref{script:polymarker}.  Notice that the functional expression
+\begin{smallplasm}
+    polymarker:1 $\sim$ S1 $\sim$ UKPOL
+\end{smallplasm}
+converts its polyhedral input into a triplet of vertices, cells and
+polyhedra, then extracts the vertices, and finally gives them as
+arguments to the function \texttt{polymarker:1}, which attaches a
+marker of type \texttt{1} to each point.
+
+\begin{script} [Curve sampling marking]
+\begin{smallplasm}
+DEF markerSize \index{Library functions!Primitives library!{\tt  Markersize}} = 0.05;\\    
+DEF markers = polymarker:1 $\sim$ S1 $\sim$ UKPOL; \\[0.3cm]
+(markers $\sim$ MAP:(CONS:alpha $\sim$ S1)):(interval:<0,1>:10);\\
+(markers $\sim$ MAP:(CONS:beta~ $\sim$ S1)):(interval:<0,1>:10);\\
+(markers $\sim$ MAP:(CONS:gamma $\sim$ S1)):(interval:<0,1>:10);
+\end{smallplasm}
+\label{script:freearcpar}
+\end{script}
+
+\begin{figure}[htb]
+    \centering
+    \begin{minipage}[b]{0.32\linewidth}
+            \centering\epsfig{file=\figsdir{cap05}arc1.eps,width=0.8\linewidth}
+    \end{minipage}
+    \hfill
+    \begin{minipage}[b]{0.32\linewidth}
+            \centering\epsfig{file=\figsdir{cap05}arc2.eps,width=0.8\linewidth}
+    \end{minipage}
+    \hfill
+    \begin{minipage}[b]{0.32\linewidth}
+            \centering\epsfig{file=\figsdir{cap05}arc3.eps,width=0.8\linewidth}
+    \end{minipage}
+\caption{Trigonometric, rational and Cartesian parametrization 
+\label{fig:arcs}}
+\end{figure}
+
+\end{example}
+
+
+\begin{example}[Coordinate maps]
+\label{ex:5:coordinatemaps}
+    
+It should be remembered that curves, as~$\v{\alpha}$, $\v{\beta}$ and
+$\v{\gamma}$ in the previous example, are vector-valued functions.  In order
+to obtain their coordinate maps, say $\alpha_{i}:\R\rightarrow\R$, a
+composition with the appropriate selector function is needed:
+\[
+\alpha_{i} = \sigma(i)\circ\v{\alpha}
+\]
+
+The conversion from a 3D vector-valued function \texttt{ curve $:=$
+CONS:alpha } to the sequence of its coordinate functions may be obtained
+in \pl\ as:
+\begin{smallplasm}
+< S1 $\sim$ curve, S2 $\sim$ curve, S3 $\sim$ curve >;
+\end{smallplasm}
+Such an approach is quite expensive and inefficient, because the curve
+function is repeatedly evaluated on data points to get its three
+component functions.  So, for the sake of efficiency, we suggest 
+maintaining a coordinate representation as a \emph{sequence} of
+scalar-valued functions, and then \texttt{CONS} it into a single
+\emph{vector-valued} function only when it is strictly necessary.
+
+Anyway, an operator \texttt{Curve2MapVect} is given in
+Script~\ref{script:Curve2MapVect}.  This operator, when applied to a
+vector-valued map $\R\rightarrow\E^{d}$ with arbitrary $d$, will
+return the sequence of its $d$ coordinate functions.  
+
+\begin{script} [Curve to vector of maps]
+\begin{smallplasm}
+DEF Curve2MapVect \index{Library functions!Curves library!{\tt  Curve2mapvect}} (curve::IsFun) = AA:COMP:(selectors DISTR curve)\\
+WHERE\+\\
+  selectors = AA:SEL:(1..d),\\
+  d = LEN:(curve:<0>)\-\\
+END;\\[0.3cm]
+
+Curve2MapVect:curve $\equiv$ < curve$_{1}$ , curve$_{2}$ >
+\end{smallplasm}
+\label{script:Curve2MapVect}
+\end{script}
+
+\end{example}
+
+
+
+
+\subsection{Reparametrization}\index{Reparametrization}
+\label{sec:8:Reparametrization}
+
+A \emph{smooth curve} is defined as a curve whose coordinate functions
+are smooth (see Section~\ref{sec:5:differentiation}) i.e.~can be
+derived as many times it is needed.  If $\v{c}:I\rightarrow \E^{d}$,
+with $I\subset\R$, is a smooth curve and $\rho:I\rightarrow I$ is a
+smooth invertible function, i.e.~a \emph{diffeomorphism}, then also
+\[
+\v{c}_{\rho} = \v{c} \circ \rho
+\]
+is a smooth curve. It is called a \emph{reparametrization} of $\v{c}$.
+
+A very simple reparametrization is the \emph{change of origin}.  For
+example $\v{c}_{\rho}$ is called a {change of origin} when
+\[
+\rho=\textrm{id}+\underline{c}.
+\]
+A reparametrization $\v{c}_{\tau}$ by an affine
+function 
+\[
+\tau=\underline{a}\,\textrm{id}+\underline{c},
+\]
+with $a\not= 0$, is called an \emph{affine reparametrization}.
+
+\begin{example}[Circle reparametrization]
+    
+The circle with the center in the origin and unit 
+radius may be parametrized on different intervals:
+\begin{eqnarray*}
+\p{c}_{1}(u) &=& \vet{\cos u & \sin u}, 
+\qquad\qquad\qquad\qquad~~~ u\in [0,2\pi]
+\\
+\p{c}_{2}(u) &=& \vet{\cos (2\pi u) & 
+\sin (2\pi u)}, 
+\qquad\qquad\qquad u\in [0,1]
+\label{ex:reparametrization}
+\end{eqnarray*}
+or with a different starting point:
+\begin{eqnarray*}
+\p{c}_{3}(u) &=& \vet{\cos (2\pi u+\frac{\pi}{2}) & 
+\sin (2\pi u+\frac{\pi}{2})}, 
+\qquad u\in [0,1]
+\label{ex:reparametrization2}
+\end{eqnarray*}
+The reparametrization becomes evident if we use a variable-free 
+representation:
+\begin{eqnarray*}
+\p{c}_{1} &=& \vet{\cos & \sin } , 
+\\
+\p{c}_{2} &=& \vet{\cos & \sin } \circ 
+(\underline{2}\,\underline{\pi}\, \textrm{id} ), 
+\\
+\p{c}_{3} &=& \vet{\cos & \sin } \circ 
+(\underline{2}\,\underline{\pi}\, \textrm{id} + 
+{\underline{\pi}}/{\underline{2}
+}).
+\end{eqnarray*}
+
+\end{example}
+
+
+\begin{example}[Reparametrization of a parabola]
+\label{ex:parabola}
+Several curves may have the same image.  Two different
+parametrizations of the same subset of parabola $y = x^2$ are given
+below:
+\begin{eqnarray*}
+\p{p}_1(u) &=&  \vet{u & u^2}, \qquad u\in[0,2], \\
+\p{p}_2(u) &=&  \vet{2u & 4u^2}, \qquad u\in[0,1], \\
+% \p{p}_3(u) &=&  \vet{u^{1/3} & u^{2/3}}, \qquad u\in[0,8].  
+\end{eqnarray*}
+Using the variable-free notation, we have:
+% the reparametrizations:
+\begin{eqnarray*}
+\p{p}_1 &=&  \vet{\textrm{id} & \textrm{id}^2}, \\
+\p{p}_2 &=&  \vet{\textrm{id} & \textrm{id}^2}
+\circ \underline{2} \,\textrm{id}. %\\ %\qquad
+% \p{p}_3[0,8] &=&  \p{p}_1
+% \circ \frac{\underline{1} }{\textrm{id}^{3}} . %\qquad
+\end{eqnarray*}
+
+A very similar \pl\ implementation of curve $\p{p}_2$ follows.  The
+\texttt{interval} function is defined in Script~\ref{script:5:toolbox}.
+
+\begin{script} [Parabola]
+\begin{smallplasm}
+DEF p2 = [ID, ID * ID] $\sim$ (K:2 * S1);\\[0.3cm]
+MAP:p2:(interval:<0,1>:30);
+\end{smallplasm}
+\label{script:parabola}
+\end{script}
+
+\end{example}
+
+\subsection{Orientation}\index{Orientation}
+\label{subsec:5:orientation}
+
+Two curves with the same image can be distinguished by the sense in 
+which the image is traversed for increasing values of the parameter. Two 
+curves which are traversed in the same way are said to have the same 
+\emph{orientation}. Actually, an orientation is an equivalence class 
+of parametrizations.
+
+A \emph{reversed orientation} of a curve $\p{c}:\R\rightarrow
+\E^{d}$, with image $\p{c}[a,b]$, is given by the affine
+reparametrization $\p{c}_{\lambda}=\p{c}\circ\lambda$, where
+${\lambda}:\R\rightarrow\R$ such that $x\mapsto-x+(a+b)$.  This map
+can be written as:
+\[
+\lambda = \underline{-1}\, \textrm{id} + (\underline{a+b}).
+\]
+
+
+\begin{example}[Reversing orientation]
+\label{ex:rev}
+    
+It is useful to have a \pl\ function \texttt{REV}, which reverses
+the orientation of any curve parametrized on the interval
+$[a,b]\subset\R$.  The \texttt{REV} function will therefore be 
+abstracted with respect to the bounds \texttt{a} and
+\texttt{b}, which are real numbers.
+
+In Script~\ref{script:5:rev} we also give a polyhedral approximation
+of the boundary of unit circle centered in the
+origin, as seen from the angle interval $[0,\frac{\pi}{2}]$.  The curve
+is a map from $[0,1]$ with reversed orientation.  
+
+\begin{script} 
+\begin{smallplasm}
+DEF REV \index{Library functions!Curves library!{\tt  Rev}} (a,b::IsReal) = K:-1 * ID + K:(a+b);\\%[0.3cm]
+
+DEF alpha = [ COS, SIN ] $\sim$ (K:(PI/2) * ID);\\[0.3cm]
+
+MAP:(alpha $\sim$ REV:<0,1> $\sim$ S1):(interval:<0,1>:20);
+\end{smallplasm}
+\label{script:5:rev}
+\end{script}
+
+\end{example}
+
+\section{Differentiation}\index{Differentiation}
+\label{sec:5:differentiation}
+
+
+Let $\v{\phi}: U \rightarrow F$ be a \emph{continuous} map, with $E,
+F$ normed linear spaces, $U\subset E$ open set, and $\p{x}\in U$.
+    
+\begin{definition}
+    The map $\v{\phi}$ is \emph{differentiable} at $\p{x}$ if there is a
+    \emph{linear} map $\T{L}_{x}: E \rightarrow F$ which approximates
+    $\v{\phi}$ at $\p{x}$, i.e. such that
+    
+    \[
+    (\v{\phi}(\p{x}+\v{h}) - \v{\phi}(\p{x})) - \T{L}_{\p{x}}(\v{h}) =
+    o(\module{\v{h}})
+    \]
+\end{definition}
+where $o(\module{\v{h}})$ means that the left-hand side approaches zero
+faster than $\module{\v{h}}$.  In general, $\T{L}_{\p{x}}$ depends on
+$\p{x}$.  When it exists, it is unique.  If $\v{\phi}$ is differentiable at
+every $\v{x}\in U$ we say that $\v{\phi}$ is differentiable in $U$.
+
+$\T{L}_{x}$ is a linear map in $\lin(E;F)$.  It is called the
+\emph{(Fr\'echet-)derivative of $\v{\phi}$ at $\p{x}$} and is denoted as 
+$D\v{\phi}(\p{x})$. 
+Hence we can write:
+
+    \[
+    \v{\phi}(\p{x}+\v{h}) - \v{\phi}(\p{x}) = D\v{\phi}(\p{x})(\v{h}) + o(\v{h})
+    \]
+
+The map $D\v{\phi}: U \rightarrow \lin(E;F)$ is called the
+\emph{derivative of $\v{\phi}$}.
+
+A map $\v{\phi}: U\rightarrow F$ is \emph{continuously differentiable} if it
+is differentiable and $D\v{\phi} \in C^{0}(U;\lin(E,F))$.  We also say that
+$\v{\phi}$ is of class $C^{1}$.  Analogously, 
+\[
+C^{n} = \{ \v{\phi}\in C^{n-1}: D\v{\phi} \in C^{n-1} \}.
+\]
+is the class of functions which are $n$-times differentiable.  A
+\emph{smooth} function is a function of class $C^{\infty}$.
+    
+\subsection{Real-valued maps of a real variable}\index{Real-valued maps!of a real variable}
+
+For real maps of a single real variable we have $E = F = \R$.  In this
+case the elementary notion of derivative can be recovered from the
+above definition.
+
+The function $\phi : \R \rightarrow \R$ is said \emph{differentiable} at $x$
+if the limit
+\[
+\lim_{h \rightarrow 0}\ {1\over h}\ (\phi(x+h) - \phi(x))
+\]
+exists and is finite.  
+That limit is called the \emph{derivative} of $\phi$ at $x$, and is
+denoted by $\phi'(x)$.  Its value $\lambda$ is both a number in $\R$ and
+a linear map in $\lin(\R,\R)$ via the canonical isomorphism
+$\lambda\mapsto\lambda(1)=\lambda$, such that $y\mapsto \lambda y$.
+
+Hence we may write for the ordinary derivative $\phi'(x) = D\phi(x)(1)$.  This
+value is the \emph{slope} of the tangent to the graph of $\phi$ at point
+$(x,\phi(x))$.
+
+
+Because of the canonical isomorphism and the consequent identification
+of $\R$ with the dual space $\R^{*}$  of linear maps
+$\R\rightarrow\R$, we may also write, for $\phi:\R\rightarrow\R$
+\[
+D\phi:\R\rightarrow\R; x \mapsto \phi'(x).
+\]
+
+
+\paragraph{Implementation}
+\index{Implementation!derivative maps!real-valued, of a real variable}
+
+The value of $\phi'(x)$ can be computed, according to its definition, by
+the function \texttt{deriv0} of Script~\ref{script:5:D11}, with
+\texttt{h}  a suitably ``small" number.  A \emph{much} better numerical
+approximation to the slope of tangent to graph of $\phi$ at $x$ is given
+by the central difference implemented by function \texttt{deriv1}, as
+shown by the following approximations of $\sin' {\pi\over 3}=\cos
+{\pi\over 3}={1\over 2}$:
+\begin{smallplasm}
+deriv0:1E-4:SIN:(PI/3)  $\equiv$ 0.499956697895\\
+deriv1:1E-4:SIN:(PI/3)  $\equiv$ 0.499999999166
+\end{smallplasm}
+
+\begin{script}[Derivation of $\phi:\R\rightarrow\R$ at ${x}$]
+\begin{smallplasm}
+DEF deriv0(h::IsReal)(f::IsFun)(x::IsReal) = %\+\\
+    (f:(x + h) - f:x)/h;\\%[0.3cm]
+    
+DEF deriv1(h::IsReal)(f::IsFun)(x::IsReal) = %\+\\
+    (f:(x + h) - f:(x - h))/(2*h);\\[0.3cm]
+    
+DEF D11 (f::IsFun)(x::IsReal) = deriv1:1E-4:f:x;
+\end{smallplasm}
+\label{script:5:D11}
+\end{script}
+
+The \texttt{D11} operator is given to compute the derivative of 
+functions $\R\rightarrow\R$ at a point $x$.  Such specialized
+operator will be needed in Script~\ref{script:5:D} to implement a
+\emph{generalized} derivation operator \texttt{D}, to be used to
+derive maps between spaces of any dimensions.  Hence in the
+rest of the chapter we only make use of this generalized operator.
+
+The differentiation operator \texttt{D} must be applied first to a
+function, and then to a real number, in order to return a real number. 
+When it is applied only to a function, it returns the \emph{derivative
+function} of its argument:
+
+\begin{smallplasm}
+D:COS:0 $\equiv$ 0.0 \\
+D:COS:(PI/2) $\equiv$ -0.9999999983332231\\
+D:COS $\equiv$ An-Anonymous-Function
+\end{smallplasm}
+
+
+
+\begin{example}[Map of the derivate functions]
+    
+In Figure~\ref{figure:5:ex1} it is shown the graph of the $\cos$
+function, together with the graph of the $D\cos$ function.  For this
+purpose we apply, in Script~\ref{script:5:interval}, the \texttt{MAP}
+primitive to function \texttt{[ID, COS] $\circ$ $\sigma(1)$} and to
+function \texttt{[ID, D:COS] $\circ$ $\sigma(1)$}, respectively, and
+then to a 1D polyhedral complex which defines a partition of the
+domain $[-\pi,\pi]$ with 60 subintervals.
+
+Notice that the same approach is used to generate the graphs of $x$
+and $y$ axes, by mapping the \texttt{[ID, K:0] $\circ$ $\sigma(1)$}
+and \texttt{[K:0, ID] $\circ$ $\sigma(1)$} functions, respectively. 
+The generator \texttt{interval} of the domain partition is given in
+Script~\ref{script:5:toolbox}.
+    
+\begin{script}
+\begin{smallplasm}
+STRUCT:< \+\\
+  MAP:([ID, COS] $\sim$ S1):(interval:<-:PI,PI>:60),\\
+  MAP:([ID, D:COS] $\sim$ S1):(interval:<-:PI,PI>:60),\\
+  MAP:([ID, K:0] $\sim$ S1):(interval:<-:PI,PI>:1),\\
+  MAP:([K:0, ID] $\sim$ S1):(interval:<-1,1>:1) >;
+\end{smallplasm}
+\label{script:5:interval}
+\end{script}
+
+
+\begin{figure}[htb]
+\centering\epsfig{file=\figsdir{cap05}ex1.eps,width=0.6\linewidth}
+\caption{Graphs of $\cos$ and $D\cos$ functions
+\label{figure:5:ex1}}
+\end{figure}
+
+    
+\end{example}
+
+
+
+\subsubsection{Higher-order derivatives}\index{Higher-order!derivatives}
+
+The differentiation operator $D$ can be applied repeatedly on a
+{smooth} function $\phi:\R\rightarrow\R$.  In particular:
+\[
+D^{2}\, \phi := 
+(D \circ D)\, \phi = D\, 
+{\phi}' = (\phi')' =: \phi^{(2)}.
+\]
+More in general, for each integer $n>1$,  
+\[
+\phi^{(n)} := D^{n}\, \phi = D\, \phi^{(n-1)}.
+\]
+
+\begin{example}[Polynomials]
+
+The set of polynomial functions of degree $\leq n$ with coefficients
+in $\R$ is often denoted as $P_{n}[\R]$.  Functions $\mu\in
+P_{n}[\R]$, where
+\[
+\mu: \R\rightarrow\R ;\ x\mapsto\sum_{i=0}^{n}a_{i}x^{i}, \qquad 
+a_{i}\in\R,
+\]
+are an important example of \emph{smooth functions}, and constitute a
+vector space of dimension $n+1$.  In later chapters we will see that
+some special bases of such vector space play a very important role in
+defining \emph{free-form} curves and surfaces used by CAD systems.
+
+It is very easy to see that the derivative of a polynomial of degree
+$n$ is a polynomial of degree $n-1$.  
+
+In other words, if $\mu\in P_{n}[\R]$, then $D\mu\in P_{n-1}[\R]$. 
+This fact implies that
+\[
+P_{n}[\R] \supset D(P_{n}[\R]) \supset \cdots \supset 
+D^{n-1}(P_{n}[\R]) \supset D^{n}(P_{n}[\R]).
+\]
+
+
+\end{example}
+
+\begin{example}[Graph of derivatives of $\cos$]
+    
+The graphs of functions $\cos$, $D\cos$, $D^{2}\cos$ and $D^{3}\cos$
+on a partition of the domain $[-\pi, \pi]$ with $60$ subintervals are
+produced by the last expression in Script~\ref{script:5:dom}, and are
+shown in Figure~\ref{figure:5:ex6}.
+    
+\begin{script}
+\begin{smallplasm}
+DEF dom = interval:<-:PI,PI>:60;\\[0.3cm]
+
+STRUCT:<\+\\
+  MAP:([ID, COS] $\sim$ S1):dom,\\
+  MAP:([ID, D:COS] $\sim$ S1):dom,\\
+  MAP:([ID, (D $\sim$ D):COS] $\sim$ S1):dom,\\
+  MAP:([ID, (D $\sim$ D $\sim$ D):COS] $\sim$ S1):dom >;
+\end{smallplasm}
+\label{script:5:dom}
+\end{script}
+
+
+\begin{figure}[htb]
+\centering\epsfig{file=\figsdir{cap05}ex6.eps,width=0.6\linewidth}
+\caption{Graphs of $\cos$ function and of its first three derivatives
+\label{figure:5:ex6}}
+\end{figure}
+
+\end{example}
+
+
+
+
+\subsubsection{Useful properties of derivatives} 
+
+Let us consider $E = F = \R$.  The following properties hold for maps in
+$C^{1}(\R;\R)$, in the following denoted as $C^{1}$.  Actually, such
+properties hold also in more general settings.
+
+\paragraph{Linearity}\index{Linearity}
+
+For all $a,b\in\R$ and all $\phi,\psi\in C^{1}$, the \emph{linear 
+combination} map $a
+\phi + b \psi \in C^{1}$, with
+\[
+D(a \phi + b \psi) = a D\phi + b D\psi.
+\]
+
+\paragraph{Chain rule}\index{Chain rule}
+
+For all $\phi,\psi\in C^{1}$, the \emph{compound} map $\phi
+\circ \psi \in C^{1}$, with
+\[
+D(\phi \circ \psi) = (D\phi \circ \psi) D\psi.
+\]
+
+
+\paragraph{Leibnitz's rule}\index{Leibnitz's rule}
+
+For all $\phi,\psi\in C^{1}$, the \emph{product} map $\phi \psi
+\in C^{1}$, with
+\[
+D(\phi \psi) = (D\phi) \psi + \phi (D\psi).
+\]
+
+\begin{example}
+    
+In Figure~\ref{figure:5:ex61} we show the graph of $\sin\circ\cos$
+function and of its three first derivatives $D(\sin\circ\cos),
+D^{2}(\sin\circ\cos)$ and $D^{3}(\sin\circ\cos)$, as generated by 
+Script~\ref{script:5:lin}.
+    
+\begin{script}[A few derivatives of $\sin\circ\cos$]
+\begin{smallplasm}
+STRUCT:< \+\\
+  MAP:([ID, (SIN $\sim$ COS)] $\sim$ S1):dom,\\
+  MAP:([ID, D:(SIN $\sim$ COS)] $\sim$ S1):dom,\\
+  MAP:([ID, (D $\sim$ D):(SIN $\sim$ COS)] $\sim$ S1):dom,\\
+  MAP:([ID, (D $\sim$ D $\sim$ D):(SIN $\sim$ COS)] $\sim$ S1):dom\-\\
+>;
+\end{smallplasm}
+\label{script:5:lin}
+\end{script}
+The reader may check that the same graph generated by
+Script~\ref{script:5:lin} and shown in Figure~\ref{figure:5:ex61} can
+be produced by substituting the right-hand side of the following
+expressions to the left-hand side.  The first equivalence is produced
+by the chain rule; the second equivalence is generated by using both
+chain and Leibnitz's rules.
+\begin{smallplasm}
+D:(SIN $\sim$ COS) $\equiv$ (D:SIN  $\sim$  COS) * D:COS\\[0.3cm]
+(D $\sim$ D):(SIN $\sim$ COS) $\equiv$ \+\\\
+  D:(D:SIN $\sim$ COS) * D:COS  + (D:SIN $\sim$ COS) * D:(D:COS)
+\end{smallplasm}
+An equivalent symbolic expression for \texttt{(D $\sim$ D $\sim$
+D):(SIN $\sim$ COS)} would produce several lines of code, as the
+diligent reader might check.  Furthermore, it would require a longer
+computation and would produce a greater numeric error when evaluated
+on actual data.
+
+\begin{figure}[htb]
+\centering\epsfig{file=\figsdir{cap05}ex61.eps,width=0.55\linewidth}
+\caption{Graphs of $\phi=\sin\circ\cos$ and of its first three derivatives 
+on $[-\pi, \pi]$
+\label{figure:5:ex61}}
+\end{figure}
+
+    
+\end{example}
+
+\subsection{Vector-valued maps of a real variable}\index{Vector!-valued maps of a real variable}
+
+In this case we have $E = \R$, $F = \R^{m}$, and
+$\v{\phi}=(\phi_{1},\ldots,\phi_{m})$ is a vector-valued
+\emph{continuous} map $\R \rightarrow \R^{m}$.  In other words,
+$\v{\phi} \in C^{0}(\R;\R^{m})$.  Such a map is called a
+\emph{curve} in $\R^{m}$.
+
+At each $u\in\R$ the derivative $D\v{\phi}(u)$, if it exists, is a
+\emph{linear} map $\R \rightarrow \R^{m}$.
+
+By linearity it is, for all $s\in\R$:
+\[
+D\v{\phi}(u)(s) = D\v{\phi}(u) (s 1) = s D\v{\phi}(u)(1) = s \v{\phi}'(u) = s
+(\phi'_{1}(u), \ldots, \phi'_{m}(u))
+\]
+
+\paragraph{Implementation}\index{Implementation!derivative maps!vector-valued, of a real variable}
+
+The function \texttt{D1m}, given in Script~\ref{script:5:D1m}, which
+implements this derivative, is very easy to write down by considering
+that $D\v{\phi}(u)(s)$ is just a scalar multiple of the vector
+$(\phi'_{1}(u), \ldots, \phi'_{m}(u))$ whose components are the
+derivatives at $u$ of the scalar functions $\phi_{1},\ldots,
+\phi_{m}\in C^{1}(\R;\R)$.  
+
+Notice that the \texttt{scalarVectProd} operator, defined in
+Script~\ref{script:2:scalarVectProd} and normally used to multiply a
+scalar number times an ordered $d$-tuple of scalars, is here used to
+multiply a scalar function times an ordered $d$-tuple of functions. 
+Such useful behavior of vector operators will often be found in this
+chapter.
+
+\begin{script}[Derivative of $f:\R\rightarrow\R^{m}$ at $u$]
+\begin{smallplasm} 
+DEF D1m (f::IsSeqOf:IsFun)(u::IsReal) = \+\\
+%(AA:*  $\sim$  DISTR): 
+%     < AA:K:((CONS  $\sim$  AA:D11):f:u), S1>;
+  S1 scalarVectProd AA:K:((CONS $\sim$ AA:D11): f: u);
+\end{smallplasm} 
+\label{script:5:D1m}
+\end{script}
+
+In the following examples, according to Script~\ref{script:5:D}, we use the
+generalized operator \texttt{D} instead of the specialized operator
+\texttt{D1m}.
+
+Notice also that in the remainder of this chapter we usually implement
+ in \pl\ a curve
+$\v{\phi} = (\phi_{1}, \ldots, \phi_{m})$ as the \emph{sequence} 
+\begin{smallplasm}
+< $\phi_{1}$, \ldots, $\phi_{m}$ >
+\end{smallplasm}
+of its coordinate functions, and not as the
+vector-valued function 
+\begin{smallplasm}
+[ $\phi_{1}$, \ldots, $\phi_{m}$ ]
+\end{smallplasm}
+given by their \texttt{CONS}.  Such implementation choice allows for
+easier access and manipulation of the coordinate functions, and is a
+consequence of the discussion in Example~\ref{ex:5:coordinatemaps}.
+
+
+\begin{example}[Circular curve]
+    
+The circular curve of unit radius centered at the origin may be given
+as a map 
+\[
+\texttt{circlemap} :\R\rightarrow\R^{2} ;\ u\mapsto (\cos u, \sin u), 
+\qquad u\in [-\pi,\pi]
+\]
+The derivative $D \texttt{circlemap}(u)$ at $u$ is a linear map.  In
+Figure~\ref{figure:5:ex2}a we show both the image curve
+$\texttt{circlemap}[-\pi,\pi]$ and the line segment $D
+\texttt{circlemap}({\pi\over 3})[-{1\over 2},{1\over 2}]$.  Notice that
+the point $D \texttt{circlemap}({\pi\over 3})(0)$ clearly coincides with
+$(0,0)$.
+    
+\begin{script}[Derivative at a circle point]
+\begin{smallplasm} 
+DEF circlemap \index{Library functions!Shapes library!{\tt  circlemap}} = < COS, SIN >;\\[0.3cm]
+
+STRUCT:<\+\\
+  MAP:(CONS:circlemap $\sim$ s1):(interval:<-:PI,PI>:60),\\
+  T:<1,2>:(CONS:circlemap:(PI/3)),\\
+  MAP:(CONS:(D:circlemap:(PI/3))):(interval:<-0.5,0.5>:1) >;
+\end{smallplasm} 
+\label{script:5:circle}
+\end{script}
+
+The last expression of Script~\ref{script:5:circle} produces
+Figure~\ref{figure:5:ex2}b, where the set $D
+\texttt{circlemap}({\pi\over 3})[-{1\over 2},{1\over 2}]$ has been
+translated to the tangency point $\texttt{circlemap}({\pi\over 3})$. 
+The part of tangent line there shown is exactly the point set
+\[
+\texttt{circlemap}({\pi\over 3}) + D
+\texttt{circlemap}({\pi\over 3})[-{1\over 2},{1\over 2}].
+\]
+where, as usual, $f(A)$ stands for $\{ f(a)\ |\ a\in A \}$, and $x + B$
+stands for $\{x + b\ |\ b\in~B\}$.
+
+
+\begin{figure}[htb]
+\centering
+\epsfig{file=\figsdir{cap05}ex21.eps,width=0.2\linewidth}
+\hspace{2.5cm}
+\epsfig{file=\figsdir{cap05}ex22.eps,width=0.2\linewidth}
+\caption{(a) Derivative of \texttt{circlemap} map $\R\rightarrow\R^{2}$ at
+$\pi\over 3$ (b) Corresponding affine map
+\label{figure:5:ex2}}
+\end{figure}
+
+\end{example}
+
+
+\begin{example}[Circular helix]
+    
+The \emph{circular helix} curve of radius $r$,
+pitch $h$ and $n$ number of $2\pi$ turns can be given as the map
+\[
+\texttt{helix}(r,h,n) : \R\rightarrow\R^{3} :
+u \mapsto (r \cos u, r \sin u, {h\over 2\pi} u ), 
+\qquad u\in[0,2\pi n].
+\]
+
+The corresponding variable-free formulation is
+\[
+\texttt{helix}(r,h,n) = \vet{\underline{r} \cos & \underline{r} \sin &
+\underline{({h \over 2\pi})} \mbox{id}}
+\]
+
+The collection of helix curves with axis on $x=y=0$, starting point on
+the $x$-axis, and prescribed radius, height and number of turns, may hence be 
+generated by the \pl\ function
+\[
+\texttt{helix} : \R^{+}\times\R^{+}\times \R^{+} \rightarrow
+(\R\rightarrow\R^{3})
+\]
+which is implemented in Script~\ref{script:5:D1mb} as a sequence of
+three coordinate functions.
+    
+\begin{script}[Derivative at a helix point]
+\begin{smallplasm}   
+    DEF helix (r,h,n::IsRealPos) = 
+  < K:r*COS, K:r*SIN, K:(h/(2*PI))*ID >;\\[0.3cm]
+
+STRUCT:<\+\\
+  MAP:(CONS:(helix:<1,0.5,4>) $\sim$ s1):(interval:<0,8*PI>:180),\\
+  T:<1,2,3>:(CONS:(helix:<1,0.5,4>):(2*PI/3)),\\
+  MAP:(CONS:(D:(helix:<1,0.5,4>):(2*PI/3))):(interval:<-0.5,0.5>:1)\-\\
+>;
+\end{smallplasm} 
+\label{script:5:D1mb}
+\end{script}
+The \texttt{STRUCT} expression gives both the helix image of the
+interval $[0,8\pi]$ and the image of the tangent map in ${2\over
+3}\pi$ on the interval $[-{1\over 2}, {1\over 2}]$.  To be precise,
+the \texttt{STRUCT} expression of Script~\ref{script:5:D1mb} produces
+(a simplicial approximation of) the sets
+\begin{eqnarray*} 
+&&\texttt{helix}(r,h,n)[0,8\pi] \qquad\mbox{and}
+\\
+&&\texttt{helix}(r,h,n)({2\over 3}\pi) + D
+\texttt{helix}(r,h,n)({2\over 3}\pi)[-{1\over 2},{1\over 2}]
+\end{eqnarray*}
+with $r=1$, $h=0.5$ and $n=4$.  Both such sets are shown in
+Figure~\ref{figure:5:ex3}.
+
+\begin{figure}[htb]
+\centering
+\epsfig{file=\figsdir{cap05}ex3.eps,width=0.6\linewidth}
+\caption{Image of the tangent map to the \texttt{helix} curve
+% $\v{\sigma}:\R\rightarrow\R^{3}$ 
+at the point ${2\over 3}\pi$
+\label{figure:5:ex3}}
+\end{figure}
+
+\end{example}
+
+
+\subsection{Real-valued maps of several real variables}\index{Real-valued maps!of several real variables}
+
+In this case we have $E = \R^{n}$ and $F = \R$, where
+$\phi:\R^{n}\rightarrow\R$ is a real-valued function of $n$ real
+variables.  The derivative $D{\phi}(\p{a})$ at $\v{a}$ (if it exists),
+is a \emph{linear functional} $\R^{n} \rightarrow \R$, called the
+\emph{gradient} of ${\phi}$ at $\p{a}$, and often denoted by $\nabla
+\phi(\p{a})$.
+
+In order to compute $D{\phi}(\p{a})$, notice that each $\v{h}\in\R^{n}$
+can be written, using the standard basis $( \v{e}_{1}, \ldots,
+\v{e}_{n} )$, as $ \v{h} = h_{1}\v{e}_{1} + \cdots + h_{n}\v{e}_{n}$,
+so that, by linearity
+\[
+D{\phi}(\p{a})(\v{h}) = h_{1}D{f}(\p{a})(\v{e}_{1}) + \cdots +
+h_{n}D{f}(\p{a})(\v{e}_{n}).
+\]
+
+Each $D{f}(\p{a})(\v{e}_{i})$ is the limit of the ratio of the
+function difference in two close points $\p{a}-dx_{i}\v{e}_{i}$ and
+$\p{a}+dx_{i}\v{e}_{i}$, over their distance $2\,dx_{i}$, but this
+limit of the ``incremental ratio" is exactly the derivative of $f$ at
+$\p{a}$ as a function of a single real variable, usually known as the
+\emph{partial derivative} ${\partial \phi \over \partial x_{i}}(\v{a})
+\in \lin(\R^{n};\R)$, so that we can write:
+\[
+D{\phi}(\p{a})(\v{h}) = h_{1}{\partial \phi \over \partial x_{1}}(\v{a}) +
+\cdots + h_{n}{\partial \phi \over \partial x_{n}}(\p{a}) 
+= \nabla\phi(\p{a}) \cdot \v{h}.
+\]
+
+\paragraph{Implementation}\index{Implementation!derivative maps!real-valued, of several real variables}
+
+To compute a partial derivative \texttt{Dp} of $\phi$ at $\p{a}$ in
+the $i$-th coordinate direction, it is necessary to compute the
+function difference in two points \texttt{a1} and \texttt{a2} which
+differ only for a suitably ``small" amount $2\,dx$ of the $i$-th
+coordinate, if we choose a numerical scheme based on central
+differences.
+
+\begin{script}[Partial derivative of $f:\R^{n}\rightarrow\R$ at $a$]
+\begin{smallplasm} 
+DEF Dp 
+(i::isIntPos)(f::IsFun)(a::IsPoint)(h::IsVect) = \+\\
+  (f:a2 - f:a1) / (2*dx) \-\\
+WHERE \+\\
+  a2 = CAT:<seq1, <SEL:i:a + dx>, seq2> , \\
+  a1 = CAT:<seq1, <SEL:i:a - dx>, seq2> , \\
+  seq1 = AS:SEL:(1..(i - 1)):a , \\
+  seq2 = AS:SEL:((i + 1)..n):a , \\
+  n = LEN:a ,\\
+  dx = 1E-5\-\\
+END;
+\end{smallplasm} 
+\label{script:5:Dp}
+\end{script}
+
+The \emph{gradient} at $\p{a}$ of a function
+$\phi:\R^{n}\rightarrow\R$ is the column vector of the partial
+derivatives of $\phi$ at $\p{a}$.  It is easily implemented in
+Script~\ref{script:5:grad}.
+
+\begin{script}[Gradient of $\phi:\R^{n}\rightarrow\R$ at $a$]
+\begin{smallplasm} 
+DEF grad \index{Library functions!Derivatives library!{\tt  Grad}} (f::IsFun)(a::IsPoint) = CONS:(DpVect:f):a\\
+WHERE\+\\
+  DpVect = (CONS  $\sim$  AA:Dp  $\sim$  INTSTO  $\sim$  LEN):a\-\\
+END;\\[0.3cm]
+
+DEF f = SIN $\sim$ S1 * SIN $\sim$ S2;\\[0.3cm]
+grad:f 
+$\equiv$ An-Anonymous-Function \\
+
+grad:f:<PI/3,PI/-2>
+$\equiv$ < An-Anonymous-Function, An-Anonymous-Function >\\
+
+CONS:(grad:f:<PI/3,PI/-2>):<1,1>
+$\equiv$ <-0.4999999999921733, 0.0>
+\end{smallplasm} 
+\label{script:5:grad}
+\end{script}
+
+Some examples of use of the \texttt{grad} operator are given in 
+Script~\ref{script:5:grad}.  They may help to understand the semantics of the
+\texttt{grad} implementation.
+
+It may be also useful to show the variable-free representation of the
+map generated when using the \texttt{Dn1} operator given in
+Script~\ref{script:5:Dn1}.  Notice first of all, that such a function,
+like most \pl\ programs, is dimension-independent and works for any
+dimension $n$ of the domain space.
+
+So, we have
+\[
+\texttt{Dn1}(\phi)(\p{a}) := 
+ {\partial \phi \over \partial x_{1}}(\v{a})  \sigma({1}) +
+\cdots + {\partial \phi \over \partial x_{n}}(\p{a}) \sigma({n}) ,
+\]
+where $\sigma({1}),\ldots,\sigma({n})$ are the selector functions
+defined in Section~\ref{sec:5:free}, and 
+\[
+\texttt{Dn1}(\phi)(\p{a})(\p{u}) = 
+ {\partial \phi \over \partial x_{1}}(\v{a}) u_{1} +
+\cdots + {\partial \phi \over \partial x_{n}}(\p{a}) u_{n}  = 
+\nabla \phi (\p{a}) \cdot \v{u}.
+\]
+
+
+\begin{script}[Derivative of $\phi:\R^{n}\rightarrow\R$ at $\p{a}$]
+\begin{smallplasm} 
+DEF Dn1 (f::IsFun)(a::IsPoint) = \+\\
+  (InnerProd  $\sim$  [AA:SEL  $\sim$  INTSTO  
+  $\sim$  LEN, grad:f]):a ;
+\end{smallplasm} 
+\label{script:5:Dn1}
+\end{script}
+
+The reader should notice that the \pl\ expression 
+\begin{smallplasm}
+  (AA:SEL $\sim$ INTSTO $\sim$ LEN):a
+\end{smallplasm}
+returns the sequence \texttt{< $\sigma({1})$, \ldots, $\sigma({n})$ >}
+of selector functions, as well as the expression\ \texttt{grad:f:a}\
+returns the sequence of partial derivatives of \texttt{f} at
+\texttt{a}.  Also notice that the binary \texttt{InnerProd} operator,
+defined in Script~\ref{script:UnitVect}, works with pairs of ordered
+$d$-tuples of either scalar numbers or scalar functions.
+
+As always, we will use in the remainder of this chapter the generalized
+operator \texttt{D} of Script~\ref{script:5:D}, instead of the
+specialized derivation operator \texttt{Dn1}.
+
+
+\paragraph{Directional derivative}\index{Directional!derivative}
+
+The weaker concept of \emph{directional} (or \emph{Gateaux})
+\emph{derivative} is defined as follows. Let $\v{h}\in \R^{n}$ be a 
+unit vector and 
+\[
+\psi:\R\rightarrow\R;\ t\mapsto \phi(\p{a}+t\v{h}).
+\]
+Then the directional derivative of $\phi$ in the chosen direction $\v{h}$ is 
+the scalar $\psi'(0) = D\psi(0)(1)$.  
+
+This directional derivative may be interpreted as the
+derivative along any curve passing for $\p{a}$ with $\v{h}$ as tangent
+vector at $\p{a}$:
+\[
+D_{\v{h}}\phi(\p{a}) = \lim_{t\rightarrow 0} {{\phi(\p{a}+t\v{h})}\over t}
+\]
+
+The map $\phi$ is said to be \emph{Gateaux-differentiable} at $\p{a}$ if
+$D_{\v{h}}\phi(\p{a})$ exists for all $\v{h}\in\R^{n}$. When $D\phi(\v{a})$ 
+exists, 
+$D_{\v{h}}\phi(\v{a})=D\phi(\v{a})(\v{h})=\nabla\phi(\p{a})\cdot\v{h}$.
+
+\begin{example}[Graph of tangent space]
+
+The graphs of $\sin u \sin v$, i.e. of the function $\phi =
+(\sin\circ\,\sigma(1)) (\sin\circ\,\sigma(2))$ on the set $U_{1} =
+[0,\pi]^{2}$, and of the affine map $(\phi + D\phi)({\pi\over
+3},{\pi\over 2})$ on the set $U_{2} = [-{1\over 2},{1\over 2}]^{2}$,
+is produced by Script~\ref{script:5:sinsin} and is shown in
+Figure~\ref{figure:5:ex41}.
+
+\begin{script}[Graph of tangent space]
+\begin{smallplasm} 
+DEF f ~= SIN $\sim$ S1 * SIN $\sim$ S2;\\
+DEF U1 = interval2D:<0,0,PI,PI>:<20,20>;\\
+DEF U2 = interval2D:<-0.5,-0.5,0.5,0.5>:<2,2>;\\[0.3cm]
+
+STRUCT:< \+\\
+  MAP:[S1, S2, f]:U1 CREASE (PI/2),\\
+  T:<1,2,3>:([S1, S2, f]:<PI/3, PI/2>),\\
+  MAP:[S1, S2, D:f:<PI/3, PI/2>]:U2 COLOR RED\-\\
+>;
+\end{smallplasm} 
+\label{script:5:sinsin}
+\end{script}
+
+Within the above \pl\ code two rendering-oriented language constructs
+are informally introduced.  The \texttt{CREASE} binary operator,
+applied to a polyhedral complex and to an angle (in radiants),
+annotates the first argument with a rendering property checked by the
+\textsf{VRML}\index{VRML} exporter.  The resulting effect is the exporting of the
+surface with ``indexed coordinates", so that a ``Gouraud's shader" can be
+applied by the \textsf{VRML}\index{VRML} browser in rendering the surface. 
+Analogously, the binary operator \texttt{COLOR} applies the predefined
+RGB constant \texttt{RED} to its polyhedral argument.  Both the
+\texttt{CREASE} and the \texttt{COLOR} operators require the loading
+of the \pl\ library named ``\texttt{colors}". Such topics are  
+discussed in detail in Chapter~\ref{chap.rendering}.
+
+\begin{figure}[htb]
+\centering
+\epsfig{file=\figsdir{cap05}ex41.eps,width=0.48\linewidth}
+\epsfig{file=\figsdir{cap05}sinsin.eps,width=0.51\linewidth,height=2.7cm}
+\caption{Graphs of map $\phi$ on $[0,\pi]^{2}$ and of map $(\phi +
+D\phi)({\pi\over 3},{\pi\over 2})$ on $[-1,1]^{2}$, with  $\phi =
+\sin u\, \sin v$: (a) polyhedral approximation (b) smooth rendering
+\label{figure:5:ex41}}
+\end{figure}
+
+In more precise terms, the \texttt{STRUCT} expresssion of
+Script~\ref{script:5:sinsin} generates a simplicial approximation of
+the set:
+\[
+(\sigma(1), \sigma(2), \phi)[0,\pi]^{2} 
+\cup \left(
+(\sigma(1), \sigma(2), D\phi({\pi\over 3},{\pi\over 2}))[-1,1]^{2}
++\phi({\pi\over 3},{\pi\over 2})
+\right)
+\]
+
+\end{example} 
+
+
+
+\subsection{Vector-valued maps of several real variables}\index{Vector!-valued maps of several real variables}
+
+In this case we have $E = \R^{n},F = \R^{m}$ and $\T{\phi}:\R^{n}
+\rightarrow \R^{m}$.  The derivative $D\T{\phi}(\p{u})$ of $\T{\phi}$
+at $\p{u}$ is a \emph{linear map} $\R^{n}\rightarrow\R^{m}$, if it
+exists.
+% , i.e.~$D\T{\phi}(\p{u})\in\R^{m}_{n}$.  
+
+In other words, $D\T{\phi}(\p{u})$ is a matrix in $\R^{m}_{n}$,
+called \emph{Jacobian matrix} of $\T{\phi}$~at~$\p{u}$.
+
+By chosing bases $(e_{i})$ in $\R^{n}$ and $(\epsilon_{j})$ in
+$\R^{m}$, with $\T{\phi} = (\phi_{1}, \phi_{2}, \ldots, \phi_{m})$ and each
+$\phi_{i}: \R^{n}\rightarrow\R$, we have
+\[
+D\T{\phi}(\p{u}) = D\phi_{1}(\p{u})\epsilon_{1} +
+D\phi_{2}(\p{u})\epsilon_{2} + \cdots + D\phi_{m}(\p{u})\epsilon_{m},
+\]
+
+The Jacobian matrix $D\T{\phi}(\p{u})$ is often represented as
+\[
+{\partial(\phi_{1}, \phi_{2}, \ldots, \phi_{m})
+\over\partial(x_{1}, x_{2}, \ldots, x_{n})} = (\alpha_{ij}),
+\quad\mbox{with}\quad \alpha_{ij} = 
+{\partial \phi_{i}\over \partial x_{j}}(x) .
+\]
+
+The determinant
+\[
+J=\left| {\partial(\phi_{1}, \phi_{2}, \ldots, \phi_{m})
+\over\partial(x_{1}, x_{2}, \ldots, x_{n})} \right|
+\]
+of the Jacobian matrix at $\p{u}$ is called the
+\emph{Jacobian} of $\T{\phi}$ at $\p{u}$. When $\T{\phi}\in 
+C^{1}(\R^{n};\R^{n})$ is a transformation of coordinates, $J(\p{u})$ 
+gives the ratio of the volume elements at $\p{u}$, with $dV' = J(\p{u}) 
+dV$. 
+
+
+\paragraph{Implementation}\index{Implementation!derivative maps!vector-valued, of several real variables}
+
+Once again, this derivative is quite easy to implement in \pl. 
+According to the functional character of the language, the easiest
+implementation of $D\T{\phi}(\p{u})$ is as the sequence
+$(D\phi_{1}(\p{u}),\ldots,D\phi_{m}(\p{u}))$ of derivatives at $\p{u}$
+of the coordinate functions of $\T{\phi}$. Such a derivative is denoted 
+as \texttt{Dnm} in Script~\ref{script:5:Dnm}.
+
+\begin{script}[Derivative of $f:\R^{n}\rightarrow\R^{m}$ at $a$]
+\begin{smallplasm} 
+DEF Dnm (f::IsSeqOf:IsFun)(u::IsPoint) = (CONS  $\sim$  AA:Dn1):f:u;
+\end{smallplasm} 
+\label{script:5:Dnm}
+\end{script}
+As is usual at this point, we will refer to this operator as
+\texttt{D}, according to the generalized implementation of the
+derivative operator given in Script~\ref{script:5:D}.
+
+\begin{example}[Tangent plane at a point of a torus]
+    
+The parametric equations of the family of surfaces known as \emph{toruses}
+can be seen as generated by a map
+\[
+\T{\phi}:\R^{+}\times\R^{+}\rightarrow(\R^{2}\rightarrow\R^{3}):
+(r,R)\mapsto (\phi_{x}, \phi_{y}, \phi_{z}),
+\]
+where $r,R$ are the \emph{minor} and \emph{major} radiuses of the
+surfaces, respectively, and  
+\[
+	\phi_{x}, \phi_{y}, \phi_{z} : U\rightarrow\R, 
+\]
+with
+\begin{eqnarray*}
+    \phi_{x} &=& (\underline{r} \cos \circ\ \sigma(1) + \underline{R}) \cos 
+			\circ\ \sigma(2), \\
+	\phi_{y} &=& (\underline{r} \cos \circ\ \sigma(1) + \underline{R}) \sin \circ\ \sigma(2), \\
+	\phi_{z} &=&  \underline{r} \sin \circ\ \sigma(1),
+\end{eqnarray*}
+and
+\[
+	U = [0,2\pi)^{2} \subset \R^{2}.
+\]
+
+Such equations can be easily derived from the general equation of 
+rotational surfaces given in Chapter~\ref{chapt:surfaces}. They are directly 
+translated into the \pl\ definition given in Script~\ref{script:5:torus}.
+
+\begin{script}[Torus]
+\begin{smallplasm} 
+DEF torus \index{Library functions!Shapes library!{\tt  Torus}} (r1,r2::IsReal) = < fx, fy, fz >\\
+WHERE\+\\
+  fx = (K:r1 * COS $\sim$   S1 + K:r2) * COS $\sim$   S2,\\
+  fy = (K:r1 * COS $\sim$   S1 + K:r2) * SIN $\sim$   S2,\\
+  fz = (K:r1 * SIN $\sim$   S1)\-\\
+END;
+\end{smallplasm} 
+\label{script:5:torus}
+\end{script}
+
+Some preliminary check on the types of elementary expressions
+involving the \texttt{torus} function may be useful for a deeper
+understanding.  In particular, we check that
+\begin{enumerate}
+    \item
+    the expression \texttt{torus:<1,3>} returns a triplet of
+    (coordinate) functions;
+    \item
+    such functions, evaluated at the same 2D point return
+    a 3D point;
+    \item
+    the derivative of \texttt{torus:<1,3>} at a point returns a triplet
+    of (linear) functions, 
+\end{enumerate}
+as shown by the following examples:
+\begin{smallplasm} 
+torus:<1,3> $\equiv$ \+\\
+<An-Anonymous-Function, An-Anonymous-Function, 
+     An-Anonymous-Function>\-\\[0.3cm]
+
+CONS:(torus:<1,3>):<PI/3,PI/3> $\equiv$ \+\\
+<1.75, 3.031088913245535, 0.8660254037844386>\-\\[0.3cm]
+
+D:(torus:<1,3>):<PI/3,PI/3>  $\equiv$ \+\\ 
+<An-Anonymous-Function, An-Anonymous-Function, 
+    An-Anonymous-Function> 
+\end{smallplasm} 
+
+\begin{figure}[htb]
+\centering
+\epsfig{file=\figsdir{cap05}torusman.eps,width=0.6\linewidth}
+% \epsfig{file=\figsdir{cap05}toro.eps,width=0.6\linewidth}
+\caption{Image of the affine map $(\T{\phi}+D\T{\phi})(\p{u})$
+on the torus surface
+\label{figure:5:ex51}}
+\end{figure}
+
+In Figure~\ref{figure:5:ex51} we show the image of the function
+\texttt{torus:<1,3>} on the domain $[0,2\pi]^{2}$, i.e.~the torus
+surface with radiuses $(1,3)$, and the image of the affine map
+$\R^{2}\rightarrow\R^{3}$ of type $(\T{\phi}+D\T{\phi})(\p{u})$ on the 
+domain $[-{1\over 2},{1\over 2}]^{2}$.
+
+More formally, we can say that Figure~\ref{figure:5:ex51} gives a
+picture of the set 
+\[
+\textstyle{ \T{\phi}[0,2\pi]^{2} \ \cup\
+(\T{\phi}(\v{u})+D\T{\phi}(\p{u})[-{1\over 2},{1\over 2}]^{2} )}
+\]
+with $\T{\phi} = \texttt{torus:<1,3>}$ and
+$\p{u}=({\pi\over3},{\pi\over3})$.
+
+\begin{script}[Image of the affine map $(\T{\phi}(\v{u})+D\T{\phi}(\p{u}) 
+\v{v}$]
+\begin{smallplasm} 
+STRUCT:<\+\\
+  MAP:(CONS:(torus:<1,3>)):(interval2D:<0,0,2*PI,2*PI>:<24,48>) ,\\
+  
+  T:<1,2,3>:(CONS:(torus:<1,3>):<PI/3,PI/3>),\\
+  
+  MAP:(CONS:(D:(torus:<1,3>):<PI/3,PI/3>)):\+\\
+    (interval2D:<-0.5,-0.5,0.5,0.5>:<2,2>) COLOR RGB:<1,0,0>  >;
+\end{smallplasm} 
+\label{script:5:ex51}
+\end{script}
+    
+Actually, the implementation in Script~\ref{script:5:ex51} is based on 
+the graphics approach of translating the image of the linear map 
+$D\T{\phi}(\p{u})$ with translation vector $\T{\phi}(\p{u})$.
+A~direct implementation of the affine mapping
+\[
+\v{v} \mapsto \T{\phi}(\v{u})+D\T{\phi}(\p{u}) \v{v}, 
+\qquad u = \left({\pi\over 3}, {\pi\over 3}\right), 
+\v{v}\in \left[-{1\over 2},{1\over 2}\right]^{2} , 
+\]
+should instead be written as
+
+
+\begin{smallplasm} 
+    MAP:(vectSum\\
+    $\sim$CONS:([K$\sim$CONS:(torus:<1,3>), 
+    CONS$\sim$D:(torus:<1,3>)]:<PI/3,PI/3>)):\+\\
+    (interval2D:<-0.5,-0.5,0.5,0.5>:<1,1>)
+\end{smallplasm} 
+Notice that the greatest care was used in \texttt{CONS}ing some
+sub-expressions, depending on whether they return either a single
+vector function or a sequence of functions.  In fact a sequence
+\emph{cannot} be applied to any argument nor composed with functions.
+
+\end{example}
+
+
+\subsection{Generalized implementation}\index{Generalized!implementation of derivative}
+
+An implementation of a derivation operator 
+\[
+\texttt{D} : C^{1}(\R^{n};\R^{m}) \rightarrow \lin (\R^{n};\R^{m})
+\]
+at point $\p{u}\in \R^{n}$ is given in this section.  This operator
+will work for arbitrary values of $n$ and $m$.  To this purpose, there
+are four different cases that we need to manage, and for which we have
+already given specialized operators, respectively named \texttt{D11},
+\texttt{D1m}, \texttt{Dn1} and \texttt{Dnm}.
+
+A cascaded \texttt{IF} sequence is just used to select the proper specialized 
+operator, to be chosen depending on the type of input parameters \texttt{f} 
+and \texttt{u}. Notice that the \texttt{TT $:=$ K:True} predicate returns 
+\emph{true} for any input.
+
+\begin{script}[Generalized derivation operator]
+\begin{smallplasm} 
+DEF D \index{Library functions!Derivatives library!{\tt  D}} (f::TT)(u::TT) = \+\\
+  IF:< AND $\sim$ [ IsFun$\sim$S1, IsReal$\sim$S2 ], APPLY $\sim$ [D11 $\sim$ S1,S2], \\
+  IF:< AND $\sim$ [ IsSeqOf:IsFun$\sim$S1, IsReal$\sim$S2 ], APPLY $\sim$ [D1m $\sim$ S1,S2], \\
+  IF:< AND $\sim$ [ IsFun$\sim$S1, IsPoint$\sim$S2 ], APPLY $\sim$ [Dn1 $\sim$ S1,S2], \\
+  IF:< AND $\sim$ [ IsSeqOf:IsFun$\sim$S1, IsPoint$\sim$S2 ], APPLY $\sim$ [Dnm $\sim$ S1,S2], 
+  \-\\
+ID >>>>:< f, u >;
+\end{smallplasm} 
+\label{script:5:D}
+\end{script}
+
+
+\section{Fields and differential operators}\index{Fields}\index{Differential operators}
+
+
+A \emph{function} $\T{\phi}: {\E} \rightarrow {F}$ that maps points
+of an Euclidean space ${\E}$ into a linear space ${F}$ is
+called a \textbf{field}.  When ${F}$ is the set of real numbers,
+or a vector or tensor space, $\T{\phi}$ is called a \emph{scalar},
+\emph{vector} or \emph{tensor} \emph{field}, respectively.
+
+\subsection{Gradient}\index{Gradient}
+
+The \textbf{gradient} $D\phi$ of a field $\phi: {\E} \rightarrow
+{F}$ is the map on ${\E}$ whose value at $x$ is the
+\emph{derivative} $D\phi(x)$ of $\phi$ at $x$:
+
+\[
+D\phi : {\E} \rightarrow \lin ({\E},{F}) : x\mapsto D\phi(x)
+\]
+In the remainder of the chapter, we identify the Euclidean $n$-space ${\E}^{n}$ with
+its linear support space $\R^{n}$, and denote the gradient of a field
+$\phi$ by $\nabla \phi$.
+    
+% When $f$ is a scalar field on $\R$, i.e. $f:\R\rightarrow\R$, the
+% gradient of $f$ evaluated at a point, i.e. $Df(x)$, is a number
+% $\lambda\in\R$, which fully identifies a linear map
+% \[
+% \R\rightarrow\R : y \mapsto \lambda y
+% \]
+% 
+% In this sense we have that, with $f:\R\rightarrow\R$, it is also
+% \[
+% Df:\R\rightarrow\R
+% \]
+
+\begin{example}[Gradient of a scalar field $\R^{m}\rightarrow \R$]
+    
+% \begin{script}[Graphs of some scalar fields]
+% \begin{smallplasm} 
+% MAP:[s1,s2,(s1*s1 - s2*s2)/K:2]:(dom_2D:<-1,-1,1,1>:<7,7>)\\
+% MAP:[s1,s2,(s1*s1 + s2*s2)/K:2]:(dom_2D:<-1,-1,1,1>:<7,7>)\\
+% MAP:[s1,s2,sin $\sim$ s1 * sin $\sim$ s2]:(dom_2D:<0,0,PI,PI>:<7,7>)
+% \end{smallplasm} 
+% \label{script:5:fields}
+% \end{script}
+% 
+% \begin{figure}[htb]
+% \centering
+% \centering\epsfig{file=\figsdir{cap05}ex15a.eps,width=0.3\linewidth}
+% \centering\epsfig{file=\figsdir{cap05}ex15b.eps,width=0.3\linewidth}
+% \centering\epsfig{file=\figsdir{cap05}ex15c.eps,width=0.3\linewidth}
+% \caption{aaaaaaaa
+% \label{figure:5:ex15}}
+% \end{figure}
+
+A vector field representation of gradient $\nabla \phi$ of a scalar field
+as a set of line segments is produced by the three expressions in
+Script~\ref{script:5:gradients}.  In particular, each expression
+aggregates the set of vectors on the vertices of the domain
+discretization named \texttt{dom} and the domain itself.  The scalar
+fields shown in Figure~\ref{figure:5:ex14} are, respectively:
+\begin{eqnarray*}
+(x,y) &\mapsto& {({x^{2} + y^{2})}/ a^{2}} 
+\qquad \mbox{with\ } a =\sqrt 2, \mbox{\ and\ } \texttt{dom} = [-1,1]^{2}
+\\
+(x,y) &\mapsto& {({x^{2} - y^{2})}/ a^{2}}
+\qquad \mbox{with\ } a =\sqrt 2, \mbox{\ and\ } \texttt{dom} = [-1,1]^{2}
+\\
+(x,y) &\mapsto& {\sin x \ \sin y}
+\qquad \mbox{~~~with\ }  \texttt{dom} = [0,\pi]^{2}
+\end{eqnarray*}
+
+    
+\begin{script}[Vector field representation of the gradient of a scalar field]
+\begin{smallplasm} 
+(STRUCT $\sim$ [GradMap,s2]):<(s1*s1 + s2*s2)/K:2, interval2D:<-1,-1,1,1>:<7,7>>\\
+(STRUCT $\sim$ [GradMap,s2]):<(s1*s1 - s2*s2)/K:2, interval2D:<-1,-1,1,1>:<7,7>>\\
+(STRUCT $\sim$ [GradMap,s2]):<sin $\sim$ s1 * sin $\sim$ s2, interval2D:<0,0,PI,PI>:<7,7>>
+\end{smallplasm} 
+\label{script:5:gradients}
+\end{script}
+
+The first two fields correspond to the explicit representation of
+quadrics surfaces called \emph{elliptic} and \emph{hyperbolic
+paraboloid}, respectively.  The function \texttt{interval2D}, to generate a
+cell decomposition of the Cartesian product of two line intervals, was
+given in Script~\ref{script:5:toolbox}.
+
+\begin{figure}[htb]
+\centering
+\centering\epsfig{file=\figsdir{cap05}ex14b.eps,width=0.3\linewidth}
+\centering\epsfig{file=\figsdir{cap05}ex14a.eps,width=0.3\linewidth}
+\centering\epsfig{file=\figsdir{cap05}ex14c.eps,width=0.3\linewidth}
+\caption{Graph of gradient of fields: (a) $\phi_{1}(x,y)={({x^{2} + y^{2})}/ 
+a^{2}} $ (b)~$\phi_{2}(x,y)={({x^{2} - y^{2})}/ a^{2}} $  
+(c) $\phi_{3}(x,y)={\sin x \ \sin y}$
+\label{figure:5:ex14}}
+\end{figure}
+
+\end{example}
+
+\paragraph{Implementation}\index{Implementation!gradient of a scalar field}
+
+As we already know, if $\phi$ is a scalar field
+$\E^{n}\rightarrow\R$, then $D\phi$ --- in the following denoted as
+$\nabla \phi$ --- can be seen as the vector field such that for each 
+$\p{u}\in\R^{n}$
+\[
+D\phi(\p{x})(\p{u}) = \nabla \phi(\p{x}) \cdot \p{u}.
+\]
+So, in Script~\ref{script:5:GradMap} we give a function
+\texttt{GradMap} to generate a map of such a vector field for every
+scalar function \texttt{f} defined on an arbitary (polyhedral) domain
+\texttt{dom}.  In particular, an expression like
+\texttt{GradMap:< f, dom >} will generate a set of line segments attached
+to vertices of the cell decomposition of \texttt{dom}, where each
+segment at point $\p{x}$ is a scaled image of the vector
+\[
+\nabla f(\p{x}) = \vet{ {{\partial f}\over{\partial x_{1}}}(\p{x})(1) &
+\cdots & {{\partial f}\over{\partial x_{n}}}(\p{x})(1) },
+\]
+translated at $\p{x}$.  For this purpose a function \texttt{segment}
+is given in Script~\ref{script:5:GradMap}, that generates the image of
+vector $\texttt{b}-\texttt{a}$ applied to $\texttt{a}$, and scaled
+with coefficient \texttt{sx}.  The segment function makes use of the
+\texttt{polyline} primitive defined in Script~\ref{script:7-polyline}.
+
+\begin{script}[Graph of gradient of a scalar field]
+\begin{smallplasm} 
+DEF Gradient \index{Library functions!Derivatives library!{\tt  Gradient}} (f::IsFun)(x::IsPoint) = 
+CONS:(grad:f:x):(\#:(LEN:x):1);\\[0.3cm]
+
+DEF Segment \index{Library functions!Shapes library!{\tt  Segment}} (sx::IsReal)(a,b::IsPoint) = \+\\
+  (T:ind:a  $\sim$  S:ind:(\#:n:sx)  $\sim$  
+  T:ind:(AA:-:a) $\sim$ polyline):<a,b>\-\\
+WHERE \+\\
+  n   = LEN:a, ind = INTSTO:n \-\\
+END;\\[0.3cm]
+
+DEF GradMap (f::IsFun; dom::IsPol) = (STRUCT\+\\
+   $\sim$ AA:(Segment:0.35 $\sim$ [ID,vectSum $\sim$ [ID,Gradient:f]])\\
+   $\sim$ S1 $\sim$ UKPOL):dom
+\end{smallplasm} 
+\label{script:5:GradMap}
+\end{script}
+
+The simple algorithm used in implementing the \texttt{GradMap}
+function can be described as follows.  The \texttt{vectSum} function
+was given in Script~\ref{script:2:sum}.
+\begin{enumerate}
+\item
+Compute the vertices of the cells of the polyhedral decomposition of 
+\texttt{dom}, by ``unpacking" its data structure and extracting their 
+set with the \texttt{S1} selector.  
+\item
+Apply to all such vertices the function
+\begin{smallplasm} 
+segment:0.35 $\sim$ [ID, vectSum $\sim$ [ID, Gradient:f]]
+\end{smallplasm} 
+which generates a sequence of segments --- scaled with coefficient
+$0.35$ --- with first point in each cell vertex.
+\item
+Aggregate all such segments in the output polyhedral complex.
+\end{enumerate}
+
+    
+\paragraph{Gradient of a vector field}
+\index{Gradient!of a vector field}
+
+The implementation of Script~\ref{script:5:GradMap} works only for
+scalar fields.  The gradient of a \emph{vector field}
+$\T{\phi}:\R^{2}\rightarrow\R^{2}$ would return a tensor (represented
+by the $2\times 2$ Jacobian matrix) at each point.  A graphical
+representation of the output tensor field would be much harder to
+devise.  Anyway, a possible implementation of a function, which
+returns the gradient of a vector field in a point as the Jacobian
+matrix in that point, is given by function \texttt{Jacobian} in
+Script~\ref{script:5:Jacobian}.
+
+As a check on the implementation, we compute directly $\nabla\T{\phi}(0.25,
+0.3)$, with
+\[
+\T{\phi}(x,y)=\left({x^{2}-y^{2}\over 2}, {x^{2}+y^{2}\over 2}\right).
+\]
+In this case we have 
+\[
+\nabla \T{\phi}(x,y)
+= \mat{
+x  &  -y \\
+x  &  y
+}, \quad\mbox{and}\quad
+\nabla \T{\phi}(0.25, 0.3)
+= \mat{
+0.25  &  -0.3 \\
+0.25  &  0.3
+} .
+\]
+
+As we are now used to doing, the field to be differentiated must be written 
+using the variable-free notation
+\[
+\T{\phi} = \left(
+{\sigma(1)^{2} - \sigma(2)^{2} \over \underline{2}},
+{\sigma(1)^{2} + \sigma(2)^{2} \over \underline{2}}
+\right).
+\]
+
+\begin{script}[Jacobian of a vector field]
+\begin{smallplasm} 
+DEF Jacobian \index{Library functions!Derivatives library!{\tt  Jacobian}} (f::IsSeqOf:IsFun)(x::IsPoint) = %\+\\
+  CONS:(AA:Gradient:f):x;\\[0.3cm]
+
+Jacobian:< (s1*s1 - s2*s2)/K:2, (s1*s1 + s2*s2)/K:2 >:<0.25,0.3> $\equiv$\+\\
+<<0.24999999999995512, -0.2999999999999531>, \\
+~<0.24999999999997247, 0.2999999999998837>> ;
+\end{smallplasm} 
+\label{script:5:Jacobian}
+\end{script}
+
+
+\subsection{Divergence and Laplacian}\index{Divergence!and Laplacian}
+
+The divergence and Laplacian operators are defined for vector and 
+scalar fields, respectively, and are both functions of the gradient.
+
+The \emph{divergence} of a vector field $\v{\phi}$ is defined as the
+\emph{trace of the gradient}:
+\[
+\mbox{div\ } \v{\phi} := \mbox{tr }\nabla\v{\phi}
+\]
+Notice that the gradient of a vector field is a tensor field, whereas 
+the divergence of a vector field is a scalar field.
+
+The \emph{Laplacian} $\Delta\phi$ of a scalar field $\phi$ is defined as the
+\emph{divergence of its gradient}:
+\[
+\Delta\phi := \mbox{div\ }\nabla \phi = \mbox{tr }\nabla\nabla \phi = \mbox{tr
+}\nabla^{2} \phi
+\]
+Accordingly with the above remark, notice that the Laplacian of a
+scalar field is a scalar field.
+
+\subsection{Curl}\index{Curl}
+
+Let $\v{\phi}$ be a smooth vector field.  The \emph{curl} of $\v{\phi}$, denoted
+$\curl \v{\phi}$, is the unique vector field such that
+\[
+(\curl \v{\phi}) \times \v{v} = (\nabla\v{\phi} - \nabla\v{\phi}^{T}) \v{v}
+\]
+for every vector $\v{v}$.  Unlike gradient and divergence, the usual
+setting of curl can be given only in $\E^{3}$.  A more general
+definition of curl requires exterior calculus.
+
+Let us remember that (a) a tensor $\T{W}$ is said to be \emph{skew} if  
+$\T{W} = -\T{W}^{T}$, and (b) there is a one-to-one correspondence 
+between skew tensors and vectors. In fact, for every skew tensor $\T{W}$ 
+there is one and only one vector $\v{w}$ such that 
+\[
+\v{w} \times \v{v} = \T{W}\v{v}
+\]
+for every vector $\v{v}$.  The one-dimensional space spanned by
+$\v{w}$ is called \emph{axis} of the tensor $\T{W}$.  It coincides
+with the null space of $\T{W}$, i.e. with the subset of vectors that
+$\T{W}$ maps to $\v{0}$.
+
+Clearly enough, \curl \v{\phi} is the axis of 
+$\nabla\v{\phi} - \nabla\v{\phi}^{T}$, which is a skew tensor field.
+
+
+
+% \subsection{Flows}\index{Flows}
+
+
+\subsection{Gradient, divergence and curl of a 3D field}
+\index{Gradient!of a 3D field}
+\index{Divergence!of a 3D field}
+\index{Curl!of a 3D field}
+
+In elementary vector calculus in $\E^{3}$ it is customary to use the operator
+\[
+\nabla = 
+{\partial\over \partial x}\v{e}_{1} +
+{\partial\over \partial y}\v{e}_{2} +
+{\partial\over \partial z}\v{e}_{3} ,
+\]
+referred to as either \emph{nabla} or \emph{DEL}, as a sort of vector 
+which follows the standard rules of vector calculus. Using 
+this operator it is possible to give three simple and well-known formulas for
+gradient, divergence and curl, respectively. 
+
+\paragraph{Gradient}\index{Gradient}
+
+If $\phi$ is a differentiable scalar field, then the gradient of $\phi$ is 
+defined~by
+\[
+\mbox{grad}\ \phi = \nabla \phi = 
+{\partial \phi\over \partial x}\v{e}_{1} +
+{\partial \phi\over \partial y}\v{e}_{2} +
+{\partial \phi\over \partial z}\v{e}_{3} 
+\]
+
+\paragraph{Divergence}  
+
+If $\v{\phi} = \phi_{1}\v{e}_{1} + \phi_{2}\v{e}_{2} +
+\phi_{3}\v{e}_{3}$ is a differentiable vector field, then the
+\emph{divergence} of $\v{\phi}$ is given by
+\[
+\mbox{div}\ \v{\phi} =
+\nabla \cdot \v{\phi} 
+% = \left(
+% {\partial\over \partial x}\v{e}_{1} +
+% {\partial\over \partial y}\v{e}_{2} +
+% {\partial\over \partial z}\v{e}_{3} \right) \cdot
+% (
+% f_{1}\v{e}_{1} +
+% f_{2}\v{e}_{2} +
+% f_{3}\v{e}_{3} )
+=
+{\partial \phi_{1}\over \partial x} +
+{\partial \phi_{2}\over \partial y} +
+{\partial \phi_{3}\over \partial z} 
+\]
+
+\paragraph{Curl}\index{Curl}
+
+If $\v{\phi}$ is a
+differentiable vector field, then the \emph{curl} of $\v{\phi}$ is defined by
+\[
+\mbox{curl}\ \v{\phi} =
+\nabla \times \v{\phi} = \det \mat{
+\v{e}_{1} & \v{e}_{2} & \v{e}_{3} \\[0.2cm]
+{\partial \over \partial x} & {\partial \over \partial y} & {\partial 
+o\over \partial z}\\[0.2cm]
+\phi_{1} & \phi_{2} & \phi_{3}
+}
+\]
+\[
+= 
+\left({\partial \phi_{3}\over \partial y} - {\partial \phi_{2}\over \partial z}\right)\v{e}_{1} + 
+\left({\partial \phi_{1}\over \partial z} - {\partial \phi_{3}\over \partial x}\right)\v{e}_{2} + 
+\left({\partial \phi_{2}\over \partial x} - {\partial \phi_{1}\over \partial y}\right)\v{e}_{3} .
+\]
+
+\paragraph{Laplacian}  
+
+If $\phi$ is a differentiable scalar field, then the \emph{Laplacian} 
+of $\phi$ is given~by
+\[
+\Delta \phi =
+\nabla \cdot (\nabla \phi) = {\partial^{2} \phi\over \partial x^{2}} +
+{\partial^{2} \phi\over \partial y^{2}} +
+{\partial^{2} \phi\over \partial z^{2}}  = \nabla^{2} \phi
+\]
+where $\nabla^{2}$ is called the \emph{Laplacian operator}.
+
+\paragraph{Properties}\index{Properties}
+
+Some well-known statements relating gradient, divergence and curl say
+that, for every differentiable vector field $\v{\phi}$ and 
+scalar field $\phi$:
+\begin{enumerate}
+
+\item the curl of the gradient is zero: $ (\mbox{curl} \circ
+\mbox{grad})\ \phi = \nabla \times (\nabla \phi) = \v{0}$;
+
+\item a vector field is (locally) a gradient if and only if its curl vanishes;
+
+\item the divergence of curl is zero: $ (\mbox{div}
+\circ \mbox{curl})\ \v{\phi} = \nabla \cdot (\nabla \times \v{\phi}) =
+0$;
+
+\item a vector field is (locally) a curl if and only if its divergence
+vanishes.
+\end{enumerate}
+
+
+\paragraph{Implementation}\index{Implementation!divergence and curl}
+
+According to its definition, the \texttt{Divergence} of a
+vector field $\v{\phi}:\R^{n}\rightarrow\R^{n}$ is implemented in
+Script~\ref{script:5:divergence} as the \texttt{Trace} of Jacobian
+matrix of $\v{\phi}$.  The \texttt{Trace} function, that returns the
+sum of diagonal elements of a square matrix, was introduced in
+Script~\ref{script:Trace}.
+
+The \texttt{Curl} operator is conversely defined here only for 3D
+fields, according to the formula $\nabla\times\v{\phi}$.  Remember that
+\texttt{(S2$\sim$S3):M}, where \texttt{M} is a \pl\ matrix (stored by
+rows), returns the second element of the third row,
+i.e.~$\texttt{m}_{32}$.
+
+\begin{script}[Divergence and Curl]
+\begin{smallplasm} 
+DEF Divergence \index{Library functions!Derivatives library!{\tt  Divergence}} (f::IsSeqOf:IsFun)(x::IsSeqOf:IsReal) = \+\\
+  Trace:(Jacobian:f:x);\-
+  \\[0.3cm]
+  
+DEF Curl \index{Library functions!Derivatives library!{\tt  Curl}} (f::IsSeqOf:IsFun)(x::IsSeqOf:IsReal) = \+\\
+\,[ S2$\sim$S3 - S3$\sim$S2, S3$\sim$S1 - S1$\sim$S3, 
+  S1$\sim$S2 - S2$\sim$S1 ]\,:(Jacobian:f:x)
+
+\end{smallplasm} 
+\label{script:5:divergence}
+\end{script}
+
+
+\begin{example}[Checks on field operators]
+    
+Some computational checks are done in Script~\ref{script:5:check},
+with the aim of showing both the usage and the result of some compound
+functional expressions involving curl, divergence and gradient. 
+
+The reader should notice that fields are written either as single
+functions (scalar fields), or as sequences of functions (vector
+fields), and using the variable-free notation.  In particular,
+\texttt{f1} and \texttt{f2} in Script~\ref{script:5:check} are two
+scalar fields in $\R^{3}$, and \texttt{g} is a vector field
+$\R^{3}\rightarrow\R^{3}$.
+
+According to our expectations, we can see that $ (\mbox{curl} \circ
+\mbox{grad})\ \phi = \v{0}$ and that $ (\mbox{div} \circ \mbox{curl})\
+\v{\phi} = 0$.  Those checks are done in a single
+point, but it is reasonable to expect that they give the same result
+everywhere, as the reader may check.
+
+Notice also the inefficiency involved in extracting the coordinate
+functions of the vector functions returned by expressions
+\texttt{Gradient:f1}, \texttt{Gradient:f2} and \texttt{Curl:g}.  At
+present, there is no way in \pl\ to deal efficiently with this
+kind of extraction.
+
+\begin{script}[Some computational checks]
+\begin{smallplasm} 
+DEF f1 = ( s1*s1 + s2*s2 )/K:2;\\
+DEF f2 = ( s1*s1 + sin $\sim$ s2 - s1*s3 )/ K:2;\\
+DEF g ~= < sin $\sim$ s1, cos $\sim$ s2, s1*s3 >;\\[0.3cm]
+
+Gradient:f1:<0.5,0.1> $\equiv$ 
+<0.49999999999994493, 0.10000000000010001>\\[0.3cm]
+
+Curl:< s1 $\sim$ Gradient:f1, s2 $\sim$ Gradient:f1, s3 $\sim$ Gradient:f1 
+>:<0.9,8,0>\+\\
+$\equiv$ <0.0, 0.0, 0.0>\-\\
+Curl:< s1 $\sim$ Gradient:f2, s2 $\sim$ Gradient:f2, s3 $\sim$ 
+Gradient:f2 >:<1,0.5,1>\+\\
+$\equiv$ <0.0, 0.0, 0.0>\-\\[0.3cm]
+
+Divergence:< s1 $\sim$ Curl:g, s2 $\sim$ Curl:g, s3 $\sim$ Curl:g >:<0.5,110.5,1>
+$\equiv$ 0.0\\
+Divergence:< s1 $\sim$ Curl:g, s2 $\sim$ Curl:g, s3 $\sim$ Curl:g >:<-8.5,0.5,-3>
+$\equiv$ 0.0
+\end{smallplasm} 
+\label{script:5:check}
+\end{script}
+
+Actually such a solution would exist, but it requires us to completely
+renounce the $\lambda$-style of writing \pl\ functions, and its
+somewhat static typing, and to adopt systematically a \emph{pure} \fl\ 
+style, i.e.~\emph{without} formal parameters. 
+Doing so, we would be able to write an expression like
+\begin{smallplasm} 
+Divergence:([s1,s2,s3] $\sim$ Curl:g):<0.5,110.5,1>
+\end{smallplasm} 
+This is not possible with the definition of \texttt{Divergence}
+operator given in Script~\ref{script:5:divergence}, because the
+interpreter would expect to apply it to a \emph{sequence} of functions,
+whereas \texttt{[s1,s2,s3] $\sim$ Curl:g} is a single function.
+
+Actually, there are some drawbacks in using only the pure \fl\ style,
+including less self-documented and more intricate programs, and lack
+of any type checking.  A carefully chosen compromise between
+$\lambda$-style and pure \fl\ style is often preferable.
+
+\label{example:5:checks}
+\end{example}
+
+
+
+\section{Differentiable manifolds}\index{Differentiable manifolds}
+
+In some areas of geometric modeling, and in particular in solid
+modeling, the terms ``manifold" and ``differentiable manifold" are
+used quite frequently.  A quick introduction to this concept may
+therefore be needed, and is given here.  A manifold is a set where it 
+makes sense to introduce coordinates, at least locally. Such 
+coordinates locally behave like affine coordinates.
+Useful references are~Crampin
+and Pirani~\cite{crampin:86}, Jones, Gray and Hutton~\cite{jones:87},
+and Nakahara~\cite{nakahara:90}.
+
+
+\subsection{Charts and atlases}\index{Chart}\index{Atlas}
+
+The main concepts here are related to systems of coordinates, and are
+quite easy to understand.  For several sets, for example the surface
+$S_{2}$ of the Earth, only one system of coordinates is not
+sufficient, because a single bijection between the $S_{2}$ points and
+$2$-tuples of coordinates does not exist.  Therefore the goal is 
+to introduce coordinate systems on point \emph{subsets} such that:
+\begin{enumerate}
+    \item
+    nearby points have nearby coordinates; 
+    \item
+    every point has unique coordinates in each system that contains
+    it;
+    \item
+    when two coordinate systems overlap, they must be related in a
+    smooth way.
+\end{enumerate}
+The last requirements guarantee that differentiable functions in one
+system are differentiable also in the other.
+
+\paragraph{}\index{}
+
+A \emph{chart} for a set $M$ is a pair $(U,\v{\phi})$, with $U\subset
+M$ and $\v\phi$ a bijective function from $U$ to an open set in
+$\R^{n}$.  The subset $U$ is called the \emph{coordinate
+neighborhood}, while $\v{\phi} = (\phi_{1},\ldots,\phi_{n})$ is the
+\emph{coordinate map}, where $\phi_{i}: U\rightarrow \R$ ($1\leq i\leq
+n$) are the \emph{coordinate functions}.
+
+Two charts $(U,\v\phi)$ and $(V,\v\psi)$ for the set $M$ are said to be
+\emph{compatible} if, provided that $U \cap V \not= \emptyset$, then:
+
+\begin{enumerate}
+    \item the sets $\v\phi(U \cap V)$ and $\v\psi(U \cap V)$ are open
+    subset of $\R^{n}$; 
+    
+    \item the map $\v\phi\circ\v\psi^{-1}$ is smooth with smooth inverse,
+    i.e.~is a \emph{diffeomorphism}.
+\end{enumerate}
+
+An \emph{atlas} for the set $M$ is a collection $\{
+(U_{i},\phi_{i}) \}$ of pairwise compatible charts such that
+$\cup_{i} U_{i} = M$.
+
+
+\subsection{Differentiable manifolds}\index{Differentiable manifolds}
+
+Two atlases for the same set $M$ are \emph{equivalent} if every chart
+in an atlas is compatible with every chart in the other atlas.  This
+relation is reflexive, symmetric and transitive, i.e.~is an
+equivalence relation.
+
+Each equivalence class in the set of atlases of $M$ is said to be a 
+\emph{differentiable structure} for $M$.
+A \emph{differentiable manifold} is a pair $(M,{\cal S})$, 
+where ${\cal S}$ is a differentiable structure for $M$.
+
+The one-chart atlas $(\R^{n},\ \mbox{id}:\R^{n} \rightarrow\R^{n})$ 
+determines a differentiable structure for $\R^{n}$ as a manifold. 
+This one is probably the most trivial example, where a single chart 
+covers the whole space, and where the coordinate map is the identity 
+map.
+
+\begin{example}[Atlas for the circle $S_{1}$]
+Let us consider the one-dimensional circle $S_{1}=\{ \p{x}\in\E^{2} |\ \module{\p{x} - \p{o}}^{2}=1 \}$,
+and choose two charts $(U_{1},\v\phi_{1})$ and $(U_{2},\v\phi_{2})$, with 
+\[ 
+U_{1} = S_{1}\backslash\{(1,0)\}, \quad \v\phi_{1} :
+U_{1}\rightarrow(0,2\pi)\subset\R : (\cos\alpha, \sin\alpha)\mapsto\alpha ,
+\]
+and 
+\[
+U_{2} = S_{1}\backslash\{(-1,0)\}, \quad \v\phi_{2} :
+U_{2}\rightarrow(-\pi,\pi)\subset\R : (\cos\beta, \sin\beta)\mapsto\beta .
+\]
+It this case it is easy to see that $U_{1}$ and $U_{2}$ are open sets
+and that $\v\phi_{1}$ and $\v\phi_{2}$ are smooth.  Then, it can be
+seen that
+\[
+\v\phi_{1}\circ\v\phi_{2}^{-1}=\left\{
+\begin{array}{lcl}
+    \mbox{id} & on & (0, \pi)  \\
+    \\
+    \mbox{id}-\underline{2\pi} & on & (\pi, 2\pi)
+\end{array}
+\right.
+\]
+is a diffeomorphism between $\v\phi_{2}(U_{1}\cap U_{2}) =
+(0,2\pi)\backslash\{\pi\}$ and $\v\phi_{1}(U_{1}\cap U_{2}) =
+(-\pi,\pi)\backslash\{0\}$.  The two charts are hence compatible, and
+$U_{1}\cup U_{2} = S_{1}$.  Therefore we can conclude that
+$\{(U_{1},\v\phi_{1}),(U_{2},\v\phi_{2})\}$ is an atlas for $S_{1}$.
+
+\label{ex:5:manifold}
+\end{example}
+
+\paragraph{Manifold dimension}\index{Manifold!dimension}
+
+Let $M$ be a differentiable manifold, and let ${\cal A} = 
+\{(U_{i},\phi_{i})\}$ be an atlas for it. If all the sets 
+$\phi_{i}(U_{i})$ are contained in the same $\R^{n}$, then $n$ is 
+called the \emph{dimension} of the manifold. In other words, the dimension 
+of a differentiable manifold is the (constant) number of coordinates of 
+manifold points in all its charts.  This number is the same for any 
+atlas of the manifold.
+
+Not all differentiable manifolds have a dimension, since they may
+contain subsets covered by charts with different numbers of
+coordinates.
+
+\paragraph{Product manifold}\index{Product!manifold}
+
+The \emph{product} $M\times N$ of two manifolds $M$ and $N$ of
+dimension $m$ and $n$ respectively, with atlases $\{(U_{i},
+\phi_{i})\}$ and $\{(V_{j}, \psi_{j})\}$, is a manifold of dimension
+$m+n$, whose atlas is $\{(U_{i}\times V_{j}, (\phi_{i},\psi_{j}))\}$. 
+
+In this case if $(\p{p},\p{q})\in U_{i}\times V_{j}$, then
+\begin{equation}
+(\phi_{i},\psi_{j})(\p{p},\p{q}) = (\phi_{i}(\p{p}),\psi_{j}(\p{q})).
+\label{eq:5:productman}
+\end{equation}
+
+\paragraph{Spheres and toruses}\index{Spheres and toruses}
+
+The $n$-dimensional sphere $S_{n}$ is defined as the 
+set $\{ \p{x}\in\E^{n+1} : \module{\p{x}-\p{o}}^{2} = 1 \}$.
+
+The $2$-dimensional torus $T_{2}$ is the product manifold 
+\[
+T_{2} = S_{1} \times S_{1}.
+\]
+Clearly it is $T_{2}\subset\E^{4}$, since $S_{1}\subset\E^{2}$. The
+product manifold called  $m$-dimensional torus
+\[
+T_{m} = S_{1} \times \cdots \times S_{1}, \quad\mbox{$m$ times}.
+\]
+with $T_{m}\subset\E^{2m}$, is an immediate generalization.
+
+
+\begin{example}[Torus as Cartesian product of circles]
+    
+Our aim in this example is to generate a 3D projection of 
+\[
+T_{2} = S_{1} \times S_{1}.
+\]
+    
+In Script~\ref{script:5:mantorus1} we generate the 3D surface with the
+shape of a doughnut by translating and projecting against the subspace
+$\{\p{x}\in\E^{4} | x_{4}=0\}$ the polyhedral complex \texttt{torus},
+generated by Cartesian product of circle approximations
+\texttt{MAP:(cc:8):d1} and \texttt{MAP:(cc:2):d1}, where $8$ and $2$ are
+the radiuses, and \texttt{d1} is a partition of $[0, 2\pi]$ with $24$
+segments.  The \texttt{schlegel3D} operator is given and discussed in
+Section~\ref{subsec:4:Schlegel}.  The \texttt{interval:} function is
+given in Script~\ref{script:5:toolbox}.
+
+\begin{script}[Torus as product of circles (1)]
+\begin{smallplasm} 
+DEF cc (r::IsRealPos) = [ K:r * COS, K:r * SIN ]  $\sim$  S1;\\
+DEF d1 = interval:< 0,2*PI >:24\\
+DEF torus \index{Library functions!Shapes library!{\tt  Torus}} = (MAP: (cc:8): d1) * (MAP: (cc:2): d1);\\[0.3cm]
+
+VRML:((schlegel3D:2  $\sim$  T:4:-11):torus CREASE (PI/2)):$'$out2.wrl$'$ ;
+\end{smallplasm} 
+\label{script:5:mantorus1}
+\end{script}
+
+Notice that both circles, with $r=8$ and $r=2$ respectively, were
+produced by \texttt{MAP} operator as $\v\phi^{-1}[0,2\pi]$, with a
+single chart $(U,\v\phi)$ depending on $r$, where
+\[ 
+U = \{\p{x}\in\E^{2} | (\p{x}-\p{o})^{2} = r^{2}\}, \quad \v\phi :
+U\rightarrow[0,2\pi] : (r\cos\alpha, r\sin\alpha)\mapsto\alpha ,
+\]
+thus producing a singularity (a double coordinate value which results in
+the same point) in $\v\phi^{-1}(0)= (r,0)$ and in
+$\v\phi^{-1}(2\pi)=(r,0)$.  This kind of singularity, i.e.~double
+points at the boundary of charts of closed surfaces, will be accepted
+through the whole book, for the sake of implementation simplicity, in
+particular because the \pl\ kernel is currently able to manage only
+closed (i.e.~with boundary) polyhedral complexes.
+
+\label{ex:5:torus2}
+\end{example}
+    
+    
+\begin{example}[Torus as manifold product of circles]
+Given the charts $(U_{1},\v\phi_{1})$ and $(U_{2},\v\phi_{2})$ of two
+circles $S_{1}(r_{1})$ and $S_{2}(r_{2})$ with different radiuses, we 
+generate the torus 
+\[
+T_{2}(r_{1},r_{2}) = S_{1}(r_{1}) \times S_{1}(r_{2}),
+\]
+using the product chart $(U_{1}\times U_{2}, (\v\phi_{1},\v\phi_{2}))$.
+    
+A direct implementation of \texttt{torus} as the polyhedral
+approximation of a \emph{product manifold} is hence given
+in~Script~\ref{script:5:mantorus2}, where \texttt{c1c2} implements the
+mapping $(\v\phi_{1},\v\phi_{2})^{-1}$ on $[0,2\pi]^{2}$ using the
+\emph{product chart} $(U_{1}\times U_{2}, (\v\phi_{1},\v\phi_{2}))$
+described in equation~(\ref{eq:5:productman}).  In particular,
+$(\v\phi_{1},\v\phi_{2})^{-1}$ is implemented by the \texttt{c1c2}
+function, whereas a cell decomposition of $[0,2\pi]^{2}$ is given by
+the polyhedral complex \texttt{d1 * d1}, where \texttt{d1} is given in
+Script~\ref{script:5:mantorus1}.  The simplicial decomposition needed
+to take into account the double curvature of the doughnut surface is
+automatically provided by the \texttt{MAP} operator.
+
+\begin{script}[Torus as product of circles (2)]
+\begin{smallplasm} 
+DEF c1c2 (r1,r2::IsRealPos) = \+\\{}
+[ K:r1 * COS$\sim$S1, K:r1 * SIN$\sim$S1, 
+K:r2 * COS$\sim$S2, K:r2 * SIN$\sim$S2 ];\-\\
+DEF torus \index{Library functions!Shapes library!{\tt  Torus}} (r1,r2::IsRealPos) = MAP: (c1c2:< 8,2 >): (d1 * d1);\\[0.3cm]
+
+VRML:((schlegel3D:2  $\sim$  T:4:-11):(torus:<8,2>) CREASE (PI/2)):$'$out2.wrl$'$ ;
+\end{smallplasm} 
+\label{script:5:mantorus2}
+\end{script}
+
+The reader may try unbelievable variations of the generated 3D
+object by making small variations to the parameters of the expression,
+including the circle radiuses, the distance of the center of
+projection from the origin, the translation and the rotation
+parameters.  For example,  Figures~\ref{fig:5:toro4d}a
+and~\ref{fig:5:toro4d}c are respectively generated as
+
+\begin{smallplasm} 
+DEF rotations = (COMP $\sim$ [R:<1,4>,R:<2,4>,R:<3,4>]):(PI/6);\\
+VRML:((project:1):man CREASE (PI/2)):$'$out1.wrl$'$ ;\\
+VRML:((project:1  $\sim$  rotations):man CREASE (PI/2)):$'$out3.wrl$'$ ,
+\end{smallplasm} 
+
+
+\begin{figure}[htb]
+\centering\epsfig{file=\figsdir{cap05}toro4d1a.eps,width=0.30\linewidth}
+\hfill
+\centering\epsfig{file=\figsdir{cap05}toro4d1b.eps,width=0.32\linewidth}
+\hfill
+\centering\epsfig{file=\figsdir{cap05}toro4d3b.eps,width=0.32\linewidth}
+\caption{Different projections on $x_{4}=0$ of the manifold
+$T_{2}=S_{1}\times S_{1} \subset\E^{4}$:  (a)~standard projection
+gives a cylinder (b) central projection (c) multiple rotations
+followed by projection produce a double self-intersection in the
+$\E^{3}$ embedding
+\label{fig:5:toro4d}}
+\end{figure}
+
+
+Finally, let us notice that parametric equations  of $T_{2}$ in~$\E^{4}$ 
+\[
+    x_{1} = r_{1}\,\cos u,\quad
+    x_{2} = r_{1}\,\sin u,\quad
+    x_{3} = r_{2}\,\cos v,\quad
+    x_{4} = r_{2}\,\sin v,
+\]
+where $(u,v) \in [0,2\pi]^{2}$, are simpler than
+equations~(\ref{eq:2:torus}) in $\E^{3}$.
+    
+\label{ex:5:circles2torus}
+\end{example}
+
+
+
+% \subsection{Submanifolds}\index{Submanifolds}
+
+
+
+\subsection{Tangent spaces and maps}\index{Tangent!spaces and maps}
+
+A \emph{tangent vector} to $M$ at $x$ is an element of
+$\T{T}_{x}\R^{n}$ of the form $(x, D\gamma(0)(1))$, where $x\in M$
+and $\gamma: I\rightarrow M$ is a smooth parametrized curve with
+$\gamma(0) = x$.
+
+The \textbf{tangent space} to $M$ at $x$ is the set of all tangent
+vectors to $M$ at $x$.  It is denoted by $\T{T}_{x}M$.
+
+The tangent bundle of $M$ is the union of all its tangent spaces:
+\[
+\T{T}M = \bigcup_{x\in M}\T{T}_{x}M.
+\]
+
+    Let $f: M\rightarrow N$, with $M$ and $N$ submanifolds of $\R^{m}$ 
+and $\R^{n}$, and $x\in M$.
+A tangent map will send a small piece of curve through $x$ to a 
+small piece of curve through $f(x)$.
+
+The \emph{tangent map} of $f$ at $x$ is the map:
+\[
+\T{T}_{x}f : \T{T}_{x} M \rightarrow \T{T}_{f(x)} N 
+\]
+such that 
+\[
+(x,D\gamma(0)(1)) \mapsto (f(x), D(f \circ \gamma)(0)(1))
+\]
+for each differentiable curve $\gamma$ through $x$.  The
+\textbf{tangent map} of $f$ is the map
+\[
+\T{T}f : \T{T}M \rightarrow \T{T}N : \T{T}_{x}M = \T{T}_{x}f,
+\quad\mbox{for each\ }x\in M .
+\]
+
+
+
+\section{Derivatives of a curve}\index{Derivatives of a curve}
+
+An intrinsic representation of a curve, in the sense that it depends
+only on operations carried out on the curve itself and does not rely
+on the ambient Euclidean space, is obtained by repeated application of
+the derivation operator to the curve-generating function.  It is only
+necessary that this function is (at least) twice differentiable for plane
+curves, and (at least) three times differentiable for space curves.  Let
+us assume only smooth curves.  This case is certainly the
+more frequent and useful one in CAD applications.
+
+
+\paragraph{Tangent}\index{Tangent}
+
+The \emph{tangent} $\v{t}$ vector field, also denoted as $\p{c}'$, to a
+curve $\p{c}:\R\rightarrow{\E}^{d}$, with $\p{c}=(c_{i})$,
+is defined as the vector function $\p{c}':\R\rightarrow\R^{d}$
+such that:
+\[
+\v{t} = D \p{c} = \p{c}' = \left(
+c'_{i}\right).
+\]
+For each $u$ parameter value, $\p{t}(u)$ gives the tangent vector
+to the curve at $\p{c}(u)$.
+% , as the limit of a vector parallel to the
+% corde for a very small interval between two closed points on the
+% curve.
+
+If $u=t$ is the time $t$, then $\v{v}(t) = D\v{c}(t)$ represents the
+\emph{velocity} with which the point $\v{c}(t)$ describes the curve
+image.  Analogously, $\v{a}(t) = D\v{v}(t) = D^{(2)}\v{c}(t)$
+represents the \emph{acceleration}.
+
+If $u=s$ is the curve length from $\p{c}(0)$, then $\v{t}(s)$ gives
+the unit tangent vector at curvilinear abscissa $s$.  It is in fact
+easy to see that $\module{\v{t}(s)} = 1$ for every $s$.
+
+
+\paragraph{Normal}\index{Normal}
+
+Analogously, a \emph{normal} to a twice derivable curve
+$\p{c}:\R\rightarrow \E^{d}$ is defined as the vector function field:
+$\p{c}^{(2)}:\R\rightarrow\R^{d}$ such that:
+\[
+\p{c}^{(2)} = D^{(2)} \p{c} =
+(c^{(2)}_{i}).
+\]
+For each $u$ parameter value, $\p{c}^{(2)}(u)$ gives one of normal
+vectors to the tangent vector for the corresponding point $\p{c}(u)$
+of the curve.
+
+It is important to notice that in Euclidean space a vector
+function $\v{v}(t)$ of constant norm has the property that $\v{v}(t)$
+and $D\v{v}(t)$ are orthogonal.
+
+
+
+% 
+% 
+% Il versore normale al piano osculatore \`e detto {\it vettore binormale}
+% 
+% \[
+% \v{B}(s) = \v{T}(s) \times \v{N}(s) 
+% \]
+% 
+% Il modo in cui $\v{B}(s)$ varia con $s$, cio\`e il modulo di $\v{B}$'$(s)$, indica
+% la velocit\`a di variazione del piano osculatore lungo la curva:
+% \begin{eqnarray*}
+% \v{B}$'$(s) &=& (\v{T}(s) \times \v{N}(s))$'$ \\
+% &=& 
+% \v{T}$'$(s) \times \v{N}(s) + \v{T}(s)
+% \times \v{N}$'$(s) \\
+%  &=& k(s)\v{N}(s) \times \v{N}(s) + \v{T}(s) \times \v{N}$'$(s) \\
+%  &=& \v{T}(s) \times \v{N}$'$(s)  
+% \end{eqnarray*}
+% 
+% Potremo scrivere:
+% \[o
+% \v{B}$'$(s) = -\tau(s) \v{N}(s)
+% \]
+% dove la funzione $\tau=\tau(s)$ \`e detta {\it torsione} di $\v{\alpha}(s)$
+% 
+% 
+% Il teorema fondamentale della geometria differenziale delle curve in ${
+% E}^3$ dice che una curva \`e completamente individuata dalle sue funzioni di
+% curvatura e di torsione.
+% 
+% In particolare, siano $k(s)$ e $\tau(s)$ funzioni date su un intervallo $I$,
+% con $k$ positiva e $C^1$ e $\tau$ continua. Allora esiste una curva
+% $\p{\alpha}(s)$ definita su $I$ di cui $s,k,\tau$ sono rispettivamente la
+% lunghezza degli archi, la curvatura e la torsione.
+% 
+% Inoltre, qualunque coppia di curve siffatte \`e congruente.\\
+% Specificando i valori di $\alpha, \v{T}, \v{N}$ e  $\v{B}$ in un qualunque
+% punto $s$ di $I$, la curva resta univocamente determinata
+
+
+\paragraph{Curvature}\index{Curvature}
+
+
+The {\it curvature} $\kappa$ of a twice differentiable curve
+$\p{c}:\R\rightarrow{\E}^{d}: s\mapsto \p{o}+ \v{\alpha}(s)$, where $s$ is
+the curve length from $\p{c}(0)$, is defined as the norm of the vector
+function $D\v{t}$:
+\[
+\kappa:\R\rightarrow\R: s \mapsto \module{ D\v{t}(s) } =
+\module{D^{(2)}\v{\alpha}(s)}.
+\]
+In other words, the curvature $\kappa(s)$ is the magnitude of the acceleration 
+vector to the curve $\v{c}(s)$, under the condition that this one is 
+parametrized by the arc length $s$.
+
+
+\paragraph{Principal normal}\index{Principal normal}
+
+If $D\v{t}(s)\not= \v{0}$ for all $s$, then the unit vector function
+$\v{n}:\R\rightarrow\R^{d}$, such that
+\[
+\v{n} = {D\v{t} \over \module{D\v{t}}} = \kappa^{-1} {D\v{t}} ,
+\]
+is called \emph{principal normal} vector field.
+
+\paragraph{Binormal}\index{Binormal}
+
+The plane which contains both $\v{t}$ and $\v{n}$ at $u$ is called the
+\emph{osculating plane} at $u$. The word comes from Latin, for the plane 
+which contains the osculating circle, i.e.~the circle
+``kissing" the curve.  The vector product of tangent and
+normal vector is called the \emph{binormal} vector field:
+
+\[
+\v{b} = \v{t} \times \v{n}
+\]
+
+The norm of $D\v{b}$ gives the rate of variation of the osculating 
+plane along the curve. If $u=s$ is the arc-length of the
+curve $\v{c}$, then it is possible to write 
+\[
+D\v{b} = -\tau \v{n}
+\]
+where the function $\tau=\tau(s)$ is called \emph{torsion} at $\v{c}(s)$.
+
+The \emph{fundamental theorem} of differential geometry of curves in
+$\E^{3}$ says that a curve is completely determined by its curvature
+and torsion functions within a congruence.
+
+\paragraph{The Serret-Frenet formul\ae}\index{The Serret-Frenet formul\ae}
+
+Let us study a space curve $\v{c}$ parametrized by the arc
+length $s$, also called the \emph{natural parameter}.
+
+The tangent $\v{t}$, the principal normal $\v{n}$ and the binormal $\v{b}$
+vector functions  are related to their
+derivatives by the curvature $\kappa$ and the torsion $\tau$, as shown by the
+Serret-Frenet formul\ae:
+\[
+D\vet{\v{t}\\ \v{n}\\ \v{b}} =
+\mat {
+0 & \kappa & 0 \\
+-\kappa & 0 & \tau \\
+0 & -\tau & 0
+}
+\vet{\v{t}\\ \v{n}\\ \v{b}}
+\]
+
+
+% \begin{example}[Circular arc]
+% 
+% The three \texttt{MAP} expressions
+% given below produce the graph of circle portion, and of tangent and
+% principal normal to such a curve, that are shown in
+% Figure~\ref{fig:curvature} a,b and c, respectively.
+% 
+% \begin{smallplasm}
+%   MAP:(CONS:alpha $\sim$ s1):(interval:<0,1>:20),\\
+%   MAP:(tangent:alpha $\sim$ s1):(interval:<0,1>:20),\\
+%   MAP:(principalNormal:alpha $\sim$ s1):(interval:<0,1>:20)
+% \end{smallplasm}
+%     
+% \begin{figure}[ptb]
+% \centering\epsfig{file=\figsdir{cap05}curvature.eps,width=0.8\linewidth}
+% \caption{Graph of portion of unit circle (first quadrant), tangent
+% vector curve (second quadrant), and principal normal curve (third quadrant)
+% \label{fig:curvature}}
+% \end{figure}
+% 
+% \label{ex:curvature2}
+% \end{example}
+
+
+\paragraph{Center of curvature}\index{Center of curvature}
+
+
+For an arbitrary curve $\p{a} \in \E^{n}$, the curvature field
+$\kappa:\R\rightarrow\R$ is not constant.  Where
+$\kappa(s)\not=0$, the curve is approximated by a circle of radius
+$1/\kappa(s)$, which is tangent to $\p{a}$ in $\p{a}(s)$ and which is
+contained in the plane generated by $\v{t}(s)$ and $\v{n}(s)$.
+
+This circle, called \emph{osculating circle}, has the same tangent, curvature
+and principal normal of the curve in~$s$.  The center of the
+osculating circle is called \emph{center of curvature} of $\p{a}$ in
+$\p{a}(s)$. It is a field $\p{c}: \R\rightarrow\R^{d}$ that can be 
+written, using the variable-free notation, as:
+\[
+\p{c} = \p{a} + \kappa^{-1} \v{n}.
+\]
+
+% \paragraph{Osculating circle}\index{Osculating circle}
+% 
+% per una curva $\v{\alpha}$ arbitraria, la curvatura non \`e costante.
+% 
+% Dove $k(s)\not=0$ la curva \`e approssimata da un cerchio di raggio
+% $1/k(s)$, tangente ad $\v{\alpha}$ in $\v{\alpha}(s)$ e che giace nel piano di 
+% $\v{t}(s)$ e di $\v{n}(s)$
+% 
+% Il cerchio, detto {\it osculatore}\\
+% (baciante, dal latino), ha la stessa tangente, normale principale e curvatura
+% della curva~in~$s$.
+% 
+% Il centro del cerchio osculatore \`e detto {\it centro di curvatura} di
+% $\v{\alpha}$ in $\v{\alpha}(s)$:
+% 
+% \[
+% \p{\beta}(s) = \v{\alpha}(s) + {1\over k(s)}\v{n}(s)
+% \]
+% 
+% 
+% 
+% Il centro del cerchio osculatore \`e detto {\it centro di curvatura} di
+% $\v{\alpha}$ in $\v{\alpha}(s)$:
+% 
+% \[
+% \p{\beta}(s) = \v{\alpha}(s) + {1\over k(s)}\v{n}(s)
+% \]
+% 
+
+% \begin{figure}[h]
+% %\def\fig:osculCircle{\scaledpicture 108mm by 62mm (osculCircle.eps scaled 800)}
+% %{\fig:osculCircle}
+% \centering\epsfig{file=\figsdir{cap05}osculCircle.eps,width=90mm}
+% \caption{aaa}
+% \end{figure}
+
+
+\section{Examples}
+
+
+% \subsection{Circle}\index{Circle}
+% 
+% \paragraph{Repeated derivatives}\index{Repeated derivatives}
+% 
+% More in general, we write $\p{c}^{(n)}= (c_{i}^{(n)})$, where
+% \[
+% c_{i}^{(n)} = \deriv{}{u} c_{i}^{(n-1)},
+% \]
+% to denote the $n$-th derivative of a smooth curve with respect to the
+% parameter.
+% 
+% 
+% \begin{example}[Derivatives of a curve]
+% \label{ex:dercurve}
+% 
+% Let remember that a curve is a vector-valued function
+% $\p{c}:\R\rightarrow \E^{d}$.  So, in order to compute the
+% $\p{c}^{(n)}$ derivative we need: 
+% \begin{enumerate}
+%     \item to compute by \texttt{Curve2MapVect} the sequence of
+%     coordinate functions of the input curve;
+% 
+%     \item to apply to all such functions the operator \texttt{DD:n};
+% 
+%     \item to transform the generated sequence $(c_{i}^{(n)}(u))$ into
+%     a single vector-valued function by the \texttt{CONS} operator.
+% \end{enumerate}
+% 
+% This approach is implemented by the \texttt{XDD} function defined in
+% Script~\ref{script:dercurve}.  In particular, the operator
+% \texttt{XDD:n} applied to a curve $\alpha$ produces the $n$-derivative
+% curve $\alpha^{(n)}$.  The geometric object generated by the
+% \texttt{STRUCT} expression is shown in Figure~\ref{fig:dercurve}.
+% 
+% \begin{script}[N-th derivative of a curve]
+% \begin{smallplasm}
+% DEF XDD (n::IsInt) = CONS$\sim$AA:(DD:n)$\sim$Curve2MapVect;\\[0.3cm]
+% 
+% DEF alpha = [ cos, sin ]$\sim$(K:(PI/2) * S1); \\
+% DEF domain = (QUOTE$\sim$\#:10):(1/10);\\[0.3cm]
+% 
+% STRUCT:<\+\\
+% MAP:(alpha):domain,\\
+% MAP:(XDD:1:alpha):domain,\\
+% MAP:(XDD:2:alpha):domain,\\
+% MAP:(XDD:3:alpha):domain \-\\
+% >;
+% \end{smallplasm}
+% \label{script:dercurve}
+% \end{script}
+% 
+% \begin{figure}[ptb]
+% \centering\epsfig{file=\figsdir{cap05}derCircle.eps,width=0.4\linewidth}
+% \caption{Image of curve $\alpha=[\cos,\sin]\circ(\underline{\frac{\pi}{2}}
+% \textrm{id})$ in first quadrant; images of derivatives curves 
+% $\alpha^{(1)}$, $\alpha^{(2)}$ and $\alpha^{(3)}$ in $2^{nd}$, 
+% $3^{rd}$ and  $4^{th}$ quadrant, respectively
+% \label{fig:dercurve}}
+% \end{figure}
+% 
+% \end{example}
+
+% \subsection{helix}\index{helix}
+% 
+
+\paragraph{Helix}\index{Helix}
+
+The \emph{circular helix}  curve in $\E^{3}$ has
+vector equation $\p{s} = \p{o}+\v{\beta}(u)$, where the $u$ parameter
+denotes the angle between the $\p{s}$ projection in $z=0$ and the $x$
+axis.  For a helix segment we have $\v{\beta}:U\rightarrow\R^{3}$,
+with $U\subset\R$, and
+\begin{equation}
+\v{\beta}(u) = \vet{a\cos u & a\sin u  &b u } 
+\label{eq:5:helix}
+\end{equation}
+where $a$ is the radius of the circular projection in $z=0$ and $b$ is
+the ratio \emph{pitch}$/2\pi$.  The \emph{pitch} of the helix is the
+vertical distance of two curve points differing for $2\pi$ in the
+parameter value.
+
+
+
+\paragraph{Helix curvature and principal normal}\index{Helix!curvature and principal normal}
+    
+In Script~\ref{script:curvature} we have implemented a
+\texttt{curvature} and \texttt{principalNormal} functions, by
+abstracting with respect to the argument curve.  The geometric object
+generated by evaluating the \texttt{STRUCT} expression is shown in
+Figure~\ref{fig:5:intrinsic}.  The \texttt{helix} curve
+\texttt{domain} is defined in Script~\ref{script:5:D1mb}. The 
+\texttt{MKvector} function is given in Script~\ref{script:6-mkvector}.
+
+Notice that, according to the \texttt{STRUCT} semantics discussed in 
+Chapter~\ref{chapt:structures}, the translation operator is applied 
+to all subsequent vector models. The intrinsic triplet there generated 
+is associated to the value $\pi\over 2$ of the curve parameter.
+
+% The geometric object generated by the \texttt{STRUCT} expression of
+% Script~\ref{script:curvature} is shown in
+% Figure~\ref{fig:5:intrinsic}.
+    
+\begin{script} [Intrinsic triplet]
+\begin{smallplasm}
+DEF tangent \index{Library functions!Derivatives library!{\tt  Tangent}} (curve::IsSeqOf:IsFun) = UnitVect $\sim$ CONS:(AA:D:curve);\\
+DEF curvature \index{Library functions!Derivatives library!{\tt  Curvature}} (curve::IsSeqOf:IsFun) = 
+VectNorm $\sim$ CONS:(AA:(D $\sim$ D):curve);\\
+DEF principalNormal \index{Library functions!Derivatives library!{\tt  Principalnormal}} (curve::IsSeqOf:IsFun) = CONS:\+\\
+  ((K:1 / curvature:curve) scalarVectProd (AA:(D $\sim$ D):curve)); \-\\
+DEF binormal \index{Library functions!Derivatives library!{\tt  Binormal}} (curve::IsSeqOf:IsFun) = \+\\
+  tangent:curve LIFT:vectProd principalNormal:curve ;\-\\[0.3cm]
+
+DEF curve = helix:<1,0.2>;\\
+STRUCT:<\+\\
+  MAP:(CONS:curve  $\sim$  s1):(interval:<0,4*PI>:60),\\
+  T:<1,2,3>:(CONS:curve:(PI/2)),\\
+  MKvector:<0,0,0>:(tangent:curve:(PI/2)),\\
+  MKvector:<0,0,0>:(principalNormal:curve:(PI/2)),\\
+  MKvector:<0,0,0>:(binormal:curve:(PI/2))\-\\
+>;
+\end{smallplasm}
+\label{script:curvature}
+\end{script}
+
+\begin{figure}[ptb]
+\centering\epsfig{file=\figsdir{cap05}intrinsic.eps,width=0.4\linewidth}
+\caption{Intrinsic triplet at a helix point
+\label{fig:5:intrinsic}}
+\end{figure}
+
+\paragraph{Helix parametrized by arc length}\index{Helix!parametrized by arc length}
+
+Let us reparametrize the helix (\ref{eq:5:helix}) as a function of
+the arc length $s$.  So we have:
+\[
+D\v{\beta}(u) = \vet{-a\sin u & a\cos u  &b }
+\]
+\[
+{\deriv s u} = \module{D\v{\beta}(u)} = \sqrt{a^2 + b^2}
+\]
+\[
+s = \int_0^s ds  = \int_0^u \sqrt{a^2 + b^2}\ du = u \sqrt{a^2 + b^2}
+\]
+and hence we can write $\p{s} = \p{o}+\v{\alpha}(s)$, with $s\in [0,
+L]$ and \def\aa{{s\over\sqrt{a^2 + b^2}}}
+\[
+\v{\alpha}(s) = \vet{a\cos\aa & a\sin\aa  &b \aa }
+\]
+
+Two helixes of the same length $L=6\pi$ generated by $\v{\alpha}(s)$ 
+are shown in Figure~\ref{fig:5:eqhelixs}.
+\begin{figure}[h]
+\centering\epsfig{file=\figsdir{cap05}ascissaCurv.eps,width=0.6\linewidth}
+\caption{Two helixes of the same length and different radius
+\label{fig:5:eqhelixs}}
+\end{figure}
+
+
+\paragraph{Osculating circle to the helix}\index{Osculating circle to the helix}
+
+Our aim here is to produce the geometric construction shown in
+Figures~\ref{fig:5:helix} and~\ref{fig:5:assembly}, where a helix
+curve is displayed together with the curve of its centers of
+curvature (also a helix) and with the osculating circle at a point.
+
+\begin{figure}[h]
+\centering\epsfig{file=\figsdir{cap05}spirale.eps,width=0.8\linewidth}
+\caption{Views of an ``artistic" assembly including a helix, the
+locus of the centers of osculating circles and the osculating circle
+at a point
+\label{fig:5:helix}}
+\end{figure}
+
+So, we start by computing the tangent vector field
+\def\aa{{s\over\sqrt{a^2 + b^2}}}
+\begin{eqnarray*}
+\v{t}(s) = D\v{\alpha}(s) = {1\over\sqrt{a^2 + b^2}}
+\vet{-a\sin\aa & a\cos\aa &b }
+\end{eqnarray*}
+which is a unit vector, and the second derivative
+\begin{eqnarray*}
+D\v{t}(s) = \kappa(s)\,\v{n}(s) = {1\over{a^2 + b^2}} \vet{-a\cos\aa
+& -a\sin\aa & 0 }
+\end{eqnarray*}
+so that we get
+\[
+\kappa(s) = {a\over{a^2 + b^2}}
+\]
+\[
+\v{n}(s) = \vet{-\cos\aa & -\sin\aa  & 0 }
+\]
+Let us note that the helix is a curve of constant curvature.
+
+If $a\not=0$ and $b=0$, then the curve is a circle in $xy$ plane and
+$\kappa=1/a$. In other words, the curvature is the reciprocal of 
+radius.
+
+If $a=0$ and $b\not=0$, then the curve is a segment of straigth line,
+with $\kappa(s)=0$ and $\v{n}(s)$ undefined.
+
+
+% Eq.~parametriche della tangente
+% \def\aa{{s\over\sqrt{a^2 + b^2}}}
+% \begin{eqnarray*}
+% \v{t}(s) = \v{\alpha}$'$(s) = = {1\over\sqrt{a^2 + b^2}} \vet{-a\sin\aa
+% & a\cos\aa &b }
+% \end{eqnarray*}
+
+\paragraph{Implementation}\index{Implementation!helix}
+
+We start by implementing, in Script~\ref{script:5:helix:arc}, the
+\texttt{helix} vector function $\v{\alpha}:\R\rightarrow\R^{3}$ and the
+intrinsic triplet of orthonormal vector functions $\v{t}$, $\v{n}$ and
+$\v{b}$. As always, we give a direct translation of the variable-free 
+formulation of the $\v{\alpha}$ function, with
+\[
+\v{\alpha} = \vet{ 
+\underline{a} \cos \circ {\mbox{id} \over { \mbox{id}^{1\over 2}
+\textstyle\circ 
+\underline{{a}^{2}+{b}^{2}}}} & 
+\underline{a} \sin \circ {\mbox{id} \over { \mbox{id}^{1\over 2}
+\textstyle\circ 
+\underline{{a}^{2}+{b}^{2}}}} & 
+\underline{b} \ {\mbox{id} \over { \mbox{id}^{1\over 2}
+\textstyle\circ 
+\underline{{a}^{2}+{b}^{2}}}} }
+\]
+
+Notice that, for the sake of abstraction and consistency with the contents
+of this chapter, we have used the derivation operator \texttt{D} in
+the definition of the \texttt{tangent} and \texttt{normal} functions,
+instead using the symbolic expressions previously given.
+
+\begin{script}[Helix parametrized by arc length]
+\begin{smallplasm}
+DEF helix (a,b::IsReal) = <K:a * cos $\sim$ u, K:a * sin $\sim$ u, K:b * u>\\
+WHERE \+\\
+  u = ID / SQRT $\sim$ K:(a*a + b*b)\-\\
+END;\\[0.3cm]
+
+DEF helixtangent (a,b::IsReal) = AA:D:(helix:<a,b>);\\
+DEF helixnormal (a,b::IsReal) = \+\\
+    K:((a*a + b*b)/a) scalarVectProd AA:(D $\sim$ D):(helix:<a,b>);\-\\
+DEF helixbinormal (a,b::IsReal) = helixtangent:<a,b> VectProd helixnormal:<a,b>;
+\end{smallplasm}
+\label{script:5:helix:arc}
+\end{script}
+
+
+Notice also that in Script~\ref{script:5:helix:arc} we have redefined
+some function identifier already used with a more general meaning. 
+So, in the remainder of this chapter the functions called
+\texttt{tangent}, \texttt{normal} and \texttt{binormal} uniquely refer
+to the unit vector triplet intrinsically related to the \texttt{helix} curve
+parametrized by the arc length.
+
+In Script~\ref{script:5:OsculCircle} it is first of all defined the
+\texttt{CurvatureCenter}  $\R\rightarrow\R^{3}$ curve, generated as
+the vector sum of the \texttt{helix} $\R\rightarrow\R^{3}$ curve
+plus the \texttt{normal} $\R\rightarrow\R^{3}$ curve times the
+\texttt{K:((sqr:a + sqr:b)/a)} function $\R\rightarrow\R$. Actually the 
+implementation produces a whole family of such curves, parametrized 
+by the pair of real parameters $a,b$, corresponding respectively to the helix 
+radius and to the $z$ interval between two helix points at unit 
+curvilinear distance.
+
+In the same script the \texttt{OsculCircle} function is also given, which 
+generates the osculating circle at curvilinear ascissa $s$ for the 
+curve \texttt{helix:<a,b>}. The image of such function in a concrete 
+case is shown in Figure~\ref{fig:5:helix}.
+
+\begin{script}[Osculating circle]
+\begin{smallplasm}
+DEF helixcurvatureCenter (a,b::IsReal) = \+\\
+  helix:<a,b> vectSum (K:((sqr:a + sqr:b)/a) scalarVectProd helixnormal:<a,b>) 
+\-\\[0.3cm]
+
+DEF OsculCircle (a,b,s::IsReal) = \+\\
+  (T:<1,2,3>:center $\sim$ Rotn:<angle, axis>):circle\-\\
+WHERE\+\\
+  circle = MAP:((circle3D $\sim$ radius):<a,b, s>):(interval:<0,2*PI>:24),\\
+  angle  = (- $\sim$ ACOS $\sim$ InnerProd):<ortho,<0,0,1>>,\\
+  axis   = CONS:(helixnormal:<a,b>):s,\\
+  center = CONS:(helixCurvatureCenter:<a,b>):s,\\
+  ortho ~= CONS:(helixbinormal:<a,b>):s\-\\
+END;
+\end{smallplasm}
+\label{script:5:OsculCircle}
+\end{script}
+
+Some utility functions needed to specify the geometric assembly of
+Figure~\ref{fig:5:helix} are given in
+Script~\ref{script:5:CurveSample}. These include:
+\begin{enumerate}
+    
+\item a function \texttt{circle3D} to produce a circle of radius
+\texttt{r} embedded in the coordinate subspace $z=0$ and centered at
+the origin; 
+
+\item a function \texttt{radius} to compute the numeric value of the
+radius of the osculating circle at curvilinear abscissa $s$.  Such
+a number is computed as the norm of the vector difference of two
+corresponding points on the \texttt{helix:<a,b>} and
+\texttt{curvatureCenter:<a,b>} curves;
+
+\item a function \texttt{CurveGraph} to generate a simplicial
+approximation with 90 line segments of the image \texttt{f$[0,6\pi]$}
+of its vector function argument \texttt{f};
+
+\end{enumerate}
+
+\begin{script}[Utility functions]
+\begin{smallplasm}
+DEF circle3D (r::IsReal) = [K:r * COS, K:r * SIN, K:0] $\sim$ s1;\\
+DEF radius (a,b,s::IsReal) = (VectNorm $\sim$ VectDiff):\+\\
+  < CONS:(helix:<a,b>):s, CONS:(CurvatureCenter:<a,b>):s >;\-\\
+DEF CurveGraph (f::IsSeqOf:IsFun) = MAP:(CONS:f  $\sim$ s1):(interval:<0,6*PI>:90);
+\end{smallplasm}
+\label{script:5:CurveSample}
+\end{script}
+
+Finally, in Script~\ref{script:5:assembly} we give the definition of
+an \texttt{assembly} object, whose geometric value is shown in
+Figure~\ref{fig:5:assembly}.  Such an ``artistic" assembly contains
+simplicial approximations of the sets \texttt{helix:<1,2>$[0,2\pi]$}
+and \texttt{curvatureCenter:<1,2>$[0,2\pi]$} and a ``mat" (i.e.~2D)
+version of the osculating circle at $s=2\pi$, as produced by the
+\texttt{JOIN} primitive.
+
+\begin{script}[Artistic assembly]
+\begin{smallplasm}
+DEF assembly = STRUCT:<\+\\
+  (CurveGraph $\sim$ helix):<1,2>,\\
+  (CurveGraph $\sim$ curvatureCenter):<1,2>,\\
+  (JOIN $\sim$ OsculCircle):<1,2, 2*PI>\-\\
+>;\\[0.3cm]
+
+(STRUCT $\sim$ [EMBED:1 $\sim$ BOX:<1,2>, ID]):assembly;
+\end{smallplasm}
+\label{script:5:assembly}
+\end{script}
+
+\begin{figure}[h]
+\centering\epsfig{file=\figsdir{cap05}assembly.eps,width=0.5\linewidth}
+\caption{``Artistic" assembly of: (i) a \texttt{helix} curve (ii) 
+the locus of the centers of its
+osculating circles (iii) the osculating circle at $s=2\pi$
+\label{fig:5:assembly}}
+\end{figure}
+
+
+
+% \begin{figure}[h]
+% \centering\epsfig{file=\figsdir{cap05}spirale.eps,width=0.7\linewidth}
+% \caption{aaa}
+% \end{figure}
+
+
+% \begin{figure}[h]
+% %\def\fig:tangente{\scaledpicture 108mm by 62mm (tangente.eps scaled 900)}
+% %{\fig:tangente}
+% \centering\epsfig{file=\figsdir{cap05}tangente.eps,width=90mm}
+% \caption{aaa}
+% \end{figure}
+
+\section{Intrinsic properties of a surface}\index{Intrinsic!properties of a surface}
+
+According to the definition of curves, a surface can be defined as a
+\emph{point-valued} function $\p{s}$ of \emph{two} real variables.  So, a
+\emph{surface} in $ \E^d$ is generated as a set of points by summing to
+the origin a vector-valued function $\v{\beta}: \R^{2} \rightarrow
+\R^{d}$ of two real variables:
+\[
+\p{s}(u,v) = \p{o} + \v{\beta}(u,v), \qquad (u,v)\in[0,1]^{2}\subset\R^{2}.
+\]
+The \emph{image} of the surface is the set $\p{s}[0,1]^{2}$ of its $
+\E^d$ points.  The \emph{domain} of the surface is the parameter
+interval~$[0,1]^{2}$.
+
+A surface is said to be \emph{regular} where the partial derivatives 
+\[
+\p{s}_{1}(u,v) = {\partial\p{s}\over\partial u}(u,v)
+\quad\mbox{and}\quad
+\p{s}_{2}(u,v) = {\partial\p{s}\over\partial u}(u,v)
+\]
+are linearly independent. In the same way, it is regular (in $\E^{3}$) where 
+\[
+\p{s}_{1}(u,v) \times \p{s}_{2}(u,v) \not= \v{0}.
+\]
+
+In this case, $\p{s}_{1}(u,v)$ and $\p{s}_{2}(u,v)$ give a basis for
+the tangent space at $\p{s}(u,v)$.
+
+Hence the tangent vector $\p{c}'(t)$ to a curve $\p{c}(t) =
+\p{s}(u(t), v(t))$ on the surface $\p{s}$ can be expressed as a linear
+combination of the partial derivatives of $\p{s}$:
+\[
+\p{c}' = 
+{du\over dt}{\partial \p{s} \over \partial u} +
+{dv\over dt}{\partial \p{s} \over \partial v} = 
+u' \p{s}_{1} + v' \p{s}_{2}.
+\] 
+
+\paragraph{Normal to a 3D surface}\index{Normal!to a 3D surface}
+
+The \emph{normal} field $\v{n}: \R^{2}\rightarrow\R^{3}$ to a surface
+$\p{s}: \R^{2}\rightarrow\E^{3}$ is given, where the surface is
+regular, by the normalized vector product of the partial derivatives:
+\[
+\v{n} = {\p{s}_{1} \times \p{s}_{2}
+\over \module{\p{s}_{1} \times \p{s}_{2}}}
+\]
+
+\paragraph{Implementation}\index{Implementation!partial derivatives and normal}
+
+In Script~\ref{script:5:xf} we give the function \texttt{DS} that,
+when applied to an integer \texttt{i} and to a surface map
+\texttt{surf}, defined as a \emph{sequence} of coordinate functions
+$\R^{2}\rightarrow \R$, returns the partial derivative field
+\texttt{surf}$_{i} : \R^{2}\rightarrow \E^{3}$ ($1\leq i\leq 2$). 
+This result is obtained by suitably applying to each component of
+\texttt{surfMap} the \texttt{Dp} linear operator given in
+Script~\ref{script:5:Dp}.
+
+Also, a \emph{normal field} operator \texttt{N} is defined, as the
+normalized vector product of the (tangent) fields generators
+\texttt{DS:1} and \texttt{DS:2}.  The \texttt{vectorProd} operator can
+be found in Script~\ref{script:vectorProd}.  Clearly, specific tangent
+or normal fields are returned when such operators are applied to a
+specific surface mapping.
+
+\begin{script}[Partial derivatives and normal]
+\begin{smallplasm}
+DEF X(i::isIntPos)(f::IsFun)(a::IsPoint) = Dp:i:f:a:<1>;\\
+DEF Norm3 (x,y,z::IsFun) = < x/den, y/den, z/den >\\
+WHERE\+\\
+  den = SQRT  $\sim$  +  $\sim$  AA:sqr  $\sim$  [x, y, z],\\
+  sqr = ID * ID\-\\
+END;\\[0.3cm]
+
+DEF DS \index{Library functions!Derivatives library!{\tt  Ds}} (i::IsIntPos)(surfMap::IsSeqOf:IsFun) = AA:(X:i): surfMap;\\
+DEF N \index{Library functions!Derivatives library!{\tt  N}} = Norm3  $\sim$  VectProd  $\sim$  [DS:1, DS:2];
+\end{smallplasm}
+\label{script:5:xf}
+\end{script}
+
+\begin{example}[Graph of partial derivatives]
+    
+We give in Script~\ref{script:5:nmap} an implementation of the
+geometric construction shown in Figure~\ref{fig:5:normal}, where a
+graph is shown of both the tangent vectors
+\texttt{DS:1}$(\alpha)({\pi\over 5}, {\pi\over 10})$ and
+\texttt{DS:2}$(\alpha)({\pi\over 5}, {\pi\over 10})$, and of the
+normal vector \texttt{N}$(\alpha)({\pi\over 5}, {\pi\over 10})$, for a
+surface $\alpha = (u, v, \sin\, u\sin\, v)$.  in Figure~\ref{fig:5:normal} the
+two curves $\alpha(u,{\pi\over 10})$ and $\alpha({\pi\over 5}, v)$ are
+also shown.  
+
+This geometric construction is produced by exporting the geometric
+value of the \texttt{graph} object in Script~\ref{script:5:nmap}, for
+example as:
+\begin{smallplasm}
+VRML:graph:$'$out.wrl$'$;
+\end{smallplasm}
+
+
+\begin{figure}[h]
+\centering\epsfig{file=\figsdir{cap05}normal.eps,width=0.5\linewidth}
+\caption{First partial derivatives and normal vector in $\alpha({\pi\over
+5}, {\pi\over 10})$ to a surface $\alpha(u,v)=(u,v,\sin u\, \sin v)$
+\label{fig:5:normal}}
+\end{figure}
+
+
+Notice that the variable-free representation (see
+Section~\ref{sec:5:free}) of the studied surface is
+\[
+\alpha := ( \sigma(1), \sigma(2), 
+(\sin\circ\,\sigma(1))(\sin\circ\,\sigma(2)) )
+\]
+which is directly translated into the \texttt{surf} sequence.  The
+functions \texttt{interval} and \texttt{interval2D}, generating suitable
+decompositions of a 1D and 2D interval, respectively, are given in
+Script~\ref{script:5:toolbox}.
+
+\begin{script}[Graph of partial derivatives]
+\begin{smallplasm}
+DEF surf = < S1, S2, SIN $\sim$ S1 * SIN $\sim$ S2 >;\\
+DEF domain  = interval2D:<0,0,PI,PI>:<10,10>;\\[0.3cm]
+
+DEF graph = STRUCT:< \+\\
+  MAP:surf:domain CREASE (PI/2),\\
+  MAP:surf:((T:2:(PI/10)  $\sim$  EMBED:1  $\sim$  interval:<0,PI>):10),\\
+  MAP:surf:((T:1:(PI/5)  $\sim$  R:<1,2>:(PI/2)  $\sim$  EMBED:1  $\sim$  
+  interval:<0,PI>):10),\\
+  T:<1,2,3>:p,\\
+  Segment:1:< <0,0,0>, CONS:(DS:1:surf):<PI/5, PI/10> >,\\
+  Segment:1:< <0,0,0>, CONS:(DS:2:surf):<PI/5, PI/10> >,\\
+  Segment:1:< <0,0,0>, CONS:(N:surf):<PI/5, PI/10> >\-\\
+> \\
+WHERE p = CONS:surf:<PI/5, PI/10> END;
+\end{smallplasm}
+\label{script:5:nmap}
+\end{script}
+
+\label{ex:5:nmap}
+\end{example}
+
+
+\begin{example}[Sampling of normal field]
+    
+A graphical representation of the normal field $\v{n}$ is produced by
+the \texttt{N\_Map} function of Script~\ref{script:5:nfield}, and
+displayed in Figure~\ref{fig:5:nfield} for the normal field induced by
+the $\alpha(u,v)=(u,v,\sin u\, \sin v)$ surface, with
+$(u,v)\in[0,\pi]^{2}$.  
+
+In particular, Figure~\ref{fig:5:nfield} is generated by graphically
+browsing the geometric value produced by the \pl\ interpreter when
+evaluating the last expression of Script~\ref{script:5:nfield}.
+
+\begin{script}[Sampling of normal field]
+\begin{smallplasm}
+DEF N\_Map (f::IsSeqOf:IsFun; dom::IsPol) = (STRUCT \+\\
+    $\sim$  AA:(Segment:0.35  $\sim$  [CONS:f, vectSum  $\sim$  [CONS:f,(CONS $\sim$ N):f] ])\\
+    $\sim$  S1  $\sim$  UKPOL):dom;\-\\[0.3cm]
+
+N\_Map:< surf, domain > STRUCT (MAP:surf:domain CREASE (PI/2))
+\end{smallplasm}
+\label{script:5:nfield}
+\end{script}
+
+The reader should notice that the \texttt{N\_Map} function given here
+is very similar to the \texttt{GradMap} function of
+Script~\ref{script:5:GradMap}. 
+
+\begin{figure}[h]
+\centering\epsfig{file=\figsdir{cap05}nfield.eps,width=0.5\linewidth}
+\caption{Sampling of the (scaled) normal field $\v{n}(u,v)$ to a surface 
+$\alpha(u,v)=(u,v,\sin u\, \sin v)$, over the domain $[0,\pi]^{2}$
+\label{fig:5:nfield}}
+\end{figure}
+
+\label{ex:5:nfield}
+\end{example}
+
+
+\subsection{First fundamental form}\index{First!fundamental form}
+
+Let us consider a curve $\p{c}(t) = \p{s}(u(t), v(t))$ on the surface 
+$\p{s}(u,v)$, with $a\leq t\leq b$, and let $s$ be the arc length:
+\[
+s(t) = \int_{a}^{t} ds = \int_{a}^{t} \module{\p{c}'(t)} dt.
+\]
+
+Hence we have:
+\begin{eqnarray*}
+\left({ds \over dt}\right)^{2} &=& \module{\p{c}'}^{2} %\\
+ = \p{c}'\cdot\p{c}'%\\
+= (u' \p{s}_{1} + v' \p{s}_{2}) \cdot (u' \p{s}_{1} + v' \p{s}_{2}) \\
+ &=& (\p{s}_{1}\cdot\p{s}_{1}) u' + 2 (\p{s}_{1}\cdot\p{s}_{2}) u' v'
+      + (\p{s}_{2}\cdot\p{s}_{2}) v' 
+\end{eqnarray*}
+from where, by using the Gauss  notation:
+\begin{equation}
+\p{s}_{1}\cdot\p{s}_{1} = \mbox{E}, \qquad
+\p{s}_{1}\cdot\p{s}_{2} = \mbox{F}, \qquad
+\p{s}_{2}\cdot\p{s}_{2} = \mbox{G} .
+\label{eq:5:firstform}
+\end{equation}
+we have
+\[  
+\left({ds \over dt}\right)^{2}
+= \mbox{E} u' + 2 \mbox{F} u' v' + \mbox{G} v',
+\]
+and remembering that $u' = {du \over dt}$ and  $v' = {dv \over dt}$, we get 
+the intrinsic quantity called \emph{First Fundamental Form} or also 
+\emph{Metric Form}
+\[
+ds = \mbox{E}\, du + 2\, \mbox{F}\, du\, dv + \mbox{G}\, dv,
+\]
+in differential notation, which arises in computing the arc length of
+curves on surfaces, as well as the angle between tangent vectors on a
+surface.
+
+In fact, let $\v{v} = a \p{s}_{1} + b \p{s}_{2}$ and $\v{w} = c
+\p{s}_{1} + d \p{s}_{2}$ be tangent vectors to a surface $\p{s}$
+in the same point. We can write
+\begin{eqnarray*}
+\p{v} \cdot \p{w} &=& (a \p{s}_{1} + b \p{s}_{2}) \cdot (c \p{s}_{1} +
+d \p{s}_{2})\\
+&=& ac\, (\p{s}_{1}\cdot\p{s}_{1}) + (ad + bc)\, (\p{s}_{1}\cdot\p{s}_{2}) +
+bd\, (\p{s}_{2}\cdot\p{s}_{2})\\
+&=& ac\, \mbox{E} + (ad + bc)\, \mbox{F} + bd\, \mbox{G}\\
+&=& \mat{a & b}\mat{ \mbox{E} &  \mbox{F} \\ \mbox{F} &  
+\mbox{G}}\mat{c \\ d}.
+\end{eqnarray*}
+
+The matrix in the above formula is called \emph{matrix of the first
+fundamental form} or also \emph{metric tensor}. 
+
+Relabeling $\p{s}_{i}\cdot\p{s}_{j} = g_{ij}$, it is possible to write 
+for the differential area element:    
+\[
+\mat{ E & F \\ F & G } = 
+\mat{ g_{11} & g_{12} \\ g_{21} & g_{22} } 
+\]
+and, by labeling $du = du^{1}$ and $dv = dv^{2}$
+\[
+ds^{2} = \sum_{i,j} g_{ij}\, du^{i}\, du^{j}, \qquad i,j\in \{1,2\}.
+\]
+
+Another important property of the metric tensor is:
+\begin{eqnarray*}
+\module{ \p{s}_{1} \times \p{s}_{2} }^{2}
+&=& (\p{s}_{1}\cdot\p{s}_{1})(\p{s}_{2}\cdot\p{s}_{2}) - 
+ (\p{s}_{1}\cdot\p{s}_{2})^{2}\\
+&=& \mbox{E}\,\mbox{G} - \mbox{F}^{2}\\
+&=& \det \mat{ g_{11} & g_{12} \\ g_{21} & g_{22} }\\
+&=:& g
+\end{eqnarray*}
+
+\begin{example}
+    
+Let us try the forms $E$, $F$ and $G$ on the $(0,0)$ corner of the
+$[0,1]^{2}$ domain of the $\v{s} = (u, v, \sin u\,\sin v)$ surface
+map $[0,1]^{2}\rightarrow \E^{3}$ given in Script~\ref{script:5:nmap}.  
+
+In this case we have 
+\begin{eqnarray*}
+\p{s}_{1}(u,v)&=&(1,0,\cos u\,\sin v)
+\\
+\p{s}_{2}(u,v)&=&(0,1,\sin u\,\cos v),
+\end{eqnarray*}
+so that
+\begin{eqnarray*}
+E(\p{s}) (0,0) &=& (\p{s}_{1}\cdot\p{s}_{1})(0,0) 
+= ((1,0,\cos u\,\sin v)\cdot(1,0,\cos u\,\sin v))(0,0) = 1\\
+F(\p{s}) (0,0) &=& (\p{s}_{1}\cdot\p{s}_{2})(0,0) = ((1,0,\cos u\,\sin v)
+\cdot (0,1,\sin u\,\cos v))(0,0) = 0\\
+G(\p{s}) (0,0) &=& (\p{s}_{2}\cdot\p{s}_{2})(0,0) 
+= ((0,1,\sin u\,\cos v)\cdot(0,1,\sin u\,\cos v))(0,0) = 1
+\end{eqnarray*}
+
+\end{example}
+    
+\paragraph{Implementation}\index{Implementation!first fundamental form}
+
+The functional elements $E$, $F$ and $G$ of the metric tensor are
+easily computed in \pl\ as the functions \texttt{E1}, \texttt{F1} and
+\texttt{G1} of Script~\ref{script:5:form1}.  According to their
+defining formulas~(\ref{eq:5:firstform}), such functions are
+implemented as the composition of the \texttt{innerprod} operator
+(given in Script~\ref{script:UnitVect}) with the appropriate
+\texttt{CONS} of partial derivation operators \texttt{DS:$i$} given in
+Script~\ref{script:5:xf}.
+
+\begin{script}[First fundamental form]
+\begin{smallplasm}
+DEF E1 = innerprod $\sim$ [DS:1, DS:1];\\
+DEF F1 = innerprod $\sim$ [DS:1, DS:2];\\
+DEF G1 = innerprod $\sim$ [DS:2, DS:2];\\[0.3cm]
+
+E1:surf:<0,0> $\equiv$ 1.0\\
+F1:surf:<0,0> $\equiv$ 0.0\\
+G1:surf:<0,0> $\equiv$ 1.0
+\end{smallplasm}
+\label{script:5:form1}
+\end{script}
+
+
+
+\subsection{Second fundamental form}\index{Second fundamental form}
+
+The tensor of the \emph{second fundamental form} is defined by the 
+matrix:
+\[
+\mat{
+L & M\\M & N
+}
+\]
+where the linear forms $L$, $M$ and $N$ of the tensor are respectively
+defined as:
+\begin{eqnarray*}
+L &=& \v{n}\cdot {\partial^{2} \over{ \partial u}^{2}}\\
+M &=& \v{n}\cdot {\partial^{2} \over{ \partial u}{ \partial v}}\\
+N &=& \v{n}\cdot {\partial^{2} \over{ \partial v}^{2}}
+\end{eqnarray*}
+
+\begin{example}
+Let us compute the values of
+the $L$, $M$ and $N$ forms on the $(0,0)$ corner of the $[0,1]^{2}$
+domain of the $\v{s}=(u,v,\sin u\,\sin v)$ surface.  
+
+In this case we have
+\begin{eqnarray*}
+\v{n} &=& \v{s}_{1}\times\v{s}_{2} \\
+ &=& (1,0,\cos u\,\sin v) \times (0,1,\sin u\,\cos v) \\
+ &=& (- \cos u\,\sin v, \sin u\,\cos v, 1)
+\end{eqnarray*}
+and
+\begin{eqnarray*}
+\v{s}_{11} &=& {\partial^{2} \v{s} \over{ \partial u}^{2}} 
+\ =\ (0,0,-\sin u\,\sin v)\\
+\v{s}_{12} &=& {\partial^{2} \v{s} \over{ \partial u}{ \partial v}} 
+\ =\ (0,0,\cos u\,\cos v)\\
+\v{s}_{22} &=& {\partial^{2} \v{s} \over{ \partial v}^{2}} 
+\ =\ (0,0,-\sin u\,\sin v)
+\end{eqnarray*}
+so that
+\begin{eqnarray*}
+L(\p{s}) (0,0) &=& (\p{n}\cdot\p{s}_{11})(0,0) \\
+&=& ((- \cos u\,\sin v, \sin u\,\cos v, 1)\cdot(0,0,-\sin u\,\sin v))(0,0) = 0\\
+M(\p{s}) (0,0) &=& (\p{n}\cdot\p{s}_{12})(0,0)\\
+&=& ((- \cos u\,\sin v,
+\sin u\,\cos v, 1) \cdot (0,0,\cos u\,\cos v))(0,0) = 1\\
+N(\p{s}) (0,0) &=& (\p{n}\cdot\p{s}_{22})(0,0) \\
+&=& ((- \cos u\,\sin v, \sin u\,\cos v, 1)\cdot(0,0,-\sin u\,\sin v))(0,0) = 0
+\end{eqnarray*}
+
+\end{example}
+
+\paragraph{Implementation}\index{Implementation!second fundamental form}
+
+In accordance with the implementation of the functional elements of
+the metric tensor, we give in Script~\ref{script:5:form2} an
+implementation of the elements $L$, $M$ and $N$ of the second
+fundamental form, respectively denoted as \texttt{L2}, \texttt{N2} and
+\texttt{M2} in the implementation.
+
+\begin{script}[Second fundamental form]
+\begin{smallplasm}
+DEF L2 = innerprod $\sim$ [N, DS:1  $\sim$  DS:1];\\
+DEF M2 = innerprod $\sim$ [N, DS:1  $\sim$  DS:2];\\
+DEF N2 = innerprod $\sim$ [N, DS:2  $\sim$  DS:2];\\[0.3cm]
+
+L2:surf:<0,0> $\equiv$ 0.0\\
+M2:surf:<0,0> $\equiv$ 1.0\\
+N2:surf:<0,0> $\equiv$ 0.0
+\end{smallplasm}
+\label{script:5:form2}
+\end{script}
+A computational check was also executed, by computing 
+$L(\p{s}) (0,0)$, $M(\p{s}) (0,0)$ and $N(\p{s}) (0,0)$, and we found 
+numerically the results  already symbolically obtained in the above 
+paragraph.
+
+
+
+\subsection{Gauss curvature}\index{Gauss curvature}
+
+Let consider the normal $\v{n}(u,v)$ to a point $\v{s}(u,v)$ of a
+surface $S = \v{s}[0,1]^{2}$ in $\E^{3}$ and a unit tangent vector
+$\v{v}$ to such a surface in a point $\v{s}(u,v)$.  Then consider the
+curve $\v{\alpha}_{\v{v}}$ generated by sectioning the surface with
+the normal plane passing for $\v{n}$ and $\v{v}$.  The curvature of
+the osculating circle to $\v{\alpha}_{v}$ is called the \emph{normal
+curvature of $S$ at $\v{s}(u,v)$ in the $\v{v}$ direction}, and is
+denoted as $k_{n}(\v{v})$.  This function varies between maximum
+and minimum values, which are reached at two orthogonal directions,
+called \emph{principal directions}.  The maximum and minimum normal
+curvatures at a point are called \emph{principal curvatures} $k_{1}$
+and $k_{2}$ at that point.
+
+The product of the principal curvatures is called the \emph{Gauss 
+curvature} $K := k_{1}k_{2}$.
+
+The  \emph{Gauss curvature field} on a surface $\p{s}:[0,1]^{2}\rightarrow
+S\subset\E^{3}$ can be defined as the ratio of determinants of the
+matrices of the second and first fundamental forms:
+\[
+K(\p{s}) : S \rightarrow\R : {L(\p{s})N(\p{s}) - M^{2}(\p{s}) 
+\over E(\p{s})G(\p{s}) - F^{2}(\p{s})}
+\]
+
+\paragraph{Implementation}\index{Implementation!Gauss curvature}
+
+We already used the symbol \texttt{N} to denote the normal field to a
+surface.  Hence in Script~\ref{script:5:form2}, we used the symbols
+\texttt{L2}, \texttt{M2} and \texttt{N2} to denote the elements of the
+second fundamental form. In Script~\ref{script:5:gausscurvature} we 
+give the 
+\[
+\texttt{GaussCurvature} : ([0,1]^{2}\rightarrow \E^{3}) \rightarrow 
+(\E^{3}\rightarrow \R)
+\]
+field operator which, when applied to a surface mapping, returns its
+curvature field.  For the sake of readibility, we would like to write the
+\texttt{GaussCurvature} function using only infix operators, as,
+e.g., in
+\begin{smallplasm}
+    ((L * N) - (M * M)) / ((E * G) - (F * F))
+\end{smallplasm}
+but this is not actually possible with the current \pl\
+implementation, since the algebraic operators would be ``raised" too
+many times.  Hence, the standard \fl\ prefix and \texttt{CONS}ed form
+must instead be used.
+
+\begin{script}[Gauss curvature]
+\begin{smallplasm}
+DEF GaussCurvature \index{Library functions!Derivatives library!{\tt  Gausscurvature}} = \+\\
+/ $\sim$ [-$\sim$[*$\sim$[L2,N2], 
+*$\sim$[M2,M2]], -$\sim$[*$\sim$[E1,G1],*$\sim$[F1,F1]]];
+\-\\[0.3cm]
+
+GaussCurvature:surf:<0,0> $\equiv$ -0.9999999999333331\\
+GaussCurvature:surf:<PI/2,PI/2> $\equiv$ 1.000000165454544
+\end{smallplasm}
+\label{script:5:gausscurvature}
+\end{script}
+Clearly, the given computational examples are affected by
+approximation and round-off errors, as should be clear by remembering
+that we are using numeric derivation methods.  Once again, the
+$\texttt{surf} = (u, v, \sin u\,\sin v)$ mapping, used for the two
+checks above, is the one given in Script~\ref{script:5:nmap}.
+
+
+\section{Examples}
+
+An example of computation and presentation of the Gauss curvature
+field on a surface, generated by interpolation of two extreme curves
+with assigned extreme derivative fields, is given in this section. 
+The surface generation by ``transfinite" interpolation of curve maps,
+sometimes called \emph{skinning} in CAD systems, is discussed in
+Chapter~\ref{sect:12:transfinite}, but is anticipated here to work out
+a realistic example.
+
+\subsection{Color map of the Gauss  curvature field}\index{Color!map of Gauss  curvature field}
+\label{subsec:5:gaussmap}
+
+
+A very interesting application of many concepts studied in this book
+is discussed here.  It allows experimentation with several features of
+the \pl\ language at the same time.  In particular:
+\begin{enumerate}
+    
+    \item A smooth surface $\p{s}:[0,1]^{2}\rightarrow S$, with
+    $S\subset\E^{3}$, is generated by using transfinite interpolation
+    methods.  For this purpose two boundary curves
+    \begin{eqnarray}
+	\p{c}_{1}&:&[0,1]\rightarrow S : u\mapsto \p{s}(u,0)\\
+    	\p{c}_{2}&:&[0,1]\rightarrow S : u\mapsto \p{s}(u,1),
+    \end{eqnarray}
+    to be interpolated by $\p{s}$ are given, and are also assigned two
+    fields of first derivatives along the images of such
+    curves.
+    
+    \item The field $K : S\rightarrow\R$ of Gauss  curvature is
+    \emph{sampled} at the vertices of a cell decomposition defined
+    upon the $\p{s}[0,1]^{2}$ image of the surface.  The result is
+    represented as a polyhedral approximation, called
+    \texttt{CurvatureField}, of the 2D manifold
+    \[
+    (\mbox{id},K)(\p{s})[0,1]^{2}
+    \]
+    embedded in $4$-dimensional space $\E^{3}\times\R$.
+    
+    \item Finally, the $4$-th coordinate of vertices of this object is
+    checked for positivity/negativity and used to label each surface
+    vertex with a color triplet in two different ranges of colors, 
+    thus
+    transforming the 2-dimensional manifold \texttt{CurvatureField} in
+    4D space into the 2-dimensional manifold \texttt{colorGauss} in 6D
+    space.
+    
+    \begin{enumerate}
+	
+	\item 
+    At exporting time into a \textsf{VRML}\index{VRML} file, the first three
+    coordinates are interpreted as position of points, the last three
+    coordinates are interpreted as \emph{color per vertex} (see for
+    further details Section~\ref{sec:10:vrml}).
+    
+    \item 
+    The resulting surface, shaded between \emph{cyan} and \emph{white}
+    where the Gauss curvature is positive, and between \emph{blue} and
+    \emph{cyan} where the curvature is negative, is shown in
+    Figure~\ref{fig:5:gauss}.
+    \end{enumerate}
+
+\end{enumerate}
+Clearly, such a very simple computational solution to a quite complex
+scientific visualization problem, was possible because of the
+dimension-independent \pl\ approach to geometric modeling.
+
+
+
+\paragraph{Surface generation}\index{Surface!generation}
+
+First of all, we generate a surface mapping $\p{s}(u,v)$, with
+$(u,v)\in [0,1]^{2}$, by Hermite\footnote{Discussed in Section~\ref{subsec:11:hermite}
+for the standard case of interpolation of points and tangent vectors,
+and in Section~\ref{sect:12:transfinite} for the transfinite interpolation of curves,
+surfaces and higher dimensional manifolds, together with assigned
+boundary derivative fields.} interpolation of two boundary curves
+\[
+\p{s}(u,0) = \texttt{c1}  \quad\mbox{and}\quad \p{s}(u,1) = 
+\texttt{c2},
+\]
+and two boundary fields of
+(constant) first derivatives 
+\[
+\p{s}_{2}(u,0) = (\underline{1},\underline{1},\underline{1})
+\quad\mbox{and}\quad \p{s}_{2}(u,1) =
+(\underline{-1},\underline{-1},\underline{-1}).
+\]
+
+It is not necessary to understand here how the $\p{s}$ mapping is
+generated.  The used ``transfinite" interpolation is discussed in
+Section~\ref{sect:12:transfinite}.  Anyway, we have:
+\[
+\p{s}(u,v) = \p{s}(u,0) \v{h}_{0}(v) + \p{s}(u,1) \v{h}_{1}(v) +
+\p{s}_{2}(u,0) \v{h}_{2}(v) + \p{s}_{2}(u,1) \v{h}_{3}(v),
+\]
+where $(\v{h}_{0}(v), \v{h}_{1}(v), \v{h}_{2}(v), \v{h}_{3}(v))^{T}$ is
+the Hermite's basis of cubic polynomials.  
+
+\paragraph{Implementation}\index{Implementation!graph of Gauss curvature field}
+
+We are interested here to the \texttt{Surface} mapping, generated by
+the \texttt{CubicHermite} operator given in Script~\ref{script:12:transfhermite}.  Analogously,
+\texttt{c1} and \texttt{c2} are two cubic Hermite's curves generated
+by giving two extreme points and two extreme tangents.  Finally,
+\texttt{dom} is a polyhedral complex partitioning the real interval
+$[0,1]$ into $12$ segments, and \texttt{CurvatureField} is the
+resulting polyhedral approximation of the 2D manifold
+$(\mbox{id},K)(\p{s})[0,1]^{2}$ embedded in 4-dimensional space.
+
+\begin{script}[Geometric data]
+\begin{smallplasm}
+DEF c1 = CubicHermite:S1:<<1,0,0>,<0,1,0>,<0,3,0>,<-3,0,0>>;\\
+DEF c2 = CubicHermite:S1:<<0.5,0,0>,<0,0.5,0>,<0,1,0>,<-1,0,0>>;\\
+DEF Surface = CubicHermite:S2:<c1,c2,<1,1,1>,<-1,-1,-1>>;\\[0.3cm]
+
+DEF dom = interval:<0,1>:12;\\
+DEF CurvatureField = \+\\
+  MAP: ((CONS $\sim$ AR $\sim$ [ID, GaussCurvature]):Surface): (dom * 
+dom);\-\\[0.3cm]
+
+CurvatureField $\equiv$ A-Polyhedral-Complex\{2,4\}
+\end{smallplasm}
+\label{script:5:geomdata}
+\end{script}
+
+
+The transformation from the $2$-manifold \texttt{CurvatureField} in 4D
+space, encoding the Gauss  curvature as the $4$-th coordinate, to the
+$2$-manifold \texttt{colorGauss} in 6D space, encoding such curvature
+as a \textsc{rgb} color triplet, is performed in
+Script~\ref{script:5:colorGauss}.  For this purpose the maximum and
+minimum values of the $4$-th coordinate of \texttt{CurvatureField}
+vertices are stored into \texttt{curvmax} and \texttt{curvmin},
+respectively, and used to map the curvature values to the appropriate 
+triples in the two color ranges used for positive and negative 
+curvatures, respectively.
+
+\begin{script}[Color map of curvature]
+\begin{smallplasm}
+DEF colorGauss \index{Library functions!Derivatives library!{\tt  Colorgauss}} = MAP:(IF:< IsRealPos $\sim$ s4, \+\\{}
+     [s1,s2,s3,/ $\sim$ [s4,K:(curvmax - curvmin)],K:1,K:1], \\{}
+     [s1,s2,s3,K:0,/ $\sim$ [s4,K:(curvmin - curvmax)],K:1] %\-\\
+>):CurvatureField\-\\
+WHERE\+\\
+  curvmax = MAX:4:CurvatureField, \\
+  curvmin = MIN:4:CurvatureField \-\\
+END;\\[0.3cm]
+
+VRML:(colorGauss CREASE (PI/2)):$'$out.wrl$'$;\\
+colorGauss $\equiv$ A-Polyhedral-Complex\{2,6\}
+\end{smallplasm}
+\label{script:5:colorGauss}
+\end{script}
+
+\begin{figure}[h]
+% \begin{minipage}[c]{0.245\linewidth}
+%     \centering\epsfig{file=\figsdir{cap05}gauss1.eps,width=\linewidth}
+% \end{minipage}
+\begin{minipage}[c]{0.327\linewidth}
+    \centering\epsfig{file=\figsdir{cap05}gauss2.eps,width=\linewidth}
+\end{minipage}
+\begin{minipage}[c]{0.327\linewidth}
+    \centering\epsfig{file=\figsdir{cap05}gauss6.eps,width=\linewidth}
+\end{minipage}
+\begin{minipage}[c]{0.327\linewidth}
+    \centering\epsfig{file=\figsdir{cap05}gauss5.eps,width=\linewidth}
+\end{minipage}
+\caption{Gauss  curvature field: (a) surface generated by Hermite's
+transfinite interpolation of two curves and two (constant)
+vector fields (b) subset of negative Gauss  curvature (c) subset of
+positive Gauss  curvature
+\label{fig:5:gauss}}
+\end{figure}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%
+                     
+    \end{document}   
+                     
+%%%%%%%%%%%%%%%%%%%%%%

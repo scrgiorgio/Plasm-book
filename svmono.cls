@@ -950,7 +950,7 @@ passing it to article class \MessageBreak
 \def\corollaryname{Corollary}%
 \def\definitionname{Definition}%
 \def\emailname{e-mail}%
-\def\examplename{Example}%
+%\def\examplename{Example}%
 \def\exercisename{Exercise}%
 \def\figurename{Fig.}%
 \def\forewordname{Foreword}%
@@ -996,7 +996,7 @@ passing it to article class \MessageBreak
  \def\corollaryname{Corollaire}%
  \def\definitionname{D\'efinition}%
  \def\emailname{e-mail}%
- \def\examplename{Exemple}%
+ %\def\examplename{Exemple}%
  \def\exercisename{Exercice}%
  \def\figurename{Fig.}%
  \def\forewordname{Avant-propos}%
@@ -1040,7 +1040,7 @@ passing it to article class \MessageBreak
  \def\corollaryname{Korollar}%
 %\def\definitionname{Definition}%
  \def\emailname{E-Mail}%
- \def\examplename{Beispiel}%
+%\def\examplename{Beispiel}%
  \def\exercisename{\"Ubung}%
  \def\figurename{Abb.}%
  \def\forewordname{Geleitwort}%

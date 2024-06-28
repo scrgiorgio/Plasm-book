@@ -277,7 +277,7 @@ F(k) = CONS([ID, Bernstein(4)[k]])∘S1		#=
 Finally, we note that expressions like |MAP(F)(dom1D)| are used to apply the |F| vector function to an object of |Hpc| type, normally to bend it.
 Remember that we  generated an array of |Hpc| curves, for |k=1:n+1| --- in our case with |n=4|. For this purpose, we need to finally apply the |STRUCT| operator, to transform the array of curves into a single |Hpc| value.
 \begin{lstlisting}[language=JuliaLocal, style=julia]
-STRUCT( MAP(F(k))(dom1D) for k=1:n+1 )
+STRUCT([ MAP(F(k))(dom1D) for k=1:n+1 ])
 \end{lstlisting}
 
 \end{coding}
