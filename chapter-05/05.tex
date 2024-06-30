@@ -830,7 +830,7 @@ i.e.~that $\p{\alpha}[0,1]=\p{\beta}[0,1]=\p{\gamma}[0,1]$.
 \label{ex:5:4:freearc}
   
 It may be useful to give the variable-free representation of the three
-maps on the $[0,1]$ interval shown in Example~\ref{ex:circumference},
+maps on the $[0,1]$ interval shown in Example~\ref{},
 that is exactly the representation we need to give a \pl\
 implementation of such maps:
 \begin{eqnarray}
@@ -866,12 +866,12 @@ VIEW( MAP(CONS(gamma)∘S1)(INTERVALS(1)(32)) )
 \end{lstlisting}
 \end{condition}
 
-The circle segment representations of Example~\ref{ex:5:4:circumference} are directly
+The circle segment representations of Example~\ref{} are directly
 used in the \pl\ implementation of curves in
-Script~\ref{ex:5:4:freearc}.  To understand the implementation, notice
+Script~\ref{}.  To understand the implementation, notice
 that we generate a polyhedral complex by mapping the curve vector
 function (either $\v{\alpha}$, $\v{\beta}$ or $\v{\gamma}$ of
-Example~\ref{ex:5:4:freearc}) on the polyhedral representation of the
+Example~\ref{}) on the polyhedral representation of the
 $[0,1]\subset\R$ domain.
 
 
@@ -991,7 +991,7 @@ A curve $\v{c}: dom\to \E^d$ is a vector-valued function of a parameter $u\in |d
    	\includegraphics[width=\linewidth]{chapter-05/figs/nubspline.pdf} 
 	\end{minipage}%
 
-   \caption{Curve examples: (a) Hermite curves with same extreme point, and scaled extreme tangents (see Example \ref{ex:5:4:2}); (b) aaaaa aaaa aaaaaaa aaaaa aaaa aaaaaaa aaaaa aaaa aaaaaaa aaaaa aaaa aaaaaaa aaaaa aaaa aaaaaaa aaaaa aaaa aaaaaaa (see Example \ref{ex:5:4:3}); (c) aaaaa aaaa aaaaaaa aaaaa aaaa aaaaaaa aaaaa aaaa aaaaaaa aaaaa aaaa aaaaaaa aaaaa aaaa aaaaaaa aaaaa aaaa (see Example \ref{ex:5:4:4}); (d) aaaaa aaaa aaaaaaa aaaaa aaaa aaaaaaa aaaaa aaaa aaaaaaa aaaaa aaaa aaaaaaa aaaaa aaaa aaaaaaa aaaaa aaaa (see Example \ref{ex:5:4:4}). }
+   \caption{Curve examples: (a) Hermite curves with same extreme point, and scaled extreme tangents (see Example \ref{}); (b) aaaaa aaaa aaaaaaa aaaaa aaaa aaaaaaa aaaaa aaaa aaaaaaa aaaaa aaaa aaaaaaa aaaaa aaaa aaaaaaa aaaaa aaaa aaaaaaa (see Example \ref{}); (c) aaaaa aaaa aaaaaaa aaaaa aaaa aaaaaaa aaaaa aaaa aaaaaaa aaaaa aaaa aaaaaaa aaaaa aaaa aaaaaaa aaaaa aaaa (see Example \ref{}); (d) aaaaa aaaa aaaaaaa aaaaa aaaa aaaaaaa aaaaa aaaa aaaaaaa aaaaa aaaa aaaaaaa aaaaa aaaa aaaaaaa aaaaa aaaa (see Example \ref{}). }
    \label{fig:5:7}
 \end{figure}
 
@@ -1028,7 +1028,7 @@ MAP(CUBICHERMITE(S1)([[1,0],[1,1],[-10,10],[10,0]]))(domain)]))
 \end{condition}
 
 \begin{condition}[(Transfinite Hermite surface] (See Figure~\ref{fig:5:7}b)
-\label{\ref{ex:5:4:3}}
+\label{Transfinite-Hermite-surface}
 The transfinite Hermite implementation of Julia |Plasm| is used here.
 Let us note that |c1| and |c2| are curves, since their expressions contain the |S1| selector; conversely, |sur3| is a surface, since contains |S2|. The two extreme curves are interpolated here. Of course, the |domain| is 2D, obtained as Cartesian product of two polyhedral complexes of dimension one.
 \begin{lstlisting}[language=JuliaLocal, style=julia, mathescape=true]
@@ -1050,7 +1050,7 @@ With two control points, we have a linear curve, three a quadratic curve, four a
 
 %///////////////////////////////////////////////////////////////////////////////
 \begin{condition}[(Bézier quartic curve] (See Figure~\ref{fig:5:7}c)\
-\label{\ref{ex:5:4:4}}
+\label{}
 This script shows the first simple example of the important class of Bézier curves.  The curve |domain| is here a partition into |32| segments of the interval $[0,1]$. Thr degree of curve is 4 because of 5 control points.
 \begin{lstlisting}[language=JuliaLocal, style=julia, mathescape=true]
 controlpoints = [[0,0],[1,0],[1,1],[2,1],[2,2]]
@@ -1067,7 +1067,7 @@ A \emph{spline} is a continuous curve constructed so as to pass through a given 
 
 %///////////////////////////////////////////////////////////////////////////////
 \begin{condition}[(Cubic spline curves] (See Figure~\ref{fig:5:7}d)\
-\label{\ref{ex:5:4:5}}
+\label{}
 Here we show two examples of 2D cubic splines, piecewise curve defined by joining several segments of low-degree curve. In case of cubic splines each consecutive quadruple of points defines a different curve segment. In Figure~\ref{} we see together the |polyline|  of control points, a cardinal (interpolating) and a uniform B-spline (approximating) curve.
 \begin{lstlisting}[language=JuliaLocal, style=julia, mathescape=true]
 domain = INTERVALS(1.0)(20)

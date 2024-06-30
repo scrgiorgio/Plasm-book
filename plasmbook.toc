@@ -1,0 +1,114 @@
+\contentsline {part}{Part\ I\hspace {\betweenumberspace }Basic Concepts}{1}{part.1}%
+\contentsline {chapter}{\numberline {1}Introduction to Julia Programming}{3}{chapter.1}%
+\contentsline {section}{\numberline {1.1}Basic syntax and type system}{3}{section.1.1}%
+\contentsline {section}{\numberline {1.2}Functions and collections}{7}{section.1.2}%
+\contentsline {subsection}{\numberline {1.2.1}Julia functions}{7}{subsection.1.2.1}%
+\contentsline {subsection}{\numberline {1.2.2}Collections}{11}{subsection.1.2.2}%
+\contentsline {section}{\numberline {1.3}Matrix computations}{14}{section.1.3}%
+\contentsline {section}{\numberline {1.4}Linear algebra and sparse arrays}{16}{section.1.4}%
+\contentsline {section}{\numberline {1.5}Parallel and distributed computing}{20}{section.1.5}%
+\contentsline {subsection}{\numberline {1.5.1}Parallel Programming}{20}{subsection.1.5.1}%
+\contentsline {subsection}{\numberline {1.5.2}Multiprocessing and Distributed Computing}{25}{subsection.1.5.2}%
+\contentsline {subsection}{\numberline {1.5.3}Programming the GPU}{26}{subsection.1.5.3}%
+\contentsline {section}{\numberline {1.6}Modules and packages}{29}{section.1.6}%
+\contentsline {section}{References}{30}{section*.24}%
+\contentsline {chapter}{\numberline {2}The Package Plasm.jl}{35}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Backus' functional programming}{35}{section.2.1}%
+\contentsline {section}{\numberline {2.2}FL-based PLaSM in Julia syntax}{37}{section.2.2}%
+\contentsline {paragraph}{Programs are functions}{38}{section*.26}%
+\contentsline {paragraph}{Program composition and application}{38}{section*.27}%
+\contentsline {paragraph}{Naming objects}{38}{section*.28}%
+\contentsline {paragraph}{Parametrized objects}{39}{section*.29}%
+\contentsline {section}{\numberline {2.3}Geometric Programming at Function Level}{39}{section.2.3}%
+\contentsline {paragraph}{Construction}{40}{section*.32}%
+\contentsline {paragraph}{Apply-to-all}{41}{section*.33}%
+\contentsline {paragraph}{Identity}{41}{section*.34}%
+\contentsline {paragraph}{Constant}{41}{section*.35}%
+\contentsline {paragraph}{Composition}{42}{section*.36}%
+\contentsline {paragraph}{Conditional combinator}{42}{section*.37}%
+\contentsline {paragraph}{Insert Right/Left}{43}{section*.38}%
+\contentsline {paragraph}{Catenate}{44}{section*.39}%
+\contentsline {paragraph}{Distribute Right/Left}{44}{section*.40}%
+\contentsline {section}{\numberline {2.4}Julia’s package Plasm.jl}{46}{section.2.4}%
+\contentsline {paragraph}{Plasm.jl}{46}{section*.41}%
+\contentsline {paragraph}{fenvs.jl}{46}{section*.42}%
+\contentsline {paragraph}{hpc.jl}{47}{section*.43}%
+\contentsline {paragraph}{viever.jl}{47}{section*.44}%
+\contentsline {section}{\numberline {2.5}Julia REPL (Read-Eval-Print-Loop)}{47}{section.2.5}%
+\contentsline {section}{\numberline {2.6}Geometric Programming examples}{49}{section.2.6}%
+\contentsline {section}{References}{53}{section*.48}%
+\contentsline {chapter}{\numberline {3}Geometry and topology primer}{57}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Geometric Spaces}{57}{section.3.1}%
+\contentsline {subsection}{\numberline {3.1.1}Vector space}{57}{subsection.3.1.1}%
+\contentsline {subsection}{\numberline {3.1.2}Affine space}{64}{subsection.3.1.2}%
+\contentsline {subsection}{\numberline {3.1.3}Convex space}{66}{subsection.3.1.3}%
+\contentsline {section}{\numberline {3.2}Cellular models}{67}{section.3.2}%
+\contentsline {subsection}{\numberline {3.2.1}Simplicial complex}{69}{subsection.3.2.1}%
+\contentsline {subsection}{\numberline {3.2.2}Cubical complex and grid}{76}{subsection.3.2.2}%
+\contentsline {subsection}{\numberline {3.2.3}Polyhedral complex}{78}{subsection.3.2.3}%
+\contentsline {section}{\numberline {3.3}Chain complex}{78}{section.3.3}%
+\contentsline {subsection}{\numberline {3.3.1}Linear chain spaces}{79}{subsection.3.3.1}%
+\contentsline {subsection}{\numberline {3.3.2}Linear chain operators}{80}{subsection.3.3.2}%
+\contentsline {section}{\numberline {3.4}Cochain integration (surface, volume, inertia)}{84}{section.3.4}%
+\contentsline {part}{Part\ II\hspace {\betweenumberspace }Dimension-independent Modeling}{87}{part.2}%
+\contentsline {chapter}{\numberline {4}Geometric models}{89}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Plasm geometric types}{89}{section.4.1}%
+\contentsline {section}{\numberline {4.2}Plasm parametric primitives}{93}{section.4.2}%
+\contentsline {subsection}{\numberline {4.2.1}Geometric Transformations}{94}{subsection.4.2.1}%
+\contentsline {section}{\numberline {4.3}Assembly of geometric objects}{104}{section.4.3}%
+\contentsline {subsection}{\numberline {4.3.1}Hierarchical graphs}{105}{subsection.4.3.1}%
+\contentsline {section}{\numberline {4.4}Attach properties to geometry}{114}{section.4.4}%
+\contentsline {section}{\numberline {4.5}Design documentation notebooks}{118}{section.4.5}%
+\contentsline {section}{\numberline {4.6}Export geometry}{120}{section.4.6}%
+\contentsline {chapter}{\numberline {5}Symbolic modeling with Julia Plasm}{123}{chapter.5}%
+\contentsline {section}{\numberline {5.1} Primitive generators}{123}{section.5.1}%
+\contentsline {section}{\numberline {5.2} Plasm topological operators}{131}{section.5.2}%
+\contentsline {subsection}{\numberline {5.2.1}Incidence operators}{132}{subsection.5.2.1}%
+\contentsline {subsection}{\numberline {5.2.2}Adiacency operators}{135}{subsection.5.2.2}%
+\contentsline {subsection}{\numberline {5.2.3}Atomic decomposition}{136}{subsection.5.2.3}%
+\contentsline {section}{\numberline {5.3} Manifold mapping}{138}{section.5.3}%
+\contentsline {section}{\numberline {5.4} Parametric curves, surfaces, and solids }{142}{section.5.4}%
+\contentsline {subsection}{\numberline {5.4.1} Curve generation methods}{143}{subsection.5.4.1}%
+\contentsline {subsection}{\numberline {5.4.2} Surface generation methods}{147}{subsection.5.4.2}%
+\contentsline {subsection}{\numberline {5.4.3} Solid generation examples}{153}{subsection.5.4.3}%
+\contentsline {chapter}{\numberline {6}Product assembly structure}{159}{chapter.6}%
+\contentsline {section}{\numberline {6.1}Hierarchical assembly definition}{160}{section.6.1}%
+\contentsline {section}{\numberline {6.2}Data structures in solid modeling}{160}{section.6.2}%
+\contentsline {section}{\numberline {6.3}Structure in DOM and Plasm}{160}{section.6.3}%
+\contentsline {section}{\numberline {6.4}Julia Plasm data structures}{160}{section.6.4}%
+\contentsline {subsection}{\numberline {6.4.1}Hierarchical Polyhedral Complex (HPC)}{160}{subsection.6.4.1}%
+\contentsline {subsection}{\numberline {6.4.2}Linear Algebraic Representation (LAR)}{160}{subsection.6.4.2}%
+\contentsline {subsection}{\numberline {6.4.3}Geometric DataSet (GEO)}{160}{subsection.6.4.3}%
+\contentsline {chapter}{\numberline {7}Space arrangements}{161}{chapter.7}%
+\contentsline {section}{\numberline {7.1} Space partition and enumeration}{161}{section.7.1}%
+\contentsline {section}{\numberline {7.2} Cellular and boundary models}{161}{section.7.2}%
+\contentsline {section}{\numberline {7.3} Arrangements and Lattices}{161}{section.7.3}%
+\contentsline {section}{\numberline {7.4} 2D and 3D Examples}{161}{section.7.4}%
+\contentsline {chapter}{\numberline {8}Boolean solid algebras}{163}{chapter.8}%
+\contentsline {section}{\numberline {8.1}Constructive Solid Geometry (CSG)}{163}{section.8.1}%
+\contentsline {section}{\numberline {8.2}Atoms and Generators }{163}{section.8.2}%
+\contentsline {section}{\numberline {8.3}Finite Boolean Algebras}{163}{section.8.3}%
+\contentsline {section}{\numberline {8.4}Computational Pipeline}{163}{section.8.4}%
+\contentsline {part}{Part\ III\hspace {\betweenumberspace }Polyhedral Modeling in AEC}{165}{part.3}%
+\contentsline {chapter}{\numberline {9}Building Information Modeling (BIM)}{167}{chapter.9}%
+\contentsline {section}{\numberline {9.1}BIM history (Chuck Eastman, ...)}{167}{section.9.1}%
+\contentsline {section}{\numberline {9.2}Building taxonomy (UNI 9838)}{167}{section.9.2}%
+\contentsline {section}{\numberline {9.3}Building envelope}{167}{section.9.3}%
+\contentsline {section}{\numberline {9.4}Building skeleton}{167}{section.9.4}%
+\contentsline {section}{\numberline {9.5}Construction Process Modeling}{167}{section.9.5}%
+\contentsline {chapter}{\numberline {10}Industry Foundation Classes (IFC)}{169}{chapter.10}%
+\contentsline {section}{\numberline {10.1}Simple introduction to IFC}{170}{section.10.1}%
+\contentsline {section}{\numberline {10.2}Data scheme for BIM collaboration}{170}{section.10.2}%
+\contentsline {section}{\numberline {10.3}IfcShapeRepresentation (IFC 4.3.x: 8.18.3.14)}{170}{section.10.3}%
+\contentsline {subsection}{\numberline {10.3.1}Representation identifiers}{170}{subsection.10.3.1}%
+\contentsline {subsection}{\numberline {10.3.2}Representation types}{170}{subsection.10.3.2}%
+\contentsline {subsection}{\numberline {10.3.3}Representation Examples}{170}{subsection.10.3.3}%
+\contentsline {section}{\numberline {10.4}Plasm parametric programming to IFC}{170}{section.10.4}%
+\contentsline {part}{Part\ IV\hspace {\betweenumberspace }Geometry from Point Cloud}{171}{part.4}%
+\contentsline {chapter}{\numberline {11}Modeling from Point Clouds}{173}{chapter.11}%
+\contentsline {section}{\numberline {11.1} Geometric survey and Point Cloud}{173}{section.11.1}%
+\contentsline {section}{\numberline {11.2} Out-of-Core Potree dataset}{173}{section.11.2}%
+\contentsline {section}{\numberline {11.3} Multidimensional array store}{173}{section.11.3}%
+\contentsline {section}{\numberline {11.4} Mapping to solid models}{173}{section.11.4}%
+\contentsline {section}{\numberline {11.5} Digital Twin City of a Rome Neighbor}{173}{section.11.5}%
+\contentsline {section}{References}{174}{section*.122}%
