@@ -625,7 +625,7 @@ $\p{\gamma}$, to indicate a map $\R \rightarrow \R^d$.
 
 
 
-\begin{condition}[3D curve]
+\begin{condition}[(3D curve] (See Figure~\ref{}a)
 
 A curve $\p{c}$ in three-dimensional space has 3 \emph{coordinate
 functions}, and is often denoted as
@@ -788,7 +788,7 @@ functions with the basis vectors $\v{e}_{i}$ of the target space:
 %
 %
 %
-\begin{condition}[Circular arc]
+\begin{condition}[(Circular arc] (See Figure~\ref{}a)
 \label{ex:5:4:circumference}
 Some different curves are given here.  They have the same image in $
 \E^{2}$ but different coordinate representation in the space of
@@ -826,7 +826,7 @@ i.e.~that $\p{\alpha}[0,1]=\p{\beta}[0,1]=\p{\gamma}[0,1]$.
 \end{condition}
 
 
-\begin{condition}[Variable-free circular arc]
+\begin{condition}[(Variable-free circular arc] (See Figure~\ref{}a)
 \label{ex:5:4:freearc}
   
 It may be useful to give the variable-free representation of the three
@@ -945,7 +945,7 @@ operator |*| to denote the product of functions.
 \end{remark}
 
 
-\begin{condition}[Circle]
+\begin{condition}[(Circle] (See Figure~\ref{}a)
 The following |MAP| expression generates a pol\-y\-gonal approximation with 36 line segments  of the unit circle centered in the origin, i.e.~of the set  $\v{c}[0,2\pi]$, with $\v{c}(u) = (0, 0) + (\cos u, \sin u)$. A manifold curve with different radiuses may be obtained via uniform scaling transformation of the |Hpc| value returned by the |MAP| functional.
 \begin{lstlisting}[language=JuliaLocal, style=julia, mathescape=true]
 circle = MAP(CONS([cos, sin])∘S1)(INTERVALS(2π)(36))	#=
@@ -976,6 +976,26 @@ In some cases, the name of a class of geometry-generating curves, say |Bezier| o
 A curve $\v{c}: dom\to \E^d$ is a vector-valued function of a parameter $u\in |dom| \subset \R$, with often $|dom| = [0,1]$. The points supported by the curve image may belong to any $\E^d$, with $d\geq 1$. In each case $\v{c}$ will contain $d$ \emph{coordinate functions}.
 \end{definition}
 
+\begin{figure}[htbp] %  figure placement: here, top, bottom, or page
+	\begin{minipage}[c]{0.5\linewidth}
+   	\includegraphics[width=\linewidth,height=0.87\linewidth]{chapter-05/figs/hermitecurves.pdf}%
+	\end{minipage}%
+	\begin{minipage}[c]{0.5\linewidth}
+   	\includegraphics[width=\linewidth]{chapter-05/figs/trasfinitehermite.pdf}%
+	\end{minipage}%
+
+	\begin{minipage}[c]{0.5\linewidth}
+   	\includegraphics[width=\linewidth]{chapter-05/figs/bezier.pdf} 
+	\end{minipage}%
+	\begin{minipage}[c]{0.5\linewidth}
+   	\includegraphics[width=\linewidth]{chapter-05/figs/nubspline.pdf} 
+	\end{minipage}%
+
+   \caption{Curve examples: (a) Hermite curves with same extreme point, and scaled extreme tangents (see Example \ref{ex:5:4:2}); (b) aaaaa aaaa aaaaaaa aaaaa aaaa aaaaaaa aaaaa aaaa aaaaaaa aaaaa aaaa aaaaaaa aaaaa aaaa aaaaaaa aaaaa aaaa aaaaaaa (see Example \ref{ex:5:4:3}); (c) aaaaa aaaa aaaaaaa aaaaa aaaa aaaaaaa aaaaa aaaa aaaaaaa aaaaa aaaa aaaaaaa aaaaa aaaa aaaaaaa aaaaa aaaa (see Example \ref{ex:5:4:4}); (d) aaaaa aaaa aaaaaaa aaaaa aaaa aaaaaaa aaaaa aaaa aaaaaaa aaaaa aaaa aaaaaaa aaaaa aaaa aaaaaaa aaaaa aaaa (see Example \ref{ex:5:4:4}). }
+   \label{fig:5:7}
+\end{figure}
+
+
 \subsection{ Curve generation methods}\label{sect:5-4-1}
 
 The primary |Plasm| generator of curves is the second order |MAP(curve::Function)(domain::Hpc)| combinator function. 
@@ -985,16 +1005,18 @@ The first argument function of the |MAP| combinator will extract the |1D| points
 \end{remark}
 
 
-\begin{condition}[Hermite cubic curve and surface]
-In the case of Hermite cubic curves four constraints impose the passage through assigned initial and final points (|P1|, |P2|), with assigned initial and final tangents (|T1|,|T2|).
+\begin{condition}[(Hermite cubic curve] (See Figure~\ref{fig:5:7}a)
+In the case of Hermite cubic curves four constraints impose the passage through assigned initial and final points (|P1|, |P2|), with assigned initial and final tangents (|T1|,|T2|). Four constraints, hence degree 3. The |Plasm| implementation is given below
 \begin{lstlisting}[language=JuliaLocal, style=julia, mathescape=true]
 function HERMITE(args)
 	P1, P2, T1, T2 = args
 	return CUBICHERMITE(S1)([P1, P2, T1, T2])
 end
 \end{lstlisting}
+\end{condition}
 
-We see here four |CUBICHERMITE| curves, with growing values of extreme tangents. At some point the curve self-intersect, which is bad for geometric design. Anyway, the Low-degree Hermite curve are useful to use in spline, where to interpolate long sequences of points and tangents.
+\begin{condition}[Hermite cubic curve]\label{ex:5:4:2} (See Figure~\ref{fig:5:7}a)
+We see here four |CUBICHERMITE| curves, with growing values of extreme tangents. At some point the curve self-intersect, which is bad for geometric design. Anyway, the low-degree Hermite curve are useful to use in spline, where to interpolate long sequences of points and tangents.
 \begin{lstlisting}[language=JuliaLocal, style=julia, mathescape=true]
 domain = INTERVALS(1.0)(20)
 VIEW( STRUCT([		# aggregation of four curves
@@ -1005,7 +1027,8 @@ MAP(CUBICHERMITE(S1)([[1,0],[1,1],[-10,10],[10,0]]))(domain)]))
 \end{lstlisting}
 \end{condition}
 
-\begin{condition}[Transfinite Hermite surface]
+\begin{condition}[(Transfinite Hermite surface] (See Figure~\ref{fig:5:7}b)
+\label{\ref{ex:5:4:3}}
 The transfinite Hermite implementation of Julia |Plasm| is used here.
 Let us note that |c1| and |c2| are curves, since their expressions contain the |S1| selector; conversely, |sur3| is a surface, since contains |S2|. The two extreme curves are interpolated here. Of course, the |domain| is 2D, obtained as Cartesian product of two polyhedral complexes of dimension one.
 \begin{lstlisting}[language=JuliaLocal, style=julia, mathescape=true]
@@ -1014,7 +1037,7 @@ c2 = CUBICHERMITE(S1)([[0.5,0,0],[0,0.5,0],[0,1,0],[-1,0,0]])
 cubic = CUBICHERMITE(S2)([c1,c2,[1,1,1],[-1,-1,-1]])		
 # cubic : domain $\to \E^2$
 domain = INTERVALS(1.0)(14) * INTERVALS(1.0)(14)
-VIEW( MAP(cubic)(domain)), Dict("background_color"=>WHITE)s)
+VIEW( MAP(cubic)(domain)), Dict("background_color"=>WHITE))
 \end{lstlisting}
 \end{condition}
 
@@ -1026,14 +1049,15 @@ Bézier curves of degree $n$ are entirely defined by an ordered sequence of $n+1
 With two control points, we have a linear curve, three a quadratic curve, four a cubic curve, and so on. A cubic Bézier may have one flex (bend) point, a quartic two, a $n$-degree $n-2$ such points, so the shape is \emph{flexible}. For numerical reasons, it is better to maintain a low curve degree.
 
 %///////////////////////////////////////////////////////////////////////////////
-\begin{condition}[Bézier quartic curve]\
-This script shows the first simple example of the important class of Bézier curves.  The curve |domain| is here a partition into |32| segments of the interval $[0,1]$. 
+\begin{condition}[(Bézier quartic curve] (See Figure~\ref{fig:5:7}c)\
+\label{\ref{ex:5:4:4}}
+This script shows the first simple example of the important class of Bézier curves.  The curve |domain| is here a partition into |32| segments of the interval $[0,1]$. Thr degree of curve is 4 because of 5 control points.
 \begin{lstlisting}[language=JuliaLocal, style=julia, mathescape=true]
-controlpoints = [[0,0],[1,0],[1,1],[2,1],[3,1]]
+controlpoints = [[0,0],[1,0],[1,1],[2,1],[2,2]]
 curve  = BEZIER(S1)(controlpoints)
 domain = INTERVALS(1.0)(32)
 
-VIEW( MAP(curve)(domain) ) 
+VIEW( STRUCT(MAP(curve)(domain), POLYLINE(controlpoints), FRAME2), Dict("background_color"=>WHITE) ) 
 \end{lstlisting}
 \end{condition}
 
@@ -1042,7 +1066,8 @@ A \emph{spline} is a continuous curve constructed so as to pass through a given 
 \end{definition}
 
 %///////////////////////////////////////////////////////////////////////////////
-\begin{condition}[Cubic spline curves]\
+\begin{condition}[(Cubic spline curves] (See Figure~\ref{fig:5:7}d)\
+\label{\ref{ex:5:4:5}}
 Here we show two examples of 2D cubic splines, piecewise curve defined by joining several segments of low-degree curve. In case of cubic splines each consecutive quadruple of points defines a different curve segment. In Figure~\ref{} we see together the |polyline|  of control points, a cardinal (interpolating) and a uniform B-spline (approximating) curve.
 \begin{lstlisting}[language=JuliaLocal, style=julia, mathescape=true]
 domain = INTERVALS(1.0)(20)
@@ -1057,7 +1082,7 @@ VIEW( STRUCT( polyline, cardinal_spline, uniform_Bspline ) )
 
 
 %///////////////////////////////////////////////////////////////////////////////
-\begin{condition}[Exact ellipse curve]\
+\begin{condition}[(Exact ellipse curve] (See Figure~\ref{}a)\
 Exact ellipse curve, whose quarter is generated as exact quadratic rational Bézier curvehown here s is. The example shows one of two ellipses degenerating to a rational circle. The are three control points because each quarter is a cubic Bezier curve.
 \begin{lstlisting}[language=JuliaLocal, style=julia, mathescape=true]
 function ELLIPSE(args::Vector{Float64})
@@ -1077,7 +1102,7 @@ VIEW( STRUCT( ELLIPSE([1.0,2.0])(15), ELLIPSE([2.0,2.0])(15) ) )
 \end{condition}
 
 %///////////////////////////////////////////////////////////////////////////////
-\begin{condition}[Non Uniform cubic B-spline]\
+\begin{condition}[(Non Uniform cubic B-spline] (See Figure~\ref{}a)\
 This class of splines has consecutive curve segments defined between pairs of consecutive parameter values, called \emph{knots}. To interpolate the extreme control points, the extreme knots must have \emph{multiplicity} equal to $degree + 1$. 
 
 In this example, for the number of control points we have $n = m - (degree + 1) = 14 - 4 = 10$, where $m = n+degree+1$ is the number of knots. The number of cubic curve segments is $n - degree = 7$.  The knots are not necessarily integer. The knots (in parameter space) may be subject of affine maps (translation and scaling.
@@ -1102,7 +1127,7 @@ n=10; degree=4; segments=6; m=15 ; knots=0,0,0,0,0 1,2,3,4,5, 6,6,6,6,6 }\\
 
 
 %///////////////////////////////////////////////////////////////////////////////
-\begin{condition}[Quadratic NURBS circle]\
+\begin{condition}[(Quadratic NURBS circle] (See Figure~\ref{}a)\
 There are several ways to construct an exact 1D circle with NURBS curves of degrees two, three, and \four~\cite{Eberly/ww.geometrictools.com/}. In the case implemented in this example (see also Figure~\ref{}) we have
 $n=9 (2 coincidenti), degree=2, m=12$ satisfying our parameter relation formulas:
 \begin{lstlisting}[language=JuliaLocal, style=julia, mathescape=true]
@@ -1134,7 +1159,7 @@ To generate a 2D surface, i.e. a 2-dimensional manifold embedded in $\E^3$, we h
 
 
 %///////////////////////////////////////////////////////////////////////////////
-\begin{condition}[Parametric sphere]\
+\begin{condition}[(Parametric sphere] (See Figure~\ref{}a)\
 A unit sphere centered in the origin is given here. the default |domain| is a cell  decomposition of the $[0,\pi] \times [0,2\pi]$ rectangle into $16\times 32$ quads.
 The |SPHERE| generating function in 3D is quickly generated as |Hpc| with some empty triangles at poles and double vertices and edges at the $v$ edges of $u,v$ discretized domain. 
 \begin{lstlisting}[language=JuliaLocal, style=julia, mathescape=true]
@@ -1161,7 +1186,7 @@ Maximum correct refinement is |LAR(SPHERE(2)([73,40]))|.
 \end{condition}
 
 %///////////////////////////////////////////////////////////////////////////////
-\begin{condition}[Parametric torus]\
+\begin{condition}[(Parametric torus] (See Figure~\ref{}a)\
 The parametric equation of torus surface in 3D can be computed by rotating about the $z$ axis a parametric circle in the plane x=0. The reader may construct it by exercise. The three coordinate functions are called |fx, fy, fz|, The |domain| is $[0,2\pi]\times[2\pi]$. The surface depends on a minor and a major radii (|r1|, |r2|).
 
 The |TORUS|, function of second order, is given below.
@@ -1190,7 +1215,7 @@ VIEW( TORUS([1.0,2.0])([20,80]),Dict("background_color"=>WHITE )
 \end{condition}
 
 %///////////////////////////////////////////////////////////////////////////////
-\begin{condition}[Cubic Bézier surface generated by Bézier curves]\ 
+\begin{condition}[(Cubic Bézier surface generated by Bézier curves] (See Figure~\ref{}a)\ 
 
 A transfinite generation is given here, where the four parameters of a cubic Bézier manifold are given by |C0,C1,C2,C3| Bézier’s curves of various degrees.
 \begin{lstlisting}[language=JuliaLocal, style=julia, mathescape=true]
@@ -1205,7 +1230,7 @@ VIEW(MAP(BEZIER(S2)([C0,C1,C2,C3]))(domain))
 
 
 %///////////////////////////////////////////////////////////////////////////////
-\begin{condition}[Coons’ patch]\
+\begin{condition}[(Coons’ patch] (See Figure~\ref{}a)\
 The Coons patch provides a method to construct a surface supported on a given contour, when the latter is composed of 4 arcs of curves.
 \begin{lstlisting}[language=JuliaLocal, style=julia, mathescape=true]
 Su0 = BEZIER(S1)([[0,0,0],[10,0,0]])
@@ -1218,7 +1243,7 @@ VIEW(MAP(COONSPATCH([Su0,Su1,Sv0,Sv1]))(domain))
 \end{condition}
 
 %///////////////////////////////////////////////////////////////////////////////
-\begin{condition}[Ruled surface]\
+\begin{condition}[(Ruled surface] (See Figure~\ref{}a)\
 The |RULEDSURFACE| function is used to build a ruled 2-manifold between two given curves. Of course, the domain must be 2D ,and embedded in a Euclidean space of at least dimension $d=2$.
 \begin{lstlisting}[language=JuliaLocal, style=julia, mathescape=true]
 alpha = point -> [point[1], point[1], 0 ]
@@ -1231,7 +1256,7 @@ A hyperbolic paraboloid is a saddle surface (see Figure~\ref{}), as its Gauss cu
 \end{condition}
 
 %///////////////////////////////////////////////////////////////////////////////
-\begin{condition}[Profile product patch]\ A similar development pattern is used here, using a profile curve and a section curve. A rotational curve is a |profile| product with a circle |section|. A surface $\p{S}$ is called the {\it profile
+\begin{condition}[(Profile product patch] (See Figure~\ref{}a)\ A similar development pattern is used here, using a profile curve and a section curve. A rotational curve is a |profile| product with a circle |section|. A surface $\p{S}$ is called the {\it profile
 product} of two plane curves $\p{\alpha}$ and $\p{\beta}$, embedded
 into two coordinate subspaces and respectively called {\it profile}
 and {\it cross-section} curve:
@@ -1255,7 +1280,7 @@ VIEW( MAP(PROFILEPRODSURFACE([profile, section])(domain) ))
 \end{condition}
 
 %///////////////////////////////////////////////////////////////////////////////
-\begin{condition}[Rotational surface and solid]\
+\begin{condition}[(Rotational surface and solid] (See Figure~\ref{}a)\
 The primitive function |ROTATIONALSURFACE| is a profile product where the |section| function is already known. The control points of the |profile| curve are set to start with horizontal tangent vector at $u=0$. Of course, the |profile| curve rules entirely the surface shape. In figures \ref{} and \ref{} we show both the rotational surface and the thin solid derived from it.
 \begin{lstlisting}[language=JuliaLocal, style=julia, mathescape=true]
 profile = BEZIER(S1)([[0,0,0],[3,0,0],[4,0,1],[4,0,4]]) 
@@ -1267,7 +1292,7 @@ VIEW( MAP(THINSOLID(suface))(domain*INTERVALS(0.25)(1)))
 \end{condition}
 
 %///////////////////////////////////////////////////////////////////////////////
-\begin{condition}[Cylindrical surface and solid]\
+\begin{condition}[(Cylindrical surface and solid] (See Figure~\ref{}a)\
 A cilindrical surface is given here implemented by the |CYLINDRICALSURFACE| primitive by tensor product of a Bézier curve |alpha| in $z=0$ and a vertical vector |[0,0,1]|. 
 \begin{lstlisting}[language=JuliaLocal, style=julia, mathescape=true]
 alpha = BEZIER(S1)([[1,1,0],[-1,1,0],[1,-1,0],[-1,-1,0]])
@@ -1281,7 +1306,7 @@ VIEW(MAP(THINSOLID(fn))(domain*Vdomain))
 \end{condition}
 
 %///////////////////////////////////////////////////////////////////////////////
-\begin{condition}[Conical surface]\
+\begin{condition}[(Conical surface] (See Figure~\ref{}a)\
 A conical surface is a ruled surface whose straight lines join a base curve, the |beta| Bézier in this example and a fixed point, in this case |[0,0,1]| out of the curve.
 \begin{lstlisting}[language=JuliaLocal, style=julia, mathescape=true]
 domain = Power(INTERVALS(1.0)(20),INTERVALS(1.0)(6))
@@ -1308,7 +1333,7 @@ considered as a point locus.
 The following examples show more than one generation method in action, encouraging the reader to reason about and distinguish between bivariate parametric surface functions, coordinate functions, transfinite combinations, and polynomial tensor product functions, which are directly mapped on $ m \times n$ matrices of control points. In some cases, the interested reader will directly look at the open-source implementation of the primitive functions.
 
 %///////////////////////////////////////////////////////////////////////////////
-\begin{condition}[Transfinite Hermite surface]\
+\begin{condition}[(Transfinite Hermite surface] (See Figure~\ref{}a)\
 In this case we present a cubic transfinite Hermite interpolating two |CUBICHERMITE| curves, and with two constant ($u$) fields (initial and final), of partial derivatives in the $v$ directions (see Figure \ref{}).
  \begin{lstlisting}[language=JuliaLocal, style=julia, mathescape=true]
 c1 = CUBICHERMITE(S1)([[1,0,0],[0,1,0],[0,3,0],[-3,0,0]])
@@ -1321,7 +1346,7 @@ VIEW( MAP(sur3)(domain), Dict("background_color"=>WHITE) )
 
 
 %///////////////////////////////////////////////////////////////////////////////
-\begin{condition}[Bilinear surface]\
+\begin{condition}[(Bilinear surface] (See Figure~\ref{}a)\
 Tensor product surface function generated by the |Plasm| operator |TENSORPRODUCT| with arguments two array of 3D |controlpoints|, each containing two points, the first and the last of a linear curve in one parametric direction. the same for the transposed tensor in the other parametric coordinate direction. It is the ruled surface generated by four given points, that is interpolated at the four extreme points of |domain| $[0,1]\times[0,1]$. 
 
 \begin{lstlisting}[language=JuliaLocal, style=julia, mathescape=true]
@@ -1342,7 +1367,7 @@ end
 \end{condition}
 
 %///////////////////////////////////////////////////////////////////////////////
-\begin{condition}[Biquadratic surface]\
+\begin{condition}[(Biquadratic surface] (See Figure~\ref{}a)\
 The operator, in this case\\ |BIQUADRATICSURFACE|, is generated by |TENSORPRODSURFACE| of two instances of  quadratic Bézier , given as 
 $basis = [ (1-u)^{2},\ 2(1-u)u,\ u^{2} ]\ (0\leq u\leq 1).$
 
@@ -1357,7 +1382,7 @@ VIEW(MAP(mapping)(domain), Dict("background_color"=>WHITE))
 
 
 %///////////////////////////////////////////////////////////////////////////////
-\begin{condition}[Bicubic Hermite surface]\
+\begin{condition}[(Bicubic Hermite surface] (See Figure~\ref{}a)\
 Theis surface is an extension of Hermite curve. It is defined by 16 parameters (4 end points, 8 tangent vectors at end points, 4 twist vectors). You have (a) position vectors: the four corner points; (b) tangent vectors: the tangent vectors in u, w directions at the four position vectors of the surface; (c) twist vectors: the twist vectors at all the four position vectors of the surface. The elements of |controlpoints| tensor can be put in correspondence with the function of the basis tensor:
 
 \[
@@ -1386,7 +1411,7 @@ VIEW( MAP(mapping)(domain), Dict("background_color"=>WHITE) )
 \end{condition}
 
 %///////////////////////////////////////////////////////////////////////////////
-\begin{condition}[Bicubic Beziér surface]\
+\begin{condition}[(Bicubic Beziér surface] (See Figure~\ref{}a)\
 Conversely, the generating |controlpoints| of a cubic Bézier surface in 3D are a $4\times 4$ matrix of 3D point coordinates. This kind of suface interpolates the four extreme points, and the two cubic curves generated by the first and last row, as well the two cubic curves generated by the first and last column of the tensor of points.  
 \begin{lstlisting}[language=JuliaLocal, style=julia, mathescape=true]
 controlpoints = [
@@ -1402,7 +1427,7 @@ VIEW(MAP(mapping)(domain), Dict("background_color"=>WHITE))
 \end{condition}
 
 %///////////////////////////////////////////////////////////////////////////////
-\begin{condition}[From polyline 2D to polygon]\
+\begin{condition}[(From polyline 2D to polygon] (See Figure~\ref{}a)\
 A polyline is a list of points, where line segments are drawn between consecutive points.  a polygon is the set on points of a 2D domain, whose boundary gives a closed polyline. A polyline is said closed when has no boundary points.
 \begin{lstlisting}[language=JuliaLocal, style=julia, mathescape=true]
 VIEW(SOLIDIFY(STRUCT(AA(POLYLINE)([
@@ -1424,7 +1449,7 @@ Here, we discuss several generations of 3D solids. In particular, we use the |TE
 Another method, Minkowski projection, will be used with 4D solids to generate a 3D view through a central projection within one of their faces.
 
 %///////////////////////////////////////////////////////////////////////////////
-\begin{condition}[CUBE primitive]\
+\begin{condition}[(CUBE primitive] (See Figure~\ref{}a)\
 This primitive generator of the 3D cube has only one argument, the size of edges. 
 \begin{lstlisting}[language=JuliaLocal, style=julia, mathescape=true]
 cube = CUBE(3)
@@ -1434,7 +1459,7 @@ VIEW( cube, Dict("background_color"=>WHITE) )
 
 
 %///////////////////////////////////////////////////////////////////////////////
-\begin{condition}[$d$-Permutahedron]\ 
+\begin{condition}[($d$-Permutahedron] (See Figure~\ref{}a)\ 
 The permutahedron of order $d$ is a ($d−1$)-dimensional polytope embedded in $d$D space. It is the boundary of a $d$-solid generated by permutation of first $d$-integers. The examples of 2- and 3-permutahedra follow. The generating operator |PERMUTAHEDRON| is multidimensional, with $d\geq 2$.
 \begin{lstlisting}[language=JuliaLocal, style=julia, mathescape=true]
 VIEW( PERMUTAHEDRON(2), Dict("background_color"=>WHITE) )
@@ -1444,7 +1469,7 @@ VIEW( PERMUTAHEDRON(3), Dict("background_color"=>WHITE) )
 
 
 %///////////////////////////////////////////////////////////////////////////////
-%\begin{condition}[Schegel projection in 3D]\
+%\begin{condition}[(Schegel projection in 3D] (See Figure~\ref{}a)\
 %The \emph{Schlegel diagram} of a polytope
 %$P\subset\E^{d}$, with $\dim P = d$, is defined as the polytopal
 %complex ${\cal S}(P, F, \p{y})$, of dimension $d-1$, which is obtained
@@ -1468,7 +1493,7 @@ VIEW( PERMUTAHEDRON(3), Dict("background_color"=>WHITE) )
 %\end{condition}
 
 %///////////////////////////////////////////////////////////////////////////////
-\begin{condition}[Quadratic Bézier 3-manifold]\ In this case the fundamental function is |BEZIERMANIFOLD| that accepts the list of degrees in parametric coordinates $u,v,w$ and three second order tensors (in this case all $3\times 3\times 3$) that if assembled provide a 3-tensor of points. The result is a decomposed solid into a 3D grid, deformed according to the 3-tensor ox control points. 
+\begin{condition}[(Quadratic Bézier 3-manifold] (See Figure~\ref{}a)\ In this case the fundamental function is |BEZIERMANIFOLD| that accepts the list of degrees in parametric coordinates $u,v,w$ and three second order tensors (in this case all $3\times 3\times 3$) that if assembled provide a 3-tensor of points. The result is a decomposed solid into a 3D grid, deformed according to the 3-tensor ox control points. 
 \begin{lstlisting}[language=JuliaLocal, style=julia, mathescape=true]
 grid1D = INTERVALS(1.0)(10)
 domain3D = grid1D * grid1D *grid1D
@@ -1483,8 +1508,8 @@ VIEW( MAP(mapping)(domain3D), Dict("background_color"=>WHITE) )
 
 
 %///////////////////////////////////////////////////////////////////////////////
-\begin{condition}[Minkowski sum of wireframe end cuboid]
-This example shows the offset of a 1D graph-like cell-complex. The solid kernel traveling along the edges of the wire frame model is a parallolopiped with sides $[0.1,0.2,0.1]$.
+\begin{condition}[(Minkowski sum of wireframe end cuboid] (See Figure~\ref{}a)
+The example shows the offset of a 1D graph-like cell-complex. The solid kernel traveling along the edges of the wire frame model is a parallolopiped with sides $[0.1,0.2,0.1]$.
 The generative algorithm works by using higher dimension (up to six) that the normal workspace $\E^3$.
 
 \begin{lstlisting}[language=JuliaLocal, style=julia, mathescape=true]
@@ -1499,7 +1524,7 @@ VIEW( STRUCT( OFFSET([0.1,0.2,0.25])(House), T(2)(1.2*SIZE(2)(House))(House)), D
 
 
 %///////////////////////////////////////////////////////////////////////////////
-\begin{condition}[aaaaaaa]\
+\begin{condition}[(aaaaaaa] (See Figure~\ref{}a)\
 \begin{lstlisting}[language=JuliaLocal, style=julia, mathescape=true]
 function TestThinSolid()
 	Su0 = COMP([BEZIERCURVE([[0,0,0],[10,0,0]]),CONS([S1])])
@@ -1516,7 +1541,7 @@ end
 \end{condition}
 
 %///////////////////////////////////////////////////////////////////////////////
-\begin{condition}[aaaaaaa]\
+\begin{condition}[(aaaaaaa] (See Figure~\ref{}a)\
 \begin{lstlisting}[language=JuliaLocal, style=julia, mathescape=true]
 function TestBezierStripe()
 	vertices = ToFloat64([[0,0],[1.5,0],[-1,2],[2,2],[2,0]])
@@ -1526,7 +1551,7 @@ end
 \end{condition}
 
 %///////////////////////////////////////////////////////////////////////////////
-\begin{condition}[aaaaaaa]\
+\begin{condition}[(aaaaaaa] (See Figure~\ref{}a)\
 \begin{lstlisting}[language=JuliaLocal, style=julia, mathescape=true]
 function TestMinkowski()
 	p = MKPOL(
@@ -1546,7 +1571,7 @@ end
 \end{condition}
 
 %///////////////////////////////////////////////////////////////////////////////
-\begin{condition}[aaaaaaa]\
+\begin{condition}[(aaaaaaa] (See Figure~\ref{}a)\
 \begin{lstlisting}[language=JuliaLocal, style=julia, mathescape=true]
 function TestThinsolid()
 	Su0 = COMP([BEZIERCURVE([[0,0,0],[10,0,0]]),CONS([S1])])
@@ -1564,7 +1589,7 @@ end
 \end{condition}
 
 %///////////////////////////////////////////////////////////////////////////////
-\begin{condition}[aaaaaaa]\
+\begin{condition}[(aaaaaaa] (See Figure~\ref{}a)\
 \begin{lstlisting}[language=JuliaLocal, style=julia, mathescape=true]
 function TestSOLIDHELICOID(; nturns=3, R=1., r=0.0, shape=[36*nturns, 8], pitch=2, thickness=0.1)
  totalangle = nturns*2*pi
@@ -1582,7 +1607,7 @@ end;
 
 
 %///////////////////////////////////////////////////////////////////////////////
-\begin{condition}[aaaaaaa]\
+\begin{condition}[(aaaaaaa] (See Figure~\ref{}a)\
 \begin{lstlisting}[language=JuliaLocal, style=julia, mathescape=true]
 function TestPolar()
 	VIEW(POLAR(CUBOID([1,1,1])), Dict("background_color"=>WHITE))
@@ -1591,7 +1616,7 @@ end
 \end{condition}
 
 %///////////////////////////////////////////////////////////////////////////////
-\begin{condition}[aaaaaaa]\
+\begin{condition}[(aaaaaaa] (See Figure~\ref{}a)\
 \begin{lstlisting}[language=JuliaLocal, style=julia, mathescape=true]
 function TestSolidify()
 VIEW(SOLIDIFY(STRUCT(AA(POLYLINE)([
@@ -1603,7 +1628,7 @@ end
 \end{condition}
 
 %///////////////////////////////////////////////////////////////////////////////
-\begin{condition}[aaaaaaa]\
+\begin{condition}[(aaaaaaa] (See Figure~\ref{}a)\
 \begin{lstlisting}[language=JuliaLocal, style=julia, mathescape=true]
 function TestDiff()
 	mypol1 = T([1,2])([-5,-5])(CUBOID([10,10]))
@@ -1619,7 +1644,7 @@ end
 \end{condition}
 
 %///////////////////////////////////////////////////////////////////////////////
-\begin{condition}[Cell visualization and numbering]\
+\begin{condition}[(Cell visualization and numbering] (See Figure~\ref{}a)\
 \begin{lstlisting}[language=JuliaLocal, style=julia, mathescape=true]
 function TestViewText()
    geometry = ToGeometry(CUBOID([1.0, 1.0]))

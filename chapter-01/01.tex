@@ -807,7 +807,7 @@ Julia tasks are not threads. They are coroutines which can be scheduled asynchro
 
 \subsubsection*{Data parallelism}
 
-For data parallelism, a higher-level description is appropriate. It also helps you write more reusable code; e.g., using the same code for single-threaded, multi-threaded, and distributed computing
+For data parallelism, a higher-level description is appropriate. It also helps to write more reusable code; e.g., using the same code for single-threaded, multi-threaded, and distributed computing
 
 In particular, it is important to use libraries that help you describe \emph{what} to compute rather than \emph{how} to compute. Practically, it means to use generalized form of |map| and |reduce| operations and learn how to express your computation in terms of them. Luckily, if you already know how to write \emph{iterator comprehensions}, there is not much more to learn for accessing a large class of data parallel computations. \cite{julia:parallel:data-parallelism}. 
 
